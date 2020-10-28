@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center profile-header"
-        style="min-height: 600px; background-image: url(img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+        style="min-height: 100px; background-image: url(img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
       <b-container fluid>
         <!-- Mask -->
         <span class="mask bg-gradient-success opacity-8"></span>
         <!-- Header container -->
-        <b-container fluid class="d-flex align-items-center">
+        <!-- <b-container fluid class="d-flex align-items-center">
           <b-row >
             <b-col lg="7" md="10">
               <h1 class="display-2 text-white">Hello Jesse</h1>
@@ -15,7 +15,7 @@
               <a href="#!" class="btn btn-info">Edit profile</a>
             </b-col>
           </b-row>
-        </b-container>
+        </b-container> -->
       </b-container>
     </div>
 
