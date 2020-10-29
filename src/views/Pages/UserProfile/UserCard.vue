@@ -1,5 +1,6 @@
 <template>
-  <b-card no-body class="card-profile" alt="Image placeholder" img-top>
+  <b-card no-body class="card-profile" 
+alt="Image placeholder" img-top>
     <b-row class="justify-content-center">
       <b-col lg="3" class="order-lg-2">
         <div class="card-profile-image">
@@ -19,7 +20,7 @@
 
     <b-card-body class="pt-0">
       <b-row>
-        <b-col >
+        <b-col>
           <div class="card-profile-stats d-flex justify-content-center mt-md-5">
             <div>
               <span class="heading">22</span>
@@ -44,15 +45,18 @@
           <i class="ni location_pin mr-2"></i>Bucharest, Romania
         </div>
         <div class="h5 mt-4">
-          <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
+          <i class="ni business_briefcase-24 mr-2"></i>Solution Manager -
+          Creative Tim Officer
         </div>
         <div>
           <i class="ni education_hat mr-2"></i>University of Computer Science
         </div>
-        <hr class="my-4">
-        <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
+        <hr class="my-4" />
+        <p>
+          Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy
+          — writes, performs and records all of his own music.
+        </p>
         <a href="#">Show more</a>
-
       </div>
     </b-card-body>
   </b-card>

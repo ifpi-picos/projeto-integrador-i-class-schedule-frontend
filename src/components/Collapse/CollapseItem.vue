@@ -1,6 +1,7 @@
 <template>
   <b-card no-body>
-    <b-card-header role="tab" class="card-header" :aria-expanded="active">
+    <b-card-header role="tab" 
+class="card-header" :aria-expanded="active">
       <a
         data-toggle="collapse"
         data-parent="#accordion"
@@ -26,18 +27,18 @@
   </b-card>
 </template>
 <script>
-import { CollapseTransition } from 'vue2-transitions';
+import { CollapseTransition } from "vue2-transitions";
 
 export default {
-  name: 'collapse-item',
+  name: "collapse-item",
   components: {
     CollapseTransition
   },
   props: {
     title: {
       type: String,
-      default: '',
-      description: 'Collapse item title'
+      default: "",
+      description: "Collapse item title"
     },
     id: String
   },
@@ -75,7 +76,7 @@ export default {
         this.deactivateAll();
       }
       this.active = !wasActive;
-      console.log(this.active)
+      console.log(this.active);
     }
   },
   mounted() {
