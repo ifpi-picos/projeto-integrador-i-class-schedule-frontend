@@ -54,5 +54,8 @@
     "not ie <= 10"
   ],
   "author": "Creative Tim - https://www.creative-tim.com/",
-  "description": "BootstrapVue Argon Dashboard"
+  "description": "BootstrapVue Argon Dashboard",
+  "main": "index.js",
+  "repository": "https://github.com/ifpipicos/projeto-empty-coffee-cups.git",
+  "license": "MIT"
 }
