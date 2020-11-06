@@ -57,7 +57,7 @@
             </div>
           </el-table-column>
 
-          <el-table-column label="Ações" prop="completion" min-width="140px">
+          <!--el-table-column label="Ações" prop="completion" min-width="140px">
             <template v-slot="{ row }">
               <div class="d-flex align-items-center">
                 <span class="completion mr-2">{{ row.completion }}%</span>
@@ -87,8 +87,9 @@
                 </div>
               </div>
             </template>
-          </el-table-column> </el-table
-      ></b-card>
+          </el-table-column-->
+        </el-table>
+      </b-card>
     </b-container>
   </div>
 </template>
