@@ -3,7 +3,7 @@
     <b-card-header class="border-0">
       <h3 class="mb-0">Light table</h3>
     </b-card-header>
-
+    
     <el-table
       class="table-responsive table"
       header-row-class-name="thead-light"

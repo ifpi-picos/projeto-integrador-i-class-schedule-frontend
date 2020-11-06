@@ -7,12 +7,20 @@
           :link="{
             name: 'Dashboard',
             path: '/dashboard',
-            icon: 'ni ni-tv-2 text-primary'
+            icon: 'ni ni-tv-2 text-primary',
           }"
         >
         </sidebar-item>
 
         <sidebar-item
+          :link="{
+            name: 'Professores',
+            path: '/professores',
+            icon: 'fas fa-chalkboard-teacher text-orange',
+          }"
+        ></sidebar-item>
+
+        <!--  <sidebar-item
           :link="{
             name: 'Icons',
             path: '/icons',
@@ -29,30 +37,30 @@
           }"
         >
         </sidebar-item>
-
+        -->
         <sidebar-item
           :link="{
             name: 'User Profile',
             path: '/profile',
-            icon: 'ni ni-single-02 text-yellow'
+            icon: 'ni ni-single-02 text-yellow',
           }"
         >
         </sidebar-item>
-
+        <!--
         <sidebar-item
           :link="{
             name: 'Tables',
             path: '/tables',
-            icon: 'ni ni-bullet-list-67 text-red'
+            icon: 'ni ni-bullet-list-67 text-red',
           }"
         >
         </sidebar-item>
-
+      -->
         <sidebar-item
           :link="{
             name: 'Login',
             path: '/login',
-            icon: 'ni ni-key-25 text-info'
+            icon: 'ni ni-key-25 text-info',
           }"
         >
         </sidebar-item>
@@ -60,7 +68,7 @@
           :link="{
             name: 'Register',
             path: '/register',
-            icon: 'ni ni-circle-08 text-pink'
+            icon: 'ni ni-circle-08 text-pink',
           }"
         >
         </sidebar-item>
@@ -96,8 +104,7 @@
       <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>
 
       <div @click="$sidebar.displaySidebar(false)">
-        <fade-transition :duration="200" 
-origin="center top" mode="out-in">
+        <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
           <router-view></router-view>
         </fade-transition>
@@ -136,7 +143,7 @@ export default {
     DashboardNavbar,
     ContentFooter,
     DashboardContent,
-    FadeTransition
+    FadeTransition,
   },
   methods: {
     initScrollbar() {
@@ -144,11 +151,11 @@ export default {
       if (isWindows) {
         initScrollbar("sidenav");
       }
-    }
+    },
   },
   mounted() {
     this.initScrollbar();
-  }
+  },
 };
 </script>
 <style lang="scss"></style>
