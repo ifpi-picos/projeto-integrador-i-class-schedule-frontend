@@ -3,18 +3,20 @@
     <base-header
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success"
     ></base-header>
-
-    <TeacherForm></TeacherForm>
-    <b-modal size="lg" id="addTeacher" title="Inserir professor"> <TeacherForm></TeacherForm></b-modal>
-    <b-container fluid class="mt-7">
+    <b-modal size="lg" centered id="addTeacher" title="Novo Professor">
+      <TeacherForm></TeacherForm
+    ></b-modal>
+    <b-container fluid class="mt--7">
       <b-card>
         <b-card-header class="pt-0 pl-0 pr-0 ">
           <b-row>
-            <b-col >
+            <b-col>
               <h3>Professores</h3>
             </b-col>
             <b-col cols="2">
-              <b-button variant="success" v-b-modal.addTeacher > Adcionar</b-button>
+              <b-button variant="success" v-b-modal.addTeacher>
+                Adcionar</b-button
+              >
             </b-col>
           </b-row>
         </b-card-header>
