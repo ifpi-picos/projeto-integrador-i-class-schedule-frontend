@@ -7,9 +7,9 @@
     ref="addteacher"
     title="Novo Professor"
   >
-    <b-form @submit.prevent="handleSubmit">
+    <b-form ref="form" @submit.prevent="handleSubmit">
       <h6 class="heading-small text-muted mb-4">Cadastro de professores</h6>
-
+      
       <div class="pl-lg-4">
         <b-row>
           <b-col lg="6">
@@ -96,15 +96,20 @@ export default {
     };
   },
   methods: {
+    checkForm(){
+     const valid = this.$refs.form.checkValidity()
+     console.log(valid);
+    },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       //bvModalEvt.preventDefault();
       // Trigger submit handler
+      this.checkForm();
       this.handleSubmit();
     },
     handleSubmit() {
       const refFirebase = this.$firebase.database().ref('professores')
-      const idTeacher = refFirebase.push().key
+      const idTeacher = "-MLcGGi-0gGpsVfJhdU3" // refFirebase.push().key
 
       const payload = {
         idTeacher,
@@ -121,7 +126,6 @@ export default {
           console.log(error)
         }
         else{
-         
           this.$refs.addteacher.hide();
         }
       })

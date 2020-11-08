@@ -7,12 +7,12 @@
     <b-container fluid class="mt--7">
       <b-card>
         <b-card-header class="pt-0 pl-0 pr-0 ">
-          <b-row>
+          <b-row align-h="between">
             <b-col>
               <h3>Professores</h3>
             </b-col>
-            <b-col cols="2">
-              <b-button variant="success" v-b-modal.addteacher>
+            <b-col class="text-right">
+              <b-button  variant="success" v-b-modal.addteacher>
                 Adcionar</b-button
               >
             </b-col>
