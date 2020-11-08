@@ -1,6 +1,13 @@
 <template>
-  <div>
-    <b-form @submit.prevent="updateProfile">
+  <b-modal
+    @ok="handleOk"
+    size="lg"
+    centered
+    id="addteacher"
+    ref="addteacher"
+    title="Novo Professor"
+  >
+    <b-form @submit.prevent="handleSubmit">
       <h6 class="heading-small text-muted mb-4">Cadastro de professores</h6>
 
       <div class="pl-lg-4">
@@ -11,6 +18,7 @@
               label="Nome *"
               placeholder="Nome"
               v-model="user.username"
+              required
             >
             </base-input>
           </b-col>
@@ -21,6 +29,9 @@
               label="Matricula"
               placeholder="Ex.: SIAPE"
               v-model="user.registration"
+               name="Matricula"
+              required
+              
             >
             </base-input>
           </b-col>
@@ -31,6 +42,8 @@
               label="E-mail *"
               placeholder="professor@email.com"
               v-model="user.email"
+              required
+              name="email"
             >
             </base-input>
           </b-col>
@@ -65,7 +78,7 @@
         </b-row>
       </div>
     </b-form>
-  </div>
+  </b-modal>
 </template>
 
 <script>
@@ -79,7 +92,21 @@ export default {
         email: "",
         occupationArea: "",
       },
+      errors: [
+        'erro1'
+      ]
     };
+  },
+  methods: {
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      //bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.handleSubmit();
+    },
+    handleSubmit() {
+      this.$refs.addteacher.hide();
+    },
   },
 };
 </script>
