@@ -109,7 +109,7 @@ export default {
     },
     handleSubmit() {
       const refFirebase = this.$firebase.database().ref('professores')
-      const idTeacher = "-MLcGGi-0gGpsVfJhdU3" // refFirebase.push().key
+      const idTeacher = refFirebase.push().key
 
       const payload = {
         idTeacher,
