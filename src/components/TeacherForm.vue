@@ -109,19 +109,19 @@ export default {
     },
     handleSubmit() {
       const refFirebase = this.$firebase.database().ref('professores')
-      const idTeacher = refFirebase.push().key
+      const id = refFirebase.push().key
 
       const payload = {
-        idTeacher,
-        username: this.teacher.username,
-        registration: this.teacher.registration,
+        id,
+        nome: this.teacher.username,
+        matricula: this.teacher.registration,
         email: this.teacher.email,
-        occupationArea: this.teacher.occupationArea,
+        area_de_ocupacao: this.teacher.occupationArea,
         createdAt: new Date().getTime(),
 
       }
       
-      refFirebase.child(idTeacher).set(payload, (error) => {
+      refFirebase.child(id).set(payload, (error) => {
         if( error ){
           console.log(error)
         }
