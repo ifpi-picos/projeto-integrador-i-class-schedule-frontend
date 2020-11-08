@@ -17,7 +17,7 @@
               type="text"
               label="Nome *"
               placeholder="Nome"
-              v-model="user.username"
+              v-model="teacher.username"
               required
             >
             </base-input>
@@ -28,7 +28,7 @@
               type="text"
               label="Matricula"
               placeholder="Ex.: SIAPE"
-              v-model="user.registration"
+              v-model="teacher.registration"
                name="Matricula"
               required
               
@@ -41,7 +41,7 @@
               type="email"
               label="E-mail *"
               placeholder="professor@email.com"
-              v-model="user.email"
+              v-model="teacher.email"
               required
               name="email"
             >
@@ -58,7 +58,7 @@
         <b-row>
           <b-col lg="6">
             <base-input label="Área de atuação *">
-              <select v-model="user.occupationArea" class="form-control">
+              <select v-model="teacher.occupationArea" class="form-control">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -68,7 +68,7 @@
 
           <b-col lg="6">
             <base-input label="Cordenação" placeholder="">
-              <select v-model="user.cordination" class="form-control">
+              <select v-model="teacher.cordination" class="form-control">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -86,15 +86,13 @@ export default {
   name: "TeacherForm",
   data() {
     return {
-      user: {
+      teacher: {
         username: "",
         registration: "",
         email: "",
         occupationArea: "",
       },
-      errors: [
-        'erro1'
-      ]
+      
     };
   },
   methods: {
@@ -105,7 +103,32 @@ export default {
       this.handleSubmit();
     },
     handleSubmit() {
-      this.$refs.addteacher.hide();
+      const refFirebase = this.$firebase.database().ref('professores')
+      const idTeacher = refFirebase.push().key
+
+      const payload = {
+        idTeacher,
+        username: this.teacher.username,
+        registration: this.teacher.registration,
+        email: this.teacher.email,
+        occupationArea: this.teacher.occupationArea,
+        createdAt: new Date().getTime(),
+
+      }
+      
+      refFirebase.child(idTeacher).set(payload, (error) => {
+        if( error ){
+          console.log(error)
+        }
+        else{
+         
+          this.$refs.addteacher.hide();
+        }
+      })
+      
+
+
+      
     },
   },
 };
