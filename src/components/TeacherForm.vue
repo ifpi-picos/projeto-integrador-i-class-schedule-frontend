@@ -4,7 +4,7 @@
     size="lg"
     centered
     id="addteacher"
-    ref="addteacher"
+    :ref="ref"
     title="Novo Professor"
   >
     <b-form ref="form" @submit.prevent="handleSubmit">
