@@ -1,3 +1,4 @@
+// .github/workflows/deploy.yaml
 name: deploy
 on:
   push:
@@ -13,11 +14,9 @@ jobs:
           node-version: '12'
       - name: setup git auth
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
-          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
-          email: 'jesiel.analista@gmail.com '
+          email: 'jesiel.analista@gmail.com'
           username: 'jesielviana'
+          access_token: '6777ac94dde94a615d114647ea3fcf0903d6a20c'
         run: |
           git config --global credential.helper store
           echo "https://${access_token}:x-oauth-basic@github.com" > ~/.git-credentials
