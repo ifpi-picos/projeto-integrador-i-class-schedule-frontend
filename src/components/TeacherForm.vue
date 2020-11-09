@@ -3,8 +3,8 @@
     @ok="handleOk"
     size="lg"
     centered
-    id="addteacher"
-    :ref="ref"
+    :id="idModal"
+    :ref="idModal"
     title="Novo Professor"
   >
     <b-form ref="form" @submit.prevent="handleSubmit">
@@ -91,7 +91,22 @@ export default {
         email: "",
         occupationArea: "",
       },
+      
     };
+  },
+  props: {
+    idModal: {
+      type: String,
+      default: "",
+      description:
+        "referencia do modal"
+    },
+    idTeacher: {
+      type: String,
+      default: "",
+      description:
+        "referencia do modal"
+    }
   },
   methods: {
     checkForm() {
@@ -107,7 +122,7 @@ export default {
     },
     handleSubmit() {
       const refFirebase = this.$firebase.database().ref("professores");
-      const id = refFirebase.push().key;
+      const id = this.idTeacher? this.idTeacher : refFirebase.push().key;
 
       const payload = {
         id,
@@ -122,11 +137,29 @@ export default {
         if (error) {
           console.log(error);
         } else {
-          this.$refs.addteacher.hide();
+          this.$refs[this.idModal].hide();
         }
       });
     },
+     fillForm(){
+       console.log("ok");
+      if(this.idTeacher){
+        const refFirebase = this.$firebase.database().ref(`professores`)
+         refFirebase.on('value', (snapshot) => {
+          const data = snapshot.child(this.idTeacher).val();
+          this.teacher.username = data.nome 
+          this.teacher.registration = data.matricula
+          this.teacher.email = data.email
+          this.teacher.occupationArea = data.area_de_ocupacao
+        })
+      }
+    }
   },
+  watch: {
+    idTeacher(){
+      this.fillForm()
+    }
+  }
 };
 </script>
 

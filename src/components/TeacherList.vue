@@ -120,20 +120,19 @@
           <b-button @click="editTeacher(row.id)"  variant="outline-dark" size="sm"
             ><i class="fas fa-pen"></i
           ></b-button>
-
-          <b-button @click=" delTeacher(row.id)" variant="outline-danger" size="sm"
+          
+          <b-button @click=" delTeacher(row.id, $event.target )" variant="outline-danger" size="sm"
             ><i class="fas fa-trash"></i
           ></b-button>
         </div>
       </template>
     </el-table-column>
-    
+    <teacher-form idModal="modalEdit" :idTeacher="teacherId"/>
   </el-table>
 </template>
 
 <script>
 import { Table, TableColumn } from "element-ui";
-import projects from "../views/Tables/projects";
 import TeacherForm from './TeacherForm.vue';
 
 export default {
@@ -143,18 +142,12 @@ export default {
     [TableColumn.name]: TableColumn,
     TeacherForm
   },
-  props: {
-    ref: {
-      type: String,
-      default: "",
-      description:
-        "referencia do modal"
-    }
-  },
+  
   data() {
     return {
-      projects,
+      teacherId: '',
       teachers: "",
+
     };
   },
   mounted() {
@@ -176,9 +169,10 @@ export default {
           this.teachers = teacherArray;
         });
     },
-    editTeacher(id){
-      console.log(id);
+    editTeacher(id, button){
+      this.teacherId = id
       //this.$refs.edit.show();
+      this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
     delTeacher(id){
       const refFirebase = this.$firebase.database().ref("professores")
