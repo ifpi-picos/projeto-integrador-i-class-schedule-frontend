@@ -11,12 +11,18 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
+      - name: setup git auth
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
           GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
           email: 'jesiel.analista@gmail.com '
           username: 'jesielviana'
+        run: |
+          git config --global credential.helper store
+          echo "https://${access_token}:x-oauth-basic@github.com" > ~/.git-credentials
+          git config --global user.email $email
+          git config --global user.name $username
       - name: deploy to gh-pages
         run: |
           npm i
