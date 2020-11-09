@@ -2,6 +2,13 @@
   <b-card no-body>
     <b-card-header class="border-0">
       <h3 class="mb-0">Light table</h3>
+      <div>
+  <b-button class="float-right" v-b-modal.modal-1 variant="primary">Cadastrar</b-button>
+
+  <b-modal id="modal-1" title="New message to undefined">
+    <p class="my-4">...</p>
+  </b-modal>
+</div>
     </b-card-header>
 
     <el-table
