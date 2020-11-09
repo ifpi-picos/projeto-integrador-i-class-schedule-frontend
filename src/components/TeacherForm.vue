@@ -4,12 +4,12 @@
     size="lg"
     centered
     id="addteacher"
-    ref="addteacher"
+    :ref="ref"
     title="Novo Professor"
   >
     <b-form ref="form" @submit.prevent="handleSubmit">
       <h6 class="heading-small text-muted mb-4">Cadastro de professores</h6>
-      
+
       <div class="pl-lg-4">
         <b-row>
           <b-col lg="6">
@@ -29,9 +29,8 @@
               label="Matricula"
               placeholder="Ex.: SIAPE"
               v-model="teacher.registration"
-               name="Matricula"
+              name="Matricula"
               required
-              
             >
             </base-input>
           </b-col>
@@ -86,24 +85,18 @@ export default {
   name: "TeacherForm",
   data() {
     return {
-<<<<<<< HEAD
-      user: {
-        username: "Claudio",
-=======
       teacher: {
         username: "",
->>>>>>> 1d522c6293701d3fff064709806fa84454d520c0
         registration: "",
         email: "",
         occupationArea: "",
       },
-      
     };
   },
   methods: {
-    checkForm(){
-     const valid = this.$refs.form.checkValidity()
-     console.log(valid);
+    checkForm() {
+      const valid = this.$refs.form.checkValidity();
+      console.log(valid);
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
@@ -113,8 +106,8 @@ export default {
       this.handleSubmit();
     },
     handleSubmit() {
-      const refFirebase = this.$firebase.database().ref('professores')
-      const id = refFirebase.push().key
+      const refFirebase = this.$firebase.database().ref("professores");
+      const id = refFirebase.push().key;
 
       const payload = {
         id,
@@ -123,21 +116,15 @@ export default {
         email: this.teacher.email,
         area_de_ocupacao: this.teacher.occupationArea,
         createdAt: new Date().getTime(),
+      };
 
-      }
-      
       refFirebase.child(id).set(payload, (error) => {
-        if( error ){
-          console.log(error)
-        }
-        else{
+        if (error) {
+          console.log(error);
+        } else {
           this.$refs.addteacher.hide();
         }
-      })
-      
-
-
-      
+      });
     },
   },
 };

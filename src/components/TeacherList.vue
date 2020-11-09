@@ -76,7 +76,7 @@
         </b-media>
       </template>
     </el-table-column>
-    
+
     <el-table-column label="Area de Atuação" prop="budget" min-width="180px">
       <template v-slot="{ row }">
         <b-media no-body class="align-items-center">
@@ -116,25 +116,40 @@
     <el-table-column label="Ações" prop="completion" min-width="140px">
       <template v-slot="{ row }">
         <div class="d-flex align-items-center">
-          <span>
-            {{row.id}}
-          </span>
-          
+
+          <b-button @click="editTeacher(row.id)"  variant="outline-dark" size="sm"
+            ><i class="fas fa-pen"></i
+          ></b-button>
+
+          <b-button @click=" delTeacher(row.id)" variant="outline-danger" size="sm"
+            ><i class="fas fa-trash"></i
+          ></b-button>
         </div>
       </template>
     </el-table-column>
+    
   </el-table>
 </template>
 
 <script>
 import { Table, TableColumn } from "element-ui";
 import projects from "../views/Tables/projects";
+import TeacherForm from './TeacherForm.vue';
 
 export default {
   name: "TeacherList",
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
+    TeacherForm
+  },
+  props: {
+    ref: {
+      type: String,
+      default: "",
+      description:
+        "referencia do modal"
+    }
   },
   data() {
     return {
@@ -151,20 +166,29 @@ export default {
         .database()
         .ref("professores")
         .on("value", (data) => {
-
           let teachers = data.val();
           const teacherArray = [];
 
           Object.keys(teachers).forEach((item) => {
-
-            teacherArray.push(teachers[item])
+            teacherArray.push(teachers[item]);
           });
           console.log(teacherArray);
-          this.teachers = teacherArray
+          this.teachers = teacherArray;
         });
     },
+    editTeacher(id){
+      console.log(id);
+      //this.$refs.edit.show();
+    },
+    delTeacher(id){
+      const refFirebase = this.$firebase.database().ref("professores")
+      refFirebase.child(id).remove()
+    }
+    
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+
+</style>
