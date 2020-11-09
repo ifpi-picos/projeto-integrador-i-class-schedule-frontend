@@ -8,7 +8,7 @@
     ></b-modal>
     <b-container fluid class="mt--7">
       <b-card>
-        <b-card-header class="pt-0 pl-0 pr-0 ">
+        <b-card-header class="pt-0 pl-0 pr-0">
           <b-row>
             <b-col>
               <h3>Professores</h3>
@@ -71,7 +71,7 @@
               </div>
             </el-table-column>
 
-            <el-table-column label="Ações" prop="completion" min-width="140px">
+            <!--el-table-column label="Ações" prop="completion" min-width="140px">
               <template v-slot="{ row }">
                 <div class="d-flex align-items-center">
                   <span class="completion mr-2">{{ row.completion }}%</span>
@@ -83,7 +83,7 @@
                   </div>
                 </div>
               </template>
-            </el-table-column>
+            </el-table-column-->
           </el-table>
         </b-card-body>
       </b-card>

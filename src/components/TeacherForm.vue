@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       user: {
-        username: "",
+        username: "Claudio",
         registration: "",
         email: "",
         occupationArea: "",
