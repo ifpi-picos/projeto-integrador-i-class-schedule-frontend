@@ -4,6 +4,7 @@
     :name="name"
     v-bind="$attrs"
     v-slot="{ errors, valid, invalid, validated }"
+    
   >
     <b-form-group>
       <slot name="label">

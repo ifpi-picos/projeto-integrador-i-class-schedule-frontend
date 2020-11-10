@@ -7,7 +7,7 @@
     :ref="idModal"
     title="Novo Professor"
   >
-    <b-form ref="form" @submit.prevent="handleSubmit">
+    <b-form ref="form" @submit.stop.prevent="handleSubmit">
       <h6 class="heading-small text-muted mb-4">Cadastro de professores</h6>
 
       <div class="pl-lg-4">
@@ -18,7 +18,8 @@
               label="Nome *"
               placeholder="Nome"
               v-model="teacher.username"
-              required
+              error="teste"
+              rules="required"
             >
             </base-input>
           </b-col>
@@ -26,8 +27,8 @@
           <b-col lg="6">
             <base-input
               type="text"
-              label="Matricula"
-              placeholder="Ex.: SIAPE"
+              label="Matricula *"
+              placeholder="Ex.: SIAPE "
               v-model="teacher.registration"
               name="Matricula"
               required
@@ -66,8 +67,8 @@
           </b-col>
 
           <b-col lg="6">
-            <base-input label="Cordenação" placeholder="">
-              <select v-model="teacher.cordination" class="form-control">
+            <base-input label="Cordenação *" required>
+              <select v-model="teacher.registration" class="form-control">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -105,19 +106,20 @@ export default {
       type: String,
       default: "",
       description:
-        "referencia do modal"
+        "id do professor que vai ser atualizado"
     }
   },
   methods: {
-    checkForm() {
+    checkFormValidity() {
       const valid = this.$refs.form.checkValidity();
       console.log(valid);
+      return valid
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
-      //bvModalEvt.preventDefault();
+      bvModalEvt.preventDefault();
       // Trigger submit handler
-      this.checkForm();
+      this.checkFormValidity();
       this.handleSubmit();
     },
     handleSubmit() {
@@ -132,20 +134,25 @@ export default {
         area_de_ocupacao: this.teacher.occupationArea,
         createdAt: new Date().getTime(),
       };
-
+      if (!this.checkFormValidity()) {
+          return
+      }
       refFirebase.child(id).set(payload, (error) => {
         if (error) {
           console.log(error);
         } else {
           this.$refs[this.idModal].hide();
+          if(!this.idTeacher){
+            this.teacher = {}
+          }
         }
       });
     },
-     fillForm(){
-       console.log("ok");
+     async fillForm(){
+      
       if(this.idTeacher){
         const refFirebase = this.$firebase.database().ref(`professores`)
-         refFirebase.on('value', (snapshot) => {
+        await refFirebase.on('value', (snapshot) => {
           const data = snapshot.child(this.idTeacher).val();
           this.teacher.username = data.nome 
           this.teacher.registration = data.matricula
