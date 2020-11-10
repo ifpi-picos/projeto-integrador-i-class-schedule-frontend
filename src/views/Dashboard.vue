@@ -104,8 +104,6 @@
           </card>
         </b-col>
 
-        <b-button>Teste Digi</b-button>
-
         <b-col xl="4" class="mb-5 mb-xl-0">
           <card header-classes="bg-transparent">
             <b-row align-v="center" slot="header">
