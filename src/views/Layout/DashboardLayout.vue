@@ -20,6 +20,14 @@
           }"
         ></sidebar-item>
 
+        <sidebar-item
+          :link="{
+            name: 'Turmas',
+            path: '/turmas',
+            icon: 'ni ni-collection text-green',
+          }"
+        >
+        </sidebar-item>
         <!--  <sidebar-item
           :link="{
             name: 'Icons',
