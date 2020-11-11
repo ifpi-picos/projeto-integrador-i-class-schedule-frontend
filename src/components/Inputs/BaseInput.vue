@@ -9,7 +9,7 @@
     <b-form-group>
       <slot name="label">
         <label v-if="label" :class="labelClasses">
-          {{ label }}
+          {{ label }} <span v-if="required" class="text-red"> *</span>
         </label>
       </slot>
       <div
@@ -61,7 +61,7 @@
       <slot name="error">
         <div v-if="errors[0]" 
 class="invalid-feedback" style="display: block;">
-          {{ errors[0] }}
+         O campo {{label}} é obrigatório
         </div>
       </slot>
     </b-form-group>

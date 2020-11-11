@@ -15,7 +15,7 @@
           <b-col lg="6">
             <base-input
               type="text"
-              label="Nome *"
+              label="Nome"
               placeholder="Nome"
               v-model="teacher.username"
               error="teste"
@@ -28,7 +28,7 @@
           <b-col lg="6">
             <base-input
               type="text"
-              label="Matricula *"
+              label="Matricula"
               placeholder="Ex.: SIAPE "
               v-model="teacher.registration"
               name="Matricula"
@@ -40,7 +40,7 @@
           <b-col lg="6">
             <base-input
               type="email"
-              label="E-mail *"
+              label="E-mail"
               placeholder="professor@email.com"
               v-model="teacher.email"
               required
@@ -58,7 +58,7 @@
 
         <b-row>
           <b-col lg="6">
-            <base-input label="Área de atuação *" required >
+            <base-input label="Área de atuação" required >
               <select v-model="teacher.occupationArea" class="form-control">
                 <option>1</option>
                 <option>2</option>
@@ -68,7 +68,7 @@
           </b-col>
 
           <b-col lg="6">
-            <base-input label="cordenacao *" required>
+            <base-input label="cordenacao" required>
               <select v-model="teacher.coordination" class="form-control">
                 <option>1</option>
                 <option>2</option>
