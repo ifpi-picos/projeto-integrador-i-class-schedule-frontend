@@ -132,7 +132,7 @@
       </el-table-column>
     </el-table>
     <teacher-form idModal="modalEdit" :idTeacher="teacherId" />
-    <b-modal></b-modal>
+
   </div>
 </template>
 
@@ -175,13 +175,37 @@ export default {
     },
     editTeacher(id, button) {
       this.teacherId = id;
-      //this.$refs.edit.show();
+      //this.$refs.modaledit.show();
       this.$root.$emit("bv::show::modal", "modalEdit", button);
     },
     delTeacher(id) {
+      
       const refFirebase = this.$firebase.database().ref("professores");
-      refFirebase.child(id).remove();
+      
+     this.$bvModal.msgBoxConfirm('Tem certeza que deseja deletar?', {
+          title: 'Confirmação',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          cancelVariant: 'primary',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
+          centered: true,
+          okTitle: 'Sim',
+          cancelTitle: 'Não'
+      })
+      .then((value) => {
+        if(value){
+          refFirebase.child(id).remove();
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      })
+      
     },
+    
+    
   },
 };
 </script>

@@ -20,6 +20,7 @@
               v-model="teacher.username"
               error="teste"
               rules="required"
+              required
             >
             </base-input>
           </b-col>
@@ -29,7 +30,7 @@
               type="text"
               label="Matricula *"
               placeholder="Ex.: SIAPE "
-              v-model="teacher.registration"
+              v-model="teacher.coordination"
               name="Matricula"
               required
             >
@@ -91,6 +92,7 @@ export default {
         registration: "",
         email: "",
         occupationArea: "",
+        coordination: ""
       },
       
     };
@@ -132,6 +134,7 @@ export default {
         matricula: this.teacher.registration,
         email: this.teacher.email,
         area_de_ocupacao: this.teacher.occupationArea,
+        cordenação: this.teacher.coordination,
         createdAt: new Date().getTime(),
       };
       if (!this.checkFormValidity()) {
