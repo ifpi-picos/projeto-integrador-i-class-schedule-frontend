@@ -30,7 +30,7 @@
               type="text"
               label="Matricula *"
               placeholder="Ex.: SIAPE "
-              v-model="teacher.coordination"
+              v-model="teacher.registration"
               name="Matricula"
               required
             >
@@ -58,7 +58,7 @@
 
         <b-row>
           <b-col lg="6">
-            <base-input label="Área de atuação *">
+            <base-input label="Área de atuação *" required >
               <select v-model="teacher.occupationArea" class="form-control">
                 <option>1</option>
                 <option>2</option>
@@ -68,8 +68,8 @@
           </b-col>
 
           <b-col lg="6">
-            <base-input label="Cordenação *" required>
-              <select v-model="teacher.registration" class="form-control">
+            <base-input label="cordenacao *" required>
+              <select v-model="teacher.coordination" class="form-control">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -134,12 +134,13 @@ export default {
         matricula: this.teacher.registration,
         email: this.teacher.email,
         area_de_ocupacao: this.teacher.occupationArea,
-        cordenação: this.teacher.coordination,
+        cordenacao: this.teacher.coordination,
         createdAt: new Date().getTime(),
       };
       if (!this.checkFormValidity()) {
           return
       }
+
       refFirebase.child(id).set(payload, (error) => {
         if (error) {
           console.log(error);
@@ -161,6 +162,7 @@ export default {
           this.teacher.registration = data.matricula
           this.teacher.email = data.email
           this.teacher.occupationArea = data.area_de_ocupacao
+          this.teacher.coordination= data.cordenacao
         })
       }
     }

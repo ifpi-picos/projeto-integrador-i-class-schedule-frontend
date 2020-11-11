@@ -92,7 +92,7 @@
           <badge class="badge-dot mr-4" type="">
             <i :class="`bg-${row.statusType}`"></i>
             <span class="status" :class="`text-${row.statusType}`">{{
-              row.area_de_ocupacao
+              row.cordenacao
             }}</span>
           </badge>
         </template>
@@ -111,7 +111,7 @@
         </div>
       </el-table-column>
 
-      <el-table-column label="Ações" prop="completion" min-width="140px">
+      <el-table-column label="Ações" min-width="140px">
         <template v-slot="{ row }">
           <div class="d-flex align-items-center">
             <b-button
@@ -132,7 +132,6 @@
       </el-table-column>
     </el-table>
     <teacher-form idModal="modalEdit" :idTeacher="teacherId" />
-
   </div>
 </template>
 
@@ -164,11 +163,9 @@ export default {
         .ref("professores")
         .on("value", (data) => {
           let teachers = data.val();
-          const teacherArray = [];
-
-          Object.keys(teachers).forEach((item) => {
-            teacherArray.push(teachers[item]);
-          });
+          const teacherArray = Object.keys(teachers).map(
+            (item) => teachers[item]
+          );
           console.log(teacherArray);
           this.teachers = teacherArray;
         });
@@ -179,33 +176,30 @@ export default {
       this.$root.$emit("bv::show::modal", "modalEdit", button);
     },
     delTeacher(id) {
-      
       const refFirebase = this.$firebase.database().ref("professores");
-      
-     this.$bvModal.msgBoxConfirm('Tem certeza que deseja deletar?', {
-          title: 'Confirmação',
-          size: 'sm',
-          buttonSize: 'sm',
-          okVariant: 'danger',
-          cancelVariant: 'primary',
-          headerClass: 'p-2 border-bottom-0',
-          footerClass: 'p-2 border-top-0',
+
+      this.$bvModal
+        .msgBoxConfirm("Tem certeza que deseja deletar?", {
+          title: "Confirmação",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "danger",
+          cancelVariant: "primary",
+          headerClass: "p-2 border-bottom-0",
+          footerClass: "p-2 border-top-0",
           centered: true,
-          okTitle: 'Sim',
-          cancelTitle: 'Não'
-      })
-      .then((value) => {
-        if(value){
-          refFirebase.child(id).remove();
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      })
-      
+          okTitle: "Sim",
+          cancelTitle: "Não",
+        })
+        .then((value) => {
+          if (value) {
+            refFirebase.child(id).remove();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
-    
-    
   },
 };
 </script>
