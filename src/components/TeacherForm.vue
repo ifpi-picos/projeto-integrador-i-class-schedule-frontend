@@ -50,17 +50,12 @@
           </b-col>
         </b-row>
 
-        <!--hr class="my-4" />
-
-        <h6 class="heading-small text-muted mb-4">
-          Informações sobre o docente
-        </h6-->
 
         <b-row>
           <b-col lg="6">
             <base-input label="Área de atuação" required >
               <select v-model="teacher.occupationArea" class="form-control">
-                <option>1</option>
+                <option>Informatica</option>
                 <option>2</option>
                 <option>3</option>
               </select>
@@ -70,7 +65,7 @@
           <b-col lg="6">
             <base-input label="cordenacao" required>
               <select v-model="teacher.coordination" class="form-control">
-                <option>1</option>
+                <option>Cordenação ADS</option>
                 <option>2</option>
                 <option>3</option>
               </select>
@@ -121,7 +116,6 @@ export default {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
-      this.checkFormValidity();
       this.handleSubmit();
     },
     handleSubmit() {
@@ -142,6 +136,7 @@ export default {
       }
 
       refFirebase.child(id).set(payload, (error) => {
+        //this.$refs[this.idModal].okDisabled = true; 
         if (error) {
           console.log(error);
         } else {
