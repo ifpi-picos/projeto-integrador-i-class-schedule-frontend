@@ -19,6 +19,7 @@
             </b-col>
           </b-row>
         </b-card-header>
+        <b-card-body class="p-0"> <class-list /> </b-card-body>
       </b-card>
     </b-container>
   </div>
