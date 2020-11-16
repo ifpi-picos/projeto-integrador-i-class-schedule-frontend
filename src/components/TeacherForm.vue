@@ -5,7 +5,7 @@
     centered
     :id="idModal"
     :ref="idModal"
-    title="Novo Professor"
+    :title="title"
   >
     <b-form ref="form" @submit.stop.prevent="handleSubmit">
       <h6 class="heading-small text-muted mb-4">Cadastro de professores</h6>
@@ -104,6 +104,11 @@ export default {
       default: "",
       description:
         "id do professor que vai ser atualizado"
+    },
+    title: {
+      type: String,
+      description:
+        "titulo do modal"
     }
   },
   methods: {

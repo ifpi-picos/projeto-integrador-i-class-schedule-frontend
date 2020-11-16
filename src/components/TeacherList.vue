@@ -87,14 +87,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Turmas" min-width="170px" prop="status">
+      <el-table-column label="Turmas" min-width="170px">
         <template v-slot="{ row }">
-          <badge class="badge-dot mr-4" type="">
-            <i :class="`bg-${row.statusType}`"></i>
-            <span class="status" :class="`text-${row.statusType}`">{{
-              row.cordenacao
-            }}</span>
-          </badge>
+          <b-media no-body class="align-items-center">
+            <b-media-body>
+              <span>1</span>
+            </b-media-body>
+          </b-media>
         </template>
       </el-table-column>
 
@@ -131,7 +130,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <teacher-form idModal="modalEdit" :idTeacher="teacherId" />
+    <teacher-form idModal="modalEdit" :idTeacher="teacherId" title="Atulaizar Professor" />
   </div>
 </template>
 
