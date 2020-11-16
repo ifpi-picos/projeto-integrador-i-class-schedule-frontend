@@ -12,7 +12,7 @@
 
       <div class="pl-lg-4">
         <b-row>
-          <b-col lg="6">
+          <b-col lg="10">
             <base-input
               type="text"
               label="Nome da turma"
@@ -24,7 +24,9 @@
             >
             </base-input>
           </b-col>
+        </b-row>
 
+        <b-row>
           <b-col lg="6">
             <base-input
               type="text"
@@ -33,6 +35,18 @@
               v-model="clas.course"
               name="Curso"
               required
+            >
+            </base-input>
+          </b-col>
+
+          <b-col lg="4">
+            <base-input
+            type="number"
+            label="Módulo"
+            placeholder="3"
+            v-model="clas.module"
+            name="modulo" 
+            required
             >
             </base-input>
           </b-col>
@@ -63,6 +77,7 @@ export default {
       clas: {
         username: "",
         course: "",
+        module: "",
         location: "",
       },
     };
@@ -100,6 +115,7 @@ export default {
         id,
         nome: this.clas.username,
         curso: this.clas.course,
+        modulo: this.clas.module,
         local: this.clas.location,
         createdAt: new Date().getTime(),
       };
@@ -121,3 +137,5 @@ export default {
   },
 };
 </script>
+
+<style> </style>
