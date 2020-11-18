@@ -98,16 +98,13 @@
       </el-table-column>
 
       <el-table-column label="Disciplinas" min-width="150px">
-        <div class="avatar-group">
-          <a
-            href="#"
-            class="avatar avatar-sm rounded-circle"
-            data-toggle="tooltip"
-            data-original-title="Ryan Tompson"
-          >
-            <img alt="Image placeholder" src="img/theme/team-1.jpg" />
-          </a>
-        </div>
+       <template v-slot="{ row }">
+          <b-media no-body class="align-items-center">
+            <b-media-body>
+              <span>4</span>
+            </b-media-body>
+          </b-media>
+        </template>
       </el-table-column>
 
       <el-table-column label="Ações" min-width="140px">
