@@ -12,7 +12,7 @@
 
       <div class="pl-lg-4">
         <b-row>
-          <b-col lg="10">
+          <b-col lg="7">
             <base-input
               type="text"
               label="Nome da turma"
@@ -24,6 +24,17 @@
             >
             </base-input>
           </b-col>
+        
+          <b-col lg="3">
+            <base-input label="Turno" required>
+                <select v-model="clas.shift" class="form-control">
+                  <option >Manhã</option>
+                  <option >Tarde</option>
+                  <option >Noite</option>
+                </select>
+            </base-input>
+          </b-col>
+
         </b-row>
 
         <b-row>
@@ -54,12 +65,22 @@
 
         <b-row>
           <b-col lg="6">
-            <base-input label="Local da aula">
+            <base-input label="Sala" required>
               <select v-model="clas.location" class="form-control">
                 <option>Local 1</option>
                 <option>Local 2</option>
                 <option>Local 3</option>
                 <option>Local 4</option>
+              </select>
+            </base-input>
+          </b-col>
+
+          <b-col lg="4">
+            <base-input label="Horário" required>
+              <select v-model="clas.houer" class="form-control" >
+                <option >7:00 - 17:30</option>
+                <option >13:00 - 18:00</option>
+                <option >18:00 - 22:00</option>
               </select>
             </base-input>
           </b-col>
@@ -76,9 +97,11 @@ export default {
     return {
       clas: {
         username: "",
+        shift: "",
         course: "",
         module: "",
         location: "",
+        houer: "",
       },
     };
   },
@@ -114,9 +137,11 @@ export default {
       const payload = {
         id,
         nome: this.clas.username,
+        turno: this.clas.shift,
         curso: this.clas.course,
         modulo: this.clas.module,
         local: this.clas.location,
+        horario: this.clas.houer,
         createdAt: new Date().getTime(),
       };
       if (!this.checkFormValidity()) {

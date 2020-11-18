@@ -63,7 +63,7 @@
       header-row-class-name="thead-light"
       :data="clas"
     >
-      <el-table-column label="Turma" min-width="310px" prop="name">
+      <el-table-column label="Turma" min-width="210px" prop="name">
         <template v-slot="{ row }">
           <b-media no-body class="align-items-center">
             <b-media-body>
@@ -87,19 +87,19 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Módulo" prop="budget" min-width="180px">
+      <el-table-column label="Módulo" prop="budget" min-width="130px">
         <template v-slot="{ row }">
           <b-media no-body class="align-items-center">
             <b-media-body>
               <span class="font-weight-600 name mb-0 text-sm">{{
-                row.module
+                row.modulo
               }}</span>
             </b-media-body>
           </b-media>
         </template>
       </el-table-column>
 
-      <el-table-column label="Local da aula" min-width="170px" prop="status">
+      <el-table-column label="Sala" min-width="130px" prop="status">
         <template v-slot="{ row }">
           <b-media no-body class="align-items-center">
             <b-media-body>
@@ -111,7 +111,32 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Ações" min-width="140px">
+      <el-table-column label="Turno" min-width="130px" prop="status">
+        <template v-slot="{ row }">
+          <b-media no-body class="align-items-center">
+            <b-media-body>
+              <span class="font-weight-600 name mb-0 text-sm">{{
+                row.turno
+              }}</span>
+            </b-media-body>
+          </b-media>         
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Horário" min-width="160px" prop="status">
+        <template v-slot="{ row }">
+          <b-media no-body class="align-items-center">
+            <b-media-body>
+              <span class="font-weight-600 name mb-0 text-sm">{{
+                row.horario  
+              }}</span>
+            </b-media-body>
+          </b-media>           
+        </template>
+      </el-table-column>
+
+
+      <el-table-column label="Ações" min-width="130px">
         <template v-slot="{ row }">
           <div class="d-flex align-items-center">
             <b-button @click="editClas(row.id)" variant="outline-dark" size="sm"
