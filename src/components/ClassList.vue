@@ -99,7 +99,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Sala" min-width="130px" prop="status">
+      <el-table-column label="Sala" min-width="130px">
         <template v-slot="{ row }">
           <b-media no-body class="align-items-center">
             <b-media-body>

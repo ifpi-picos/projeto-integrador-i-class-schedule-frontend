@@ -2,7 +2,7 @@
   <b-modal
     @ok="handleOk"
     size="lg"
-    centered
+    centered   
     :id="idModal"
     :ref="idModal"
     :title="title"
@@ -18,8 +18,6 @@
               label="Nome"
               placeholder="Nome"
               v-model="teacher.username"
-              error="teste"
-              rules="required"
               required
             >
             </base-input>
@@ -170,6 +168,9 @@ export default {
   watch: {
     idTeacher(){
       this.fillForm()
+    },
+    teacher(){
+      this.checkFormValidity()
     }
   }
 };
