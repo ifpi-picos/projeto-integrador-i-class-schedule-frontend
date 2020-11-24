@@ -28,6 +28,14 @@
           }"
         >
         </sidebar-item>
+        <sidebar-item
+          :link="{
+            name: 'Salas',
+            path: '/salas',
+            icon: 'fas fa-university text-pink'
+          }"
+        >
+        </sidebar-item>
         <!--  <sidebar-item
           :link="{
             name: 'Icons',
@@ -108,16 +116,16 @@
         </b-nav>
       </template>
     </side-bar>
-    <div class="main-content">
+    <div class="main-content d-flex flex-column min-vh-100">
       <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>
 
-      <div @click="$sidebar.displaySidebar(false)">
-        <fade-transition :duration="200" origin="center top" mode="out-in">
+      <div @click="$sidebar.displaySidebar(false)" class="flex-grow-1">
+        <fade-transition :duration="200" origin="center top" mode="out-in" >
           <!-- your content here -->
           <router-view></router-view>
         </fade-transition>
       </div>
-      <content-footer v-if="!$route.meta.hideFooter"></content-footer>
+      <content-footer v-if="!$route.meta.hideFooter" class="position-relative container-fluid"></content-footer>
     </div>
   </div>
 </template>

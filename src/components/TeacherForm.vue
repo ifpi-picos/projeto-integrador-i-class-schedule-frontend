@@ -61,9 +61,9 @@
           </b-col>
 
           <b-col lg="6">
-            <base-input label="cordenacao" required>
+            <base-input label="Coordenação" required>
               <select v-model="teacher.coordination" class="form-control">
-                <option>Cordenação ADS</option>
+                <option>Coordenação ADS</option>
                 <option>2</option>
                 <option>3</option>
               </select>
@@ -131,7 +131,7 @@ export default {
         matricula: this.teacher.registration,
         email: this.teacher.email,
         area_de_ocupacao: this.teacher.occupationArea,
-        cordenacao: this.teacher.coordination,
+        coordenacao: this.teacher.coordination,
         createdAt: new Date().getTime(),
       };
       if (!this.checkFormValidity()) {
@@ -160,7 +160,7 @@ export default {
           this.teacher.registration = data.matricula
           this.teacher.email = data.email
           this.teacher.occupationArea = data.area_de_ocupacao
-          this.teacher.coordination= data.cordenacao
+          this.teacher.coordination= data.coordenacao
         })
       }
     }
