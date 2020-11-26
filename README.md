@@ -1,4 +1,8 @@
-# projeto-empty-coffee-cups
+#Visão geral do sistema
+
+O produto inicialmente tem como objetivo, facilitar o processo de Manter rofessores, disciplinas e carga horária do instituto federal campus picos(IFPI). Além disso, o mesmo possibilitara a gestão e distribuição de aulas e horários de cada professor. Tudo isso agregado em um sistema bonito, descomplicado e rápido.
+
+Em um futuro próximo receberá mais funcionalidades a fim de acelerar todo o processo descrito acima, que, segundo o diretor de ensino do IFPI-Picos “leva cerca de uma semana para preencher tudo”.
 
 ## Project setup
 ```
