@@ -1,12 +1,12 @@
 <template>
    <div>
     <el-table
-      v-if="teachers"
+      v-if="rooms"
       class="table-responsive table"
       header-row-class-name="thead-light"
-      :data="teachers"
+      :data="rooms"
     >
-      <el-table-column label="Professor" min-width="310px" prop="name">
+      <el-table-column label="Sala" min-width="310px">
         <template v-slot="{ row }">
           <b-media no-body class="align-items-center">
             <b-media-body>
@@ -18,33 +18,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Area de Atuação" prop="budget" min-width="180px">
+      <el-table-column label="Turmas" prop="budget" min-width="180px">
         <template v-slot="{ row }">
           <b-media no-body class="align-items-center">
             <b-media-body>
-              <span class="font-weight-600 name mb-0 text-sm">{{
-                row.area_de_ocupacao
-              }}</span>
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Turmas" min-width="170px">
-        <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
-            <b-media-body>
-              <span>1</span>
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Disciplinas" min-width="150px">
-       <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
-            <b-media-body>
-              <span>4</span>
+              <span class="font-weight-600 name mb-0 text-sm">
+                4
+              </span>
             </b-media-body>
           </b-media>
         </template>
@@ -54,14 +34,14 @@
         <template v-slot="{ row }">
           <div class="d-flex align-items-center">
             <b-button
-              @click="editTeacher(row.id)"
+              @click="editroom(row.id)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
             ></b-button>
 
             <b-button
-              @click="delTeacher(row.id, $event.target)"
+              @click="delroom(row.id, $event.target)"
               variant="outline-danger"
               size="sm"
               ><i class="fas fa-trash"></i
@@ -71,51 +51,51 @@
       </el-table-column>
     </el-table>
     
-    <teacher-form idModal="modalEdit" :idTeacher="teacherId" title="Atulaizar Professor" />
+    <room-form idModal="modalEdit" :idroom="roomId" title="Atulaizar Sala" />
   </div>
 </template>
 
 <script>
 import { Table, TableColumn } from "element-ui";
-import TeacherForm from "./TeacherForm.vue";
+import RoomForm from './RoomForm.vue';
 
 export default {
-  name: "TeacherList",
+  name: "roomList",
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
-    TeacherForm,
+    RoomForm
   },
 
   data() {
     return {
-      teacherId: "",
-      teachers: "",
+      roomId: "",
+      rooms: "",
     };
   },
   created() {
-    this.getTeachers();
+    this.getRooms();
   },
   methods: {
-    async getTeachers() {
+    async getRooms() {
       await this.$firebase
         .database()
-        .ref("professores")
+        .ref("salas")
         .on("value", (data) => {
-          let teachers = data.val();
-          const teacherArray = Object.keys(teachers).map(
-            (item) => teachers[item]
+          let rooms = data.val();
+          const roomArray = Object.keys(rooms).map(
+            (item) => rooms[item]
           );
-          console.log(teacherArray);
-          this.teachers = teacherArray;
+          console.log(roomArray);
+          this.rooms = roomArray;
         });
     },
-    editTeacher(id, button) {
-      this.teacherId = id;
+    editroom(id, button) {
+      this.roomId = id;
       //this.$refs.modaledit.show();
       this.$root.$emit("bv::show::modal", "modalEdit", button);
     },
-    delTeacher(id) {
+    delroom(id) {
       const refFirebase = this.$firebase.database().ref("professores");
 
       this.$bvModal

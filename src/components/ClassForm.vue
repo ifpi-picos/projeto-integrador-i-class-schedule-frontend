@@ -25,7 +25,7 @@
             </base-input>
           </b-col>
         
-          <b-col lg="3">
+          <b-col lg="4">
             <base-input label="Turno" required>
                 <select v-model="clas.shift" class="form-control">
                   <option >Manhã</option>
@@ -50,7 +50,7 @@
             </base-input>
           </b-col>
 
-          <b-col lg="4">
+          <b-col lg="5">
             <base-input
             type="number"
             label="Módulo"
@@ -75,7 +75,7 @@
             </base-input>
           </b-col>
 
-          <b-col lg="4">
+          <b-col lg="5">
             <base-input label="Horário" required>
               <select v-model="clas.houer" class="form-control" >
                 <option >7:00 - 17:30</option>
