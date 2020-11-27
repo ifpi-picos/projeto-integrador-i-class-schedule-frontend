@@ -91,6 +91,7 @@
 </template>
 
 <script>
+import db from "../fb";
 export default {
   name: "ClassForm",
   data() {
@@ -131,11 +132,10 @@ export default {
       this.handleSubmit();
     },
     handleSubmit() {
-      const refFirebase = this.$firebase.database().ref("turmas");
-      const id = this.idClas ? this.idClas : refFirebase.push().key;
+      // const refFirebase = this.$firebase.database().ref("turmas");
+      // const id = this.idClas ? this.idClas : refFirebase.push().key;
 
       const payload = {
-        id,
         nome: this.clas.username,
         turno: this.clas.shift,
         curso: this.clas.course,
@@ -148,19 +148,22 @@ export default {
         return;
       }
 
-      refFirebase.child(id).set(payload, (error) => {
-        if (error) {
-          console.log(error);
-        } else {
-          this.$refs[this.idModal].hide();
-          if (!this.idClas) {
-            this.clas = {};
-          }
-        }
-      });
+      db.collection("turmas").add(payload).then(() =>{
+        console.log("foi")
+      })
+      // refFirebase.child(id).set(payload, (error) => {
+      //   if (error) {
+      //     console.log(error);
+      //   } else {
+      //     this.$refs[this.idModal].hide();
+      //     if (!this.idClas) {
+      //       this.clas = {};
+      //     }
+      //   }
+      // });
     },
   },
 };
 </script>
 
-<style> </style>
+<style></style>
