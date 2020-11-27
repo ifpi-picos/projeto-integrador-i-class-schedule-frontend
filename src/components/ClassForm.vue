@@ -24,17 +24,16 @@
             >
             </base-input>
           </b-col>
-        
+
           <b-col lg="4">
             <base-input label="Turno" required>
-                <select v-model="clas.shift" class="form-control">
-                  <option >Manhã</option>
-                  <option >Tarde</option>
-                  <option >Noite</option>
-                </select>
+              <select v-model="clas.shift" class="form-control">
+                <option>Manhã</option>
+                <option>Tarde</option>
+                <option>Noite</option>
+              </select>
             </base-input>
           </b-col>
-
         </b-row>
 
         <b-row>
@@ -52,12 +51,12 @@
 
           <b-col lg="5">
             <base-input
-            type="number"
-            label="Módulo"
-            placeholder="3"
-            v-model="clas.module"
-            name="modulo" 
-            required
+              type="number"
+              label="Módulo"
+              placeholder="3"
+              v-model="clas.module"
+              name="modulo"
+              required
             >
             </base-input>
           </b-col>
@@ -77,10 +76,10 @@
 
           <b-col lg="5">
             <base-input label="Horário" required>
-              <select v-model="clas.houer" class="form-control" >
-                <option >7:00 - 17:30</option>
-                <option >13:00 - 18:00</option>
-                <option >18:00 - 22:00</option>
+              <select v-model="clas.houer" class="form-control">
+                <option>7:00 - 17:30</option>
+                <option>13:00 - 18:00</option>
+                <option>18:00 - 22:00</option>
               </select>
             </base-input>
           </b-col>
@@ -91,48 +90,46 @@
 </template>
 
 <script>
-import db from "../fb";
 export default {
-  name: "ClassForm",
-  data() {
+  name: 'ClassForm',
+  data () {
     return {
       clas: {
-        username: "",
-        shift: "",
-        course: "",
-        module: "",
-        location: "",
-        houer: "",
-      },
-    };
+        username: '',
+        shift: '',
+        course: '',
+        module: '',
+        location: '',
+        houer: ''
+      }
+    }
   },
   props: {
     idModal: {
       type: String,
-      default: "",
-      description: "referencia do modal",
+      default: '',
+      description: 'referencia do modal'
     },
     idClas: {
       type: String,
-      default: "",
-      description: "id da turma que vai ser atualizado",
-    },
+      default: '',
+      description: 'id da turma que vai ser atualizado'
+    }
   },
   methods: {
-    checkFormValidity() {
-      const valid = this.$refs.form.checkValidity();
-      console.log(valid);
-      return valid;
+    checkFormValidity () {
+      const valid = this.$refs.form.checkValidity()
+      console.log(valid)
+      return valid
     },
-    handleOk(bvModalEvt) {
+    handleOk (bvModalEvt) {
       // Prevent modal from closing
-      bvModalEvt.preventDefault();
+      bvModalEvt.preventDefault()
       // Trigger submit handler
-      this.checkFormValidity();
-      this.handleSubmit();
+      this.checkFormValidity()
+      this.handleSubmit()
     },
-    handleSubmit() {
-      // const refFirebase = this.$firebase.database().ref("turmas");
+    handleSubmit () {
       // const id = this.idClas ? this.idClas : refFirebase.push().key;
 
       const payload = {
@@ -142,28 +139,23 @@ export default {
         modulo: this.clas.module,
         local: this.clas.location,
         horario: this.clas.houer,
-        createdAt: new Date().getTime(),
-      };
+        createdAt: new Date().getTime()
+      }
       if (!this.checkFormValidity()) {
-        return;
+        return
       }
 
-      db.collection("turmas").add(payload).then(() =>{
-        console.log("foi")
-      })
-      // refFirebase.child(id).set(payload, (error) => {
-      //   if (error) {
-      //     console.log(error);
-      //   } else {
-      //     this.$refs[this.idModal].hide();
-      //     if (!this.idClas) {
-      //       this.clas = {};
-      //     }
-      //   }
-      // });
-    },
-  },
-};
+      this.$firebase
+        .firestore()
+        .collection('turmas')
+        .add(payload)
+        .then(() => {
+          console.log('foi')
+        })
+        .catch(error => console.error(error))
+    }
+  }
+}
 </script>
 
 <style></style>

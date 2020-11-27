@@ -1,67 +1,10 @@
 <template>
-  <!-- <el-table
-    class="table-responsive table"
-    header-row-class-name="thead-light"
-    :data="projects"
-  >
-    <el-table-column label="Professor" min-width="310px" prop="name">
-      <template v-slot="{ row }">
-        <b-media no-body class="align-items-center">
-          <a href="#" class="avatar rounded-circle mr-3">
-            <img alt="Image placeholder" :src="row.img" />
-          </a>
-          <b-media-body>
-            <span class="font-weight-600 name mb-0 text-sm">{{
-              row.title
-            }}</span>
-          </b-media-body>
-        </b-media>
-      </template>
-    </el-table-column>
-    <el-table-column label="Area de Atuação" prop="budget" min-width="180px">
-    </el-table-column>
-
-    <el-table-column label="Turmas" min-width="170px" prop="status">
-      <template v-slot="{ row }">
-        <badge class="badge-dot mr-4" type="">
-          <i :class="`bg-${row.statusType}`"></i>
-          <span class="status" :class="`text-${row.statusType}`">{{
-            row.status
-          }}</span>
-        </badge>
-      </template>
-    </el-table-column>
-
-    <el-table-column label="Disciplinas" min-width="150px">
-      <div class="avatar-group">
-        <a
-          href="#"
-          class="avatar avatar-sm rounded-circle"
-          data-toggle="tooltip"
-          data-original-title="Ryan Tompson"
-        >
-          <img alt="Image placeholder" src="img/theme/team-1.jpg" />
-        </a>
-      </div>
-    </el-table-column>
-
-    <el-table-column label="Ações" prop="completion" min-width="140px">
-      <template v-slot="{ row }">
-        <div class="d-flex align-items-center">
-          <span class="completion mr-2">{{ row.completion }}%</span>
-          <div>
-            <base-progress :type="row.statusType" :value="row.completion" />
-          </div>
-        </div>
-      </template>
-    </el-table-column>
-  </el-table> -->
   <div>
     <el-table
-      v-if="clas"
+      v-if="classes"
       class="table-responsive table"
       header-row-class-name="thead-light"
-      :data="clas"
+      :data="classes"
     >
       <el-table-column label="Turma" min-width="210px" prop="name">
         <template v-slot="{ row }">
@@ -119,7 +62,7 @@
                 row.turno
               }}</span>
             </b-media-body>
-          </b-media>         
+          </b-media>
         </template>
       </el-table-column>
 
@@ -128,13 +71,12 @@
           <b-media no-body class="align-items-center">
             <b-media-body>
               <span class="font-weight-600 name mb-0 text-sm">{{
-                row.horario  
+                row.horario
               }}</span>
             </b-media-body>
-          </b-media>           
+          </b-media>
         </template>
       </el-table-column>
-
 
       <el-table-column label="Ações" min-width="130px">
         <template v-slot="{ row }">
@@ -158,70 +100,97 @@
 </template>
 
 <script>
-import { Table, TableColumn } from "element-ui";
-import ClassForm from "./ClassForm.vue";
+import { Table, TableColumn } from 'element-ui'
+import ClassForm from './ClassForm.vue'
 
 export default {
-  name: "ClassList",
+  name: 'ClassList',
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
-    ClassForm,
+    ClassForm
   },
 
-  data() {
+  data () {
     return {
-      clasId: "",
-      clas: "",
-    };
+      clasId: '',
+      classes: []
+    }
   },
-  created() {
-    this.getClas();
+  created () {
+    this.getClassesOnChange()
   },
   methods: {
-    async getClas() {
-      await this.$firebase
-        .database()
-        .ref("turmas")
-        .on("value", (data) => {
-          let clas = data.val();
-          const clasArray = Object.keys(clas).map((item) => clas[item]);
-          console.log(clasArray);
-          this.clas = clasArray;
-        });
+    async getClasses () {
+      this.$firebase
+        .firestore()
+        .collection('turmas')
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            const classRom = doc.data()
+            classRom.id = doc.id
+            this.classes.push(classRom)
+          })
+        })
+        .catch(function (error) {
+          console.log('Error getting documents: ', error)
+        })
     },
-    editClas(id, button) {
-      this.clasId = id;
+
+    getClassesOnChange () {
+      this.$firebase
+        .firestore()
+        .collection('turmas')
+        .onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(change => {
+            if (change.type === 'added') {
+              const classRom = change.doc.data()
+              classRom.id = change.doc.id
+              this.classes.push(classRom)
+            }
+            if (change.type === 'modified') {
+              console.log('Modified city: ', change.doc.data())
+            }
+            if (change.type === 'removed') {
+              console.log('Removed city: ', change.doc.data())
+            }
+          })
+        })
+    },
+
+    editClas (id, button) {
+      this.clasId = id
       //this.$refs.modaledit.show();
-      this.$root.$emit("bv::show::modal", "modalEdit", button);
+      this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
-    delClas(id) {
-      const refFirebase = this.$firebase.database().ref("turmas");
+    delClas (id) {
+      const refFirebase = this.$firebase.database().ref('turmas')
 
       this.$bvModal
-        .msgBoxConfirm("Tem certeza que deseja deletar?", {
-          title: "Confirmação",
-          size: "sm",
-          buttonSize: "sm",
-          okVariant: "danger",
-          cancelVariant: "primary",
-          headerClass: "p-2 border-bottom-0",
-          footerClass: "p-2 border-top-0",
+        .msgBoxConfirm('Tem certeza que deseja deletar?', {
+          title: 'Confirmação',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          cancelVariant: 'primary',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
           centered: true,
-          okTitle: "Sim",
-          cancelTitle: "Não",
+          okTitle: 'Sim',
+          cancelTitle: 'Não'
         })
-        .then((value) => {
+        .then(value => {
           if (value) {
-            refFirebase.child(id).remove();
+            refFirebase.child(id).remove()
           }
         })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-  },
-};
+        .catch(e => {
+          console.log(e)
+        })
+    }
+  }
+}
 </script>
 
 <style scoped></style>

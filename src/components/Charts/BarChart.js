@@ -1,8 +1,8 @@
-import { Bar, mixins } from "vue-chartjs";
-import globalOptionsMixin from "@/components/Charts/globalOptionsMixin";
+import { Bar, mixins } from 'vue-chartjs'
+import globalOptionsMixin from '@/components/Charts/globalOptionsMixin'
 
 export default {
-  name: "bar-chart",
+  name: 'bar-chart',
   extends: Bar,
   mixins: [mixins.reactiveProp, globalOptionsMixin],
   props: {
@@ -11,20 +11,20 @@ export default {
       default: () => ({})
     }
   },
-  data() {
+  data () {
     return {
       ctx: null
-    };
+    }
   },
-  mounted() {
+  mounted () {
     this.$watch(
-      "chartData",
+      'chartData',
       (newVal, oldVal) => {
         if (!oldVal) {
-          this.renderChart(this.chartData, this.extraOptions);
+          this.renderChart(this.chartData, this.extraOptions)
         }
       },
       { immediate: true }
-    );
+    )
   }
-};
+}
