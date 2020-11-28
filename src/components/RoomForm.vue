@@ -72,50 +72,45 @@ export default {
       this.handleSubmit();
     },
     handleSubmit() {
-      const refFirebase = this.$firebase.database().ref("salas");
-      const id = this.idroom? this.idroom : refFirebase.push().key;
+      // const refFirebase = this.$firebase.database().ref("salas");
+      // const id = this.idroom? this.idroom : refFirebase.push().key;
 
       const payload = {
-        id,
         nome: this.room.name,
         createdAt: new Date().getTime(),
       };
       if (!this.checkFormValidity()) {
           return
       }
-
-      refFirebase.child(id).set(payload, (error) => {
-        //this.$refs[this.idModal].okDisabled = true; 
-        if (error) {
-          console.log(error);
-        } else {
-          this.$refs[this.idModal].hide();
-          if(!this.idroom){
-            this.room = {}
-          }
-        }
-      });
-    },
-     async fillForm(){
-      
-      if(this.idroom){
-        const refFirebase = this.$firebase.database().ref(`salas`)
-        await refFirebase.on('value', (snapshot) => {
-          const data = snapshot.child(this.idroom).val();
-          this.room.name = data.nome 
-        })
-      }
-    }
-  },
-  watch: {
-    idroom(){
-      this.fillForm()
-    },
-    room(){
-      this.checkFormValidity()
+  
+      this.$firebase
+      .firestore()
+      .collection('salas')
+      .add(payload)
+      .then(() => {
+        console.log('foi')
+      }).catch(error => console.error(error))
     }
   }
-};
+}
+  //    async fillForm(){
+      
+  //     if(this.idroom){
+  //       const refFirebase = this.$firebase.database().ref(`salas`)
+  //       await refFirebase.on('value', (snapshot) => {
+  //         const data = snapshot.child(this.idroom).val();
+  //         this.room.name = data.nome 
+  //       })
+  //     }
+  //   }
+  //  },
+  //   watch: {
+  //     idroom(){
+  //       this.fillForm()
+  //     },
+  //     room(){
+  //       this.checkFormValidity()
+  //     }
 </script>
 
 <style></style>

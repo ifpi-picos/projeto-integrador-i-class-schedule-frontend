@@ -122,11 +122,8 @@ export default {
       this.handleSubmit();
     },
     handleSubmit() {
-      const refFirebase = this.$firebase.database().ref("professores");
-      const id = this.idTeacher? this.idTeacher : refFirebase.push().key;
 
       const payload = {
-        id,
         nome: this.teacher.username,
         matricula: this.teacher.registration,
         email: this.teacher.email,
@@ -138,41 +135,38 @@ export default {
           return
       }
 
-      refFirebase.child(id).set(payload, (error) => {
-        //this.$refs[this.idModal].okDisabled = true; 
-        if (error) {
-          console.log(error);
-        } else {
-          this.$refs[this.idModal].hide();
-          if(!this.idTeacher){
-            this.teacher = {}
-          }
-        }
-      });
+     this.$firebase
+     .firestore()
+     .collection('professores')
+     .add(payload)
+     .then(() => {
+       console.log('foi')
+     })
+     .catch(error => console.error(error))
     },
-     async fillForm(){
+    // async fillForm(){
       
-      if(this.idTeacher){
-        const refFirebase = this.$firebase.database().ref(`professores`)
-        await refFirebase.on('value', (snapshot) => {
-          const data = snapshot.child(this.idTeacher).val();
-          this.teacher.username = data.nome 
-          this.teacher.registration = data.matricula
-          this.teacher.email = data.email
-          this.teacher.occupationArea = data.area_de_ocupacao
-          this.teacher.coordination= data.coordenacao
-        })
-      }
-    }
+    //   if(this.idTeacher){
+    //     const refFirebase = this.$firebase.database().ref(`professores`)
+    //     await refFirebase.on('value', (snapshot) => {
+    //       const data = snapshot.child(this.idTeacher).val();
+    //       this.teacher.username = data.nome 
+    //       this.teacher.registration = data.matricula
+    //       this.teacher.email = data.email
+    //       this.teacher.occupationArea = data.area_de_ocupacao
+    //       this.teacher.coordination= data.coordenacao
+    //     })
+    //   }
+    // }
   },
-  watch: {
-    idTeacher(){
-      this.fillForm()
-    },
-    teacher(){
-      this.checkFormValidity()
-    }
-  }
+  // watch: {
+  //   idTeacher(){
+  //     this.fillForm()
+  //   },
+  //   teacher(){
+  //     this.checkFormValidity()
+  //   }
+  // }
 };
 </script>
 
