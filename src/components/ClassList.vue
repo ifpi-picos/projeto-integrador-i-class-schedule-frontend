@@ -54,7 +54,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Turno" min-width="130px" prop="status">
+      <!-- <el-table-column label="Turno" min-width="130px" prop="status">
         <template v-slot="{ row }">
           <b-media no-body class="align-items-center">
             <b-media-body>
@@ -64,7 +64,7 @@
             </b-media-body>
           </b-media>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column label="Horário" min-width="160px" prop="status">
         <template v-slot="{ row }">
@@ -78,7 +78,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Ações" min-width="130px">
+      <el-table-column label="Ações" min-width="120px">
         <template v-slot="{ row }">
           <div class="d-flex align-items-center">
             <b-button @click="editClas(row.id)" variant="outline-dark" size="sm"
