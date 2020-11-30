@@ -111,17 +111,6 @@ export default {
             return doc.data().name
           })
         })
-      // this.$firebase
-      //   .database()
-      //   .ref("professores")
-      //   .on("value", (data) => {
-      //     let teachers = data.val();
-      //     const teacherArray = Object.keys(teachers).map(
-      //       (item) => teachers[item]
-      //     );
-      //     console.log(teacherArray);
-      //     this.teachers = teacherArray;
-      //   });
     },
     editTeacher (id, button) {
       this.teacherId = id
