@@ -85,7 +85,7 @@ export default {
               room.id = change.doc.id
               this.rooms.push(room)
             }
-            if (change.type === 'modifeid') {
+            if (change.type === 'modified') {
               console.log('Modified: ', change.doc.data())
               this.rooms.forEach((item, index) => {
                 if (change.doc.id === item.id) {
@@ -124,7 +124,6 @@ export default {
         })
         .then(value => {
           if (value) {
-            //refFirebase.child(id).remove()
             this.$firebase
               .firestore()
               .collection('salas')

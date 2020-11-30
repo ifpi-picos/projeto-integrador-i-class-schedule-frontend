@@ -25,6 +25,7 @@
         </b-row>
       </div>
     </b-form>
+    {{ idroom }}
   </b-modal>
 </template>
 
@@ -47,7 +48,7 @@ export default {
     idroom: {
       type: String,
       default: '',
-      description: 'id do professor que vai ser atualizado'
+      description: 'id do sala que vai ser atualizado'
     },
     title: {
       type: String,
@@ -78,35 +79,55 @@ export default {
         return
       }
 
-      this.$firebase
-        .firestore()
-        .collection('salas')
-        .add(payload)
-        .then(() => {
-          console.log('foi')
-        })
-        .catch(error => console.error(error))
+      const BD = this.$firebase.firestore().collection('salas')
+      if (this.idroom) {
+        BD.doc(this.idroom)
+          .set(payload)
+          .then(() => {
+            this.$refs[this.idModal].hide()
+            if (!this.idroom) {
+              this.room = {}
+            }
+          })
+          .catch(error => console.error(error))
+      } else {
+        BD.add(payload)
+          .then(() => {
+            this.$refs[this.idModal].hide()
+            if (!this.idroom) {
+              this.room = {}
+            }
+          })
+          .catch(error => console.error(error))
+      }
+    },
+    async fillForm () {
+      if (this.idroom) {
+        this.$firebase
+          .firestore()
+          .collection('salas')
+          .doc(this.idroom)
+          .get()
+          .then(querySnapshot => {
+            const data = querySnapshot.data()
+            this.room.name = data.nome
+          })
+          .catch(error => {
+            console.log('Error getting documents: ', error)
+          })
+      }
+    }
+  },
+
+  watch: {
+    idroom () {
+      this.fillForm()
+    },
+    room () {
+      this.checkFormValidity()
     }
   }
 }
-//    async fillForm(){
-
-//     if(this.idroom){
-//       const refFirebase = this.$firebase.database().ref(`salas`)
-//       await refFirebase.on('value', (snapshot) => {
-//         const data = snapshot.child(this.idroom).val();
-//         this.room.name = data.nome
-//       })
-//     }
-//   }
-//  },
-//   watch: {
-//     idroom(){
-//       this.fillForm()
-//     },
-//     room(){
-//       this.checkFormValidity()
-//     }
 </script>
 
 <style></style>
