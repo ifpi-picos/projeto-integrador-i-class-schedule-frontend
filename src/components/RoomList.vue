@@ -81,29 +81,34 @@ export default {
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
             const room = change.doc.data()
-            console.log('interação')
             if (change.type === 'added') {
               room.id = change.doc.id
               this.rooms.push(room)
             }
             if (change.type === 'modifeid') {
               console.log('Modified: ', change.doc.data())
+              this.rooms.forEach((item, index) => {
+                if (change.doc.id === item.id) {
+                  this.$set(this.rooms, index, change.doc.data())
+                }
+              })
             }
             if (change.type === 'removed') {
               console.log('Removed : ', change.doc.data())
-              const index = this.rooms.indexOf(room)
-              console.log(index)
-              this.rooms.splice(index, 1)
+              this.rooms.forEach((item, index) => {
+                if (change.doc.id === item.id) {
+                  this.rooms.splice(index, 1)
+                }
+              })
             }
           })
         })
     },
     editroom (id, button) {
       this.roomId = id
-      //this.$refs.modaledit.show();
       this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
-    delTeacher (id) {
+    delroom (id) {
       this.$bvModal
         .msgBoxConfirm('Tem certeza que deseja deletar?', {
           title: 'Confirmação',
@@ -136,30 +141,6 @@ export default {
         .catch(e => {
           console.log(e)
         })
-      // delroom (id) {
-      //   const refFirebase = this.$firebase.database().ref('professores')
-
-      //   this.$bvModal
-      //     .msgBoxConfirm('Tem certeza que deseja deletar?', {
-      //       title: 'Confirmação',
-      //       size: 'sm',
-      //       buttonSize: 'sm',
-      //       okVariant: 'danger',
-      //       cancelVariant: 'primary',
-      //       headerClass: 'p-2 border-bottom-0',
-      //       footerClass: 'p-2 border-top-0',
-      //       centered: true,
-      //       okTitle: 'Sim',
-      //       cancelTitle: 'Não'
-      //     })
-      //     .then(value => {
-      //       if (value) {
-      //         refFirebase.child(id).remove()
-      //       }
-      //     })
-      //     .catch(e => {
-      //       console.log(e)
-      //     })
     }
   }
 }
