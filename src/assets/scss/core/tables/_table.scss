@@ -104,9 +104,9 @@
 
     td,
     th {
-      padding-left: $card-spacer-x;
+      //padding-left: $card-spacer-x;
       //alterado pq estava quebrando a tela
-      //padding-left: 0;
+      padding-left: 0;
       padding-right: $card-spacer-x;
     }
   }
