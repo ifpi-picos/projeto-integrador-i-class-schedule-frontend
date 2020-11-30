@@ -71,7 +71,6 @@
         </b-row>
       </div>
     </b-form>
-    {{ idTeacher }}
   </b-modal>
 </template>
 
@@ -129,22 +128,35 @@ export default {
       if (!this.checkFormValidity()) {
         return
       }
-
-      this.$firebase
-        .firestore()
-        .collection('professores')
-        .add(payload)
-        .then(() => {
-          this.$refs[this.idModal].hide()
-          if (!this.idTeacher) {
-            this.teacher = {}
-          }
-        })
-        .catch(error => console.error(error))
+      if (this.idTeacher) {
+        this.$firebase
+          .firestore()
+          .collection('professores')
+          .doc(this.idTeacher)
+          .set(payload)
+          .then(() => {
+            this.$refs[this.idModal].hide()
+            if (!this.idTeacher) {
+              this.teacher = {}
+            }
+          })
+          .catch(error => console.error(error))
+      } else {
+        this.$firebase
+          .firestore()
+          .collection('professores')
+          .add(payload)
+          .then(() => {
+            this.$refs[this.idModal].hide()
+            if (!this.idTeacher) {
+              this.teacher = {}
+            }
+          })
+          .catch(error => console.error(error))
+      }
     },
     async fillForm () {
       if (this.idTeacher) {
-        console.log(this.idTeacher)
         this.$firebase
           .firestore()
           .collection('professores')

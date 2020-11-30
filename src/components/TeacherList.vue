@@ -70,7 +70,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+ 
     <teacher-form
       idModal="modalEdit"
       :idTeacher="teacherId"
@@ -108,19 +108,28 @@ export default {
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
             const teacher = change.doc.data()
-            console.log('interação')
+            console.log(change.type )
             if (change.type === 'added') {
               teacher.id = change.doc.id
               this.teachers.push(teacher)
             }
-            if (change.type === 'modifeid') {
+            if (change.type === 'modified') {
               console.log('Modified: ', change.doc.data())
+              this.teachers.forEach((item, index) => {
+                if (change.doc.id === item.id) {
+                  this.teachers[index] = change.doc.data()
+                  //console.log(this.teachers[index])
+                }
+              })
             }
             if (change.type === 'removed') {
               console.log('Removed : ', change.doc.data())
-              const index = this.teachers.indexOf(teacher)
-              console.log(index)
-              this.teachers.splice(index, 1)
+              this.teachers.forEach((item, index) => {
+                if (change.doc.id === item.id) {
+                  this.teachers.splice(index, 1)
+                  //console.log(index)
+                }
+              })
             }
           })
         })
@@ -169,6 +178,4 @@ export default {
 }
 </script>
 
-
 <style scoped></style>
-
