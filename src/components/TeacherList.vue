@@ -11,7 +11,7 @@
           <b-media no-body class="align-items-center">
             <b-media-body>
               <span class="font-weight-600 name mb-0 text-sm">{{
-                row.nome
+                this.getTeachers()
               }}</span>
             </b-media-body>
           </b-media>
@@ -70,6 +70,7 @@
         </template>
       </el-table-column>
     </el-table>
+
     <teacher-form
       idModal="modalEdit"
       :idTeacher="teacherId"
@@ -131,8 +132,6 @@ export default {
       this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
     delTeacher (id) {
-      //const refFirebase = this.$firebase.database().ref('professores')
-
       this.$bvModal
         .msgBoxConfirm('Tem certeza que deseja deletar?', {
           title: 'Confirmação',
@@ -170,6 +169,6 @@ export default {
 }
 </script>
 
-<style scoped>
 
-</style>
+<style scoped></style>
+
