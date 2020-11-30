@@ -71,7 +71,7 @@
         </b-row>
       </div>
     </b-form>
-    {{idTeacher}}
+    {{ idTeacher }}
   </b-modal>
 </template>
 
@@ -144,30 +144,33 @@ export default {
     },
     async fillForm () {
       if (this.idTeacher) {
-        console.log(this.idTeacher);
-        //const refFirebase = this.$firebase.firestore.collection('professores')
-       // await refFirebase.doc(idTeacher).get()
+        console.log(this.idTeacher)
+        this.$firebase
+          .firestore()
+          .collection('professores')
+          .doc(this.idTeacher)
+          .get()
+          .then(querySnapshot => {
+            const data = querySnapshot.data()
+            this.teacher.username = data.nome
+            this.teacher.registration = data.matricula
+            this.teacher.email = data.email
+            this.teacher.occupationArea = data.area_de_ocupacao
+            this.teacher.coordination = data.coordenacao
+          })
+          .catch(error => {
+            console.log('Error getting documents: ', error)
+          })
       }
-      //   if(this.idTeacher){
-      //     const refFirebase = this.$firebase.database().ref(`professores`)
-      //     await refFirebase.on('value', (snapshot) => {
-      //       const data = snapshot.child(this.idTeacher).val();
-      //       this.teacher.username = data.nome
-      //       this.teacher.registration = data.matricula
-      //       this.teacher.email = data.email
-      //       this.teacher.occupationArea = data.area_de_ocupacao
-      //       this.teacher.coordination= data.coordenacao
-      //     })
-      //   }
     }
   },
   watch: {
-     idTeacher(){
-       this.fillForm()
-     },
-     teacher(){
-       this.checkFormValidity()
-     }
+    idTeacher () {
+      this.fillForm()
+    },
+    teacher () {
+      this.checkFormValidity()
+    }
   }
 }
 </script>
