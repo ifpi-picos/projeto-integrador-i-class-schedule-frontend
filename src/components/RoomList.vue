@@ -1,5 +1,5 @@
 <template>
-   <div>
+  <div>
     <el-table
       v-if="rooms"
       class="table-responsive table"
@@ -18,25 +18,22 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Turmas" prop="budget" min-width="180px">
+      <!-- <el-table-column label="Turmas" prop="budget" min-width="180px">
         <template v-slot="{ row }">
           <b-media no-body class="align-items-center">
             <b-media-body>
               <span class="font-weight-600 name mb-0 text-sm">
-                4
+                {{ row.nome }}
               </span>
             </b-media-body>
           </b-media>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column label="Ações" min-width="140px">
         <template v-slot="{ row }">
           <div class="d-flex align-items-center">
-            <b-button
-              @click="editroom(row.id)"
-              variant="outline-dark"
-              size="sm"
+            <b-button @click="editroom(row.id)" variant="outline-dark" size="sm"
               ><i class="fas fa-pen"></i
             ></b-button>
 
@@ -50,79 +47,122 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <room-form idModal="modalEdit" :idroom="roomId" title="Atulaizar Sala" />
   </div>
 </template>
 
 <script>
-import { Table, TableColumn } from "element-ui";
-import RoomForm from './RoomForm.vue';
+import { Table, TableColumn } from 'element-ui'
+import RoomForm from './RoomForm.vue'
 
 export default {
-  name: "roomList",
+  name: 'roomList',
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
     RoomForm
   },
 
-  data() {
+  data () {
     return {
-      roomId: "",
-      rooms: "",
-    };
+      roomId: '',
+      rooms: []
+    }
   },
-  created() {
-    this.getRooms();
+  created () {
+    this.getRooms()
   },
   methods: {
-    async getRooms() {
-      await this.$firebase
-        .database()
-        .ref("salas")
-        .on("value", (data) => {
-          let rooms = data.val();
-          const roomArray = Object.keys(rooms).map(
-            (item) => rooms[item]
-          );
-          console.log(roomArray);
-          this.rooms = roomArray;
-        });
-    },
-    editroom(id, button) {
-      this.roomId = id;
-      //this.$refs.modaledit.show();
-      this.$root.$emit("bv::show::modal", "modalEdit", button);
-    },
-    delroom(id) {
-      const refFirebase = this.$firebase.database().ref("professores");
-
-      this.$bvModal
-        .msgBoxConfirm("Tem certeza que deseja deletar?", {
-          title: "Confirmação",
-          size: "sm",
-          buttonSize: "sm",
-          okVariant: "danger",
-          cancelVariant: "primary",
-          headerClass: "p-2 border-bottom-0",
-          footerClass: "p-2 border-top-0",
-          centered: true,
-          okTitle: "Sim",
-          cancelTitle: "Não",
+    async getRooms () {
+      this.$firebase
+        .firestore()
+        .collection('salas')
+        .onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(change => {
+            const room = change.doc.data()
+            console.log('interação')
+            if (change.type === 'added') {
+              room.id = change.doc.id
+              this.rooms.push(room)
+            }
+            if (change.type === 'modifeid') {
+              console.log('Modified: ', change.doc.data())
+            }
+            if (change.type === 'removed') {
+              console.log('Removed : ', change.doc.data())
+              const index = this.rooms.indexOf(room)
+              console.log(index)
+              this.rooms.splice(index, 1)
+            }
+          })
         })
-        .then((value) => {
+    },
+    editroom (id, button) {
+      this.roomId = id
+      //this.$refs.modaledit.show();
+      this.$root.$emit('bv::show::modal', 'modalEdit', button)
+    },
+    delTeacher (id) {
+      this.$bvModal
+        .msgBoxConfirm('Tem certeza que deseja deletar?', {
+          title: 'Confirmação',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          cancelVariant: 'primary',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
+          centered: true,
+          okTitle: 'Sim',
+          cancelTitle: 'Não'
+        })
+        .then(value => {
           if (value) {
-            refFirebase.child(id).remove();
+            //refFirebase.child(id).remove()
+            this.$firebase
+              .firestore()
+              .collection('salas')
+              .doc(id)
+              .delete()
+              .then(() => {
+                console.log('apagado')
+              })
+              .catch(erro => {
+                console.error(error)
+              })
           }
         })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-  },
-};
+        .catch(e => {
+          console.log(e)
+        })
+      // delroom (id) {
+      //   const refFirebase = this.$firebase.database().ref('professores')
+
+      //   this.$bvModal
+      //     .msgBoxConfirm('Tem certeza que deseja deletar?', {
+      //       title: 'Confirmação',
+      //       size: 'sm',
+      //       buttonSize: 'sm',
+      //       okVariant: 'danger',
+      //       cancelVariant: 'primary',
+      //       headerClass: 'p-2 border-bottom-0',
+      //       footerClass: 'p-2 border-top-0',
+      //       centered: true,
+      //       okTitle: 'Sim',
+      //       cancelTitle: 'Não'
+      //     })
+      //     .then(value => {
+      //       if (value) {
+      //         refFirebase.child(id).remove()
+      //       }
+      //     })
+      //     .catch(e => {
+      //       console.log(e)
+      //     })
+    }
+  }
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
