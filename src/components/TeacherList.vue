@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table
-      v-if="teachers"
+      v-if="teachers[0]"
       class="table-responsive table"
       header-row-class-name="thead-light"
       :data="teachers"
@@ -74,7 +74,7 @@
     <teacher-form
       idModal="modalEdit"
       :idTeacher="teacherId"
-      title="Atualizar Professor"
+      title="Atulaizar Professor"
     />
   </div>
 </template>
@@ -94,7 +94,7 @@ export default {
   data () {
     return {
       teacherId: '',
-      teachers: ''
+      teachers: []
     }
   },
   created () {
@@ -102,24 +102,36 @@ export default {
   },
   methods: {
     async getTeachers () {
-      await this.$firebase
+      this.$firebase
         .firestore()
         .collection('professores')
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            return doc.data().name
+        .onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(change => {
+            const teacher = change.doc.data()
+            console.log('interação')
+            if (change.type === 'added') {
+              teacher.id = change.doc.id
+              this.teachers.push(teacher)
+            }
+            if (change.type === 'modifeid') {
+              console.log('Modified: ', change.doc.data())
+            }
+            if (change.type === 'removed') {
+              console.log('Removed : ', change.doc.data())
+              const index = this.teachers.indexOf(teacher)
+              console.log(index)
+              this.teachers.splice(index, 1)
+            }
           })
         })
     },
+
     editTeacher (id, button) {
       this.teacherId = id
       //this.$refs.modaledit.show();
       this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
     delTeacher (id) {
-      const refFirebase = this.$firebase.database().ref('professores')
-
       this.$bvModal
         .msgBoxConfirm('Tem certeza que deseja deletar?', {
           title: 'Confirmação',
@@ -135,7 +147,18 @@ export default {
         })
         .then(value => {
           if (value) {
-            refFirebase.child(id).remove()
+            //refFirebase.child(id).remove()
+            this.$firebase
+              .firestore()
+              .collection('professores')
+              .doc(id)
+              .delete()
+              .then(() => {
+                console.log('apagado')
+              })
+              .catch(erro => {
+                console.error(error)
+              })
           }
         })
         .catch(e => {
@@ -146,4 +169,6 @@ export default {
 }
 </script>
 
+
 <style scoped></style>
+

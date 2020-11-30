@@ -2,7 +2,7 @@
   <b-modal
     @ok="handleOk"
     size="lg"
-    centered   
+    centered
     :id="idModal"
     :ref="idModal"
     :title="title"
@@ -48,10 +48,9 @@
           </b-col>
         </b-row>
 
-
         <b-row>
           <b-col lg="6">
-            <base-input label="Área de atuação" required >
+            <base-input label="Área de atuação" required>
               <select v-model="teacher.occupationArea" class="form-control">
                 <option>Informatica</option>
                 <option>2</option>
@@ -72,102 +71,105 @@
         </b-row>
       </div>
     </b-form>
+    {{idTeacher}}
   </b-modal>
 </template>
 
 <script>
 export default {
-  name: "TeacherForm",
-  data() {
+  name: 'TeacherForm',
+  data () {
     return {
       teacher: {
-        username: "",
-        registration: "",
-        email: "",
-        occupationArea: "",
-        coordination: ""
-      },
-      
-    };
+        username: '',
+        registration: '',
+        email: '',
+        occupationArea: '',
+        coordination: ''
+      }
+    }
   },
   props: {
     idModal: {
       type: String,
-      default: "",
-      description:
-        "referencia do modal"
+      default: '',
+      description: 'referencia do modal'
     },
     idTeacher: {
       type: String,
-      default: "",
-      description:
-        "id do professor que vai ser atualizado"
+      default: '',
+      description: 'id do professor que vai ser atualizado'
     },
     title: {
       type: String,
-      description:
-        "titulo do modal"
+      description: 'titulo do modal'
     }
   },
   methods: {
-    checkFormValidity() {
-      const valid = this.$refs.form.checkValidity();
-      console.log(valid);
+    checkFormValidity () {
+      const valid = this.$refs.form.checkValidity()
+      console.log(valid)
       return valid
     },
-    handleOk(bvModalEvt) {
+    handleOk (bvModalEvt) {
       // Prevent modal from closing
-      bvModalEvt.preventDefault();
+      bvModalEvt.preventDefault()
       // Trigger submit handler
-      this.handleSubmit();
+      this.handleSubmit()
     },
-    handleSubmit() {
-
+    handleSubmit () {
       const payload = {
         nome: this.teacher.username,
         matricula: this.teacher.registration,
         email: this.teacher.email,
         area_de_ocupacao: this.teacher.occupationArea,
         coordenacao: this.teacher.coordination,
-        createdAt: new Date().getTime(),
-      };
+        createdAt: new Date().getTime()
+      }
       if (!this.checkFormValidity()) {
-          return
+        return
       }
 
-     this.$firebase
-     .firestore()
-     .collection('professores')
-     .add(payload)
-     .then(() => {
-       console.log('foi')
-     })
-     .catch(error => console.error(error))
+      this.$firebase
+        .firestore()
+        .collection('professores')
+        .add(payload)
+        .then(() => {
+          this.$refs[this.idModal].hide()
+          if (!this.idTeacher) {
+            this.teacher = {}
+          }
+        })
+        .catch(error => console.error(error))
     },
-    // async fillForm(){
-      
-    //   if(this.idTeacher){
-    //     const refFirebase = this.$firebase.database().ref(`professores`)
-    //     await refFirebase.on('value', (snapshot) => {
-    //       const data = snapshot.child(this.idTeacher).val();
-    //       this.teacher.username = data.nome 
-    //       this.teacher.registration = data.matricula
-    //       this.teacher.email = data.email
-    //       this.teacher.occupationArea = data.area_de_ocupacao
-    //       this.teacher.coordination= data.coordenacao
-    //     })
-    //   }
-    // }
+    async fillForm () {
+      if (this.idTeacher) {
+        console.log(this.idTeacher);
+        //const refFirebase = this.$firebase.firestore.collection('professores')
+       // await refFirebase.doc(idTeacher).get()
+      }
+      //   if(this.idTeacher){
+      //     const refFirebase = this.$firebase.database().ref(`professores`)
+      //     await refFirebase.on('value', (snapshot) => {
+      //       const data = snapshot.child(this.idTeacher).val();
+      //       this.teacher.username = data.nome
+      //       this.teacher.registration = data.matricula
+      //       this.teacher.email = data.email
+      //       this.teacher.occupationArea = data.area_de_ocupacao
+      //       this.teacher.coordination= data.coordenacao
+      //     })
+      //   }
+    }
   },
-  // watch: {
-  //   idTeacher(){
-  //     this.fillForm()
-  //   },
-  //   teacher(){
-  //     this.checkFormValidity()
-  //   }
-  // }
-};
+  watch: {
+     idTeacher(){
+       this.fillForm()
+     },
+     teacher(){
+       this.checkFormValidity()
+     }
+  }
+}
 </script>
 
 <style></style>
