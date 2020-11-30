@@ -26,18 +26,18 @@
 </template>
 
 <script>
-import ClassForm from "@/components/ClassForm.vue";
-import ClassList from "@/components/ClassList.vue";
+import ClassForm from '@/components/ClassForm.vue'
+import ClassList from '@/components/ClassList.vue'
 export default {
-  name: "Class",
+  name: 'Class',
   components: {
     ClassForm,
-    ClassList,
+    ClassList
   },
-  data() {
-    return {};
-  },
-};
+  data () {
+    return {}
+  }
+}
 </script>
 
 <style></style>

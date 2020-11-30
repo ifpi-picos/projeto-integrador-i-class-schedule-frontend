@@ -139,17 +139,17 @@
 </template>
 <script>
 // Charts
-import * as chartConfigs from "@/components/Charts/config";
-import LineChart from "@/components/Charts/LineChart";
-import BarChart from "@/components/Charts/BarChart";
+import * as chartConfigs from '@/components/Charts/config'
+import LineChart from '@/components/Charts/LineChart'
+import BarChart from '@/components/Charts/BarChart'
 
 // Components
-import BaseProgress from "@/components/BaseProgress";
-import StatsCard from "@/components/Cards/StatsCard";
+import BaseProgress from '@/components/BaseProgress'
+import StatsCard from '@/components/Cards/StatsCard'
 
 // Tables
-import SocialTrafficTable from "./Dashboard/SocialTrafficTable";
-import PageVisitsTable from "./Dashboard/PageVisitsTable";
+import SocialTrafficTable from './Dashboard/SocialTrafficTable'
+import PageVisitsTable from './Dashboard/PageVisitsTable'
 
 export default {
   components: {
@@ -160,7 +160,7 @@ export default {
     PageVisitsTable,
     SocialTrafficTable
   },
-  data() {
+  data () {
     return {
       bigLineChart: {
         allData: [
@@ -171,47 +171,47 @@ export default {
         chartData: {
           datasets: [
             {
-              label: "Performance",
+              label: 'Performance',
               data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
             }
           ],
-          labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+          labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         },
         extraOptions: chartConfigs.blueChartOptions
       },
       redBarChart: {
         chartData: {
-          labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           datasets: [
             {
-              label: "Sales",
+              label: 'Sales',
               data: [25, 20, 30, 22, 17, 29]
             }
           ]
         },
         extraOptions: chartConfigs.blueChartOptions
       }
-    };
+    }
   },
   methods: {
-    initBigChart(index) {
+    initBigChart (index) {
       let chartData = {
         datasets: [
           {
-            label: "Performance",
+            label: 'Performance',
             data: this.bigLineChart.allData[index]
           }
         ],
-        labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-      };
-      this.bigLineChart.chartData = chartData;
-      this.bigLineChart.activeIndex = index;
+        labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      }
+      this.bigLineChart.chartData = chartData
+      this.bigLineChart.activeIndex = index
     }
   },
-  mounted() {
-    this.initBigChart(0);
+  mounted () {
+    this.initBigChart(0)
   }
-};
+}
 </script>
 <style>
 .el-table .cell {

@@ -1,7 +1,7 @@
 <template>
-   <div>
+  <div>
     <el-table
-      v-if="teachers"
+      v-if="teachers[0]"
       class="table-responsive table"
       header-row-class-name="thead-light"
       :data="teachers"
@@ -41,7 +41,7 @@
       </el-table-column>
 
       <el-table-column label="Disciplinas" min-width="150px">
-       <template v-slot="{ row }">
+        <template v-slot="{ row }">
           <b-media no-body class="align-items-center">
             <b-media-body>
               <span>4</span>
@@ -70,79 +70,106 @@
         </template>
       </el-table-column>
     </el-table>
-    
-    <teacher-form idModal="modalEdit" :idTeacher="teacherId" title="Atulaizar Professor" />
+    <teacher-form
+      idModal="modalEdit"
+      :idTeacher="teacherId"
+      title="Atulaizar Professor"
+    />
   </div>
 </template>
 
 <script>
-import { Table, TableColumn } from "element-ui";
-import TeacherForm from "./TeacherForm.vue";
+import { Table, TableColumn } from 'element-ui'
+import TeacherForm from './TeacherForm.vue'
 
 export default {
-  name: "TeacherList",
+  name: 'TeacherList',
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
-    TeacherForm,
+    TeacherForm
   },
 
-  data() {
+  data () {
     return {
-      teacherId: "",
-      teachers: "",
-    };
+      teacherId: '',
+      teachers: []
+    }
   },
-  created() {
-    this.getTeachers();
+  created () {
+    this.getTeachers()
   },
   methods: {
-    async getTeachers() {
-      await this.$firebase
-        .database()
-        .ref("professores")
-        .on("value", (data) => {
-          let teachers = data.val();
-          const teacherArray = Object.keys(teachers).map(
-            (item) => teachers[item]
-          );
-          console.log(teacherArray);
-          this.teachers = teacherArray;
-        });
+    async getTeachers () {
+      this.$firebase
+        .firestore()
+        .collection('professores')
+        .onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(change => {
+            const teacher = change.doc.data()
+            console.log('interação')
+            if (change.type === 'added') {
+              teacher.id = change.doc.id
+              this.teachers.push(teacher)
+            }
+            if (change.type === 'modifeid') {
+              console.log('Modified: ', change.doc.data())
+            }
+            if (change.type === 'removed') {
+              console.log('Removed : ', change.doc.data())
+              const index = this.teachers.indexOf(teacher)
+              console.log(index)
+              this.teachers.splice(index, 1)
+            }
+          })
+        })
     },
-    editTeacher(id, button) {
-      this.teacherId = id;
+
+    editTeacher (id, button) {
+      this.teacherId = id
       //this.$refs.modaledit.show();
-      this.$root.$emit("bv::show::modal", "modalEdit", button);
+      this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
-    delTeacher(id) {
-      const refFirebase = this.$firebase.database().ref("professores");
+    delTeacher (id) {
+      //const refFirebase = this.$firebase.database().ref('professores')
 
       this.$bvModal
-        .msgBoxConfirm("Tem certeza que deseja deletar?", {
-          title: "Confirmação",
-          size: "sm",
-          buttonSize: "sm",
-          okVariant: "danger",
-          cancelVariant: "primary",
-          headerClass: "p-2 border-bottom-0",
-          footerClass: "p-2 border-top-0",
+        .msgBoxConfirm('Tem certeza que deseja deletar?', {
+          title: 'Confirmação',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          cancelVariant: 'primary',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
           centered: true,
-          okTitle: "Sim",
-          cancelTitle: "Não",
+          okTitle: 'Sim',
+          cancelTitle: 'Não'
         })
-        .then((value) => {
+        .then(value => {
           if (value) {
-            refFirebase.child(id).remove();
+            //refFirebase.child(id).remove()
+            this.$firebase
+              .firestore()
+              .collection('professores')
+              .doc(id)
+              .delete()
+              .then(() => {
+                console.log('apagado')
+              })
+              .catch(erro => {
+                console.error(error)
+              })
           }
         })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-  },
-};
+        .catch(e => {
+          console.log(e)
+        })
+    }
+  }
+}
 </script>
 
 <style scoped>
+
 </style>
