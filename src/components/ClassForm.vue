@@ -17,7 +17,7 @@
               type="text"
               label="Nome da turma"
               placeholder="INFO III"
-              v-model="clas.username"
+              v-model="schoolClass.username"
               error="teste"
               rules="required"
               required
@@ -27,7 +27,7 @@
 
           <b-col lg="4">
             <base-input label="Turno" required>
-              <select v-model="clas.shift" class="form-control">
+              <select v-model="schoolClass.shift" class="form-control">
                 <option>Manhã</option>
                 <option>Tarde</option>
                 <option>Noite</option>
@@ -42,7 +42,7 @@
               type="text"
               label="Curso"
               placeholder="Informática"
-              v-model="clas.course"
+              v-model="schoolClass.course"
               name="Curso"
               required
             >
@@ -54,7 +54,7 @@
               type="number"
               label="Módulo"
               placeholder="3"
-              v-model="clas.module"
+              v-model="schoolClass.module"
               name="modulo"
               required
             >
@@ -65,7 +65,7 @@
         <b-row>
           <b-col lg="6">
             <base-input label="Sala" required>
-              <select v-model="clas.location" class="form-control">
+              <select v-model="schoolClass.location" class="form-control">
                 <option>Local 1</option>
                 <option>Local 2</option>
                 <option>Local 3</option>
@@ -76,7 +76,7 @@
 
           <b-col lg="5">
             <base-input label="Horário" required>
-              <select v-model="clas.houer" class="form-control">
+              <select v-model="schoolClass.houer" class="form-control">
                 <option>7:00 - 17:30</option>
                 <option>13:00 - 18:00</option>
                 <option>18:00 - 22:00</option>
@@ -94,7 +94,7 @@ export default {
   name: 'ClassForm',
   data () {
     return {
-      clas: {
+      schoolClass: {
         username: '',
         shift: '',
         course: '',
@@ -110,7 +110,7 @@ export default {
       default: '',
       description: 'referencia do modal'
     },
-    idClas: {
+    idClass: {
       type: String,
       default: '',
       description: 'id da turma que vai ser atualizado'
@@ -133,12 +133,12 @@ export default {
       // const id = this.idClas ? this.idClas : refFirebase.push().key;
 
       const payload = {
-        nome: this.clas.username,
-        turno: this.clas.shift,
-        curso: this.clas.course,
-        modulo: this.clas.module,
-        local: this.clas.location,
-        horario: this.clas.houer,
+        nome: this.schoolClass.username,
+        turno: this.schoolClass.shift,
+        curso: this.schoolClass.course,
+        modulo: this.schoolClass.module,
+        local: this.schoolClass.location,
+        horario: this.schoolClass.houer,
         createdAt: new Date().getTime()
       }
       if (!this.checkFormValidity()) {

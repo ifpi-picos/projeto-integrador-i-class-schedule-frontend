@@ -87,7 +87,7 @@
             ></b-button>
 
             <b-button
-              @click="delClas(row.id, $event.target)"
+              @click="delClass(row.id, $event.target)"
               variant="outline-danger"
               size="sm"
               ><i class="fas fa-trash"></i
@@ -165,7 +165,7 @@ export default {
       //this.$refs.modaledit.show();
       this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
-    delClas (id) {
+    delClass (id) {
       const refFirebase = this.$firebase.database().ref('turmas')
 
       this.$bvModal

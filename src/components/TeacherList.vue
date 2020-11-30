@@ -121,8 +121,7 @@ export default {
               console.log('Modified: ', change.doc.data())
               this.teachers.forEach((item, index) => {
                 if (change.doc.id === item.id) {
-                  this.teachers[index] = change.doc.data()
-                  //console.log(this.teachers[index])
+                  this.$set(this.teachers, index, change.doc.data())
                 }
               })
             }
@@ -131,7 +130,6 @@ export default {
               this.teachers.forEach((item, index) => {
                 if (change.doc.id === item.id) {
                   this.teachers.splice(index, 1)
-                  //console.log(index)
                 }
               })
             }
@@ -141,7 +139,6 @@ export default {
 
     editTeacher (id, button) {
       this.teacherId = id
-      //this.$refs.modaledit.show();
       this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
     delTeacher (id) {
@@ -160,7 +157,6 @@ export default {
         })
         .then(value => {
           if (value) {
-            //refFirebase.child(id).remove()
             this.$firebase
               .firestore()
               .collection('professores')
