@@ -6,9 +6,9 @@
       header-row-class-name="thead-light"
       :data="teachers"
     >
-      <el-table-column label="Professor" min-width="310px" prop="name">
+      <el-table-column label="Professor" min-width="300px" prop="name">
         <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
+          <b-media no-body>
             <b-media-body>
               <span class="font-weight-600 name mb-0 text-sm">{{
                 row.nome
@@ -20,7 +20,7 @@
 
       <el-table-column label="Area de Atuação" prop="budget" min-width="180px">
         <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
+          <b-media no-body>
             <b-media-body>
               <span class="font-weight-600 name mb-0 text-sm">{{
                 row.area_de_ocupacao
@@ -30,11 +30,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Turmas" min-width="170px">
+      <el-table-column
+        class="d-flex justify-content-center !important"
+        label="Turmas"
+        min-width="160px"
+      >
         <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
+          <b-media no-body>
             <b-media-body>
-              <span>1</span>
+              <span class="d-flex justify-content-center">1</span>
             </b-media-body>
           </b-media>
         </template>
@@ -42,7 +46,7 @@
 
       <el-table-column label="Disciplinas" min-width="150px">
         <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
+          <b-media no-body>
             <b-media-body>
               <span>4</span>
             </b-media-body>
@@ -52,7 +56,7 @@
 
       <el-table-column label="Ações" min-width="140px">
         <template v-slot="{ row }">
-          <div class="d-flex align-items-center">
+          <div>
             <b-button
               @click="editTeacher(row.id)"
               variant="outline-dark"

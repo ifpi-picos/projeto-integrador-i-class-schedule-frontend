@@ -33,12 +33,12 @@
       <el-table-column label="Ações" min-width="140px">
         <template v-slot="{ row }">
           <div class="d-flex align-items-center">
-            <b-button @click="editroom(row.id)" variant="outline-dark" size="sm"
+            <b-button @click="editRoom(row.id)" variant="outline-dark" size="sm"
               ><i class="fas fa-pen"></i
             ></b-button>
 
             <b-button
-              @click="delroom(row.id, $event.target)"
+              @click="delRoom(row.id, $event.target)"
               variant="outline-danger"
               size="sm"
               ><i class="fas fa-trash"></i
@@ -104,11 +104,11 @@ export default {
           })
         })
     },
-    editroom (id, button) {
+    editRoom (id, button) {
       this.roomId = id
       this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
-    delroom (id) {
+    delRoom (id) {
       this.$bvModal
         .msgBoxConfirm('Tem certeza que deseja deletar?', {
           title: 'Confirmação',
