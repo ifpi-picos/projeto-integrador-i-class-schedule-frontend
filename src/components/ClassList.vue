@@ -96,7 +96,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <class-form idModal="modalEdit" :idClas="clasId" />
+    <class-form idModal="modalEdit" :idClass="idClass" />
   </div>
 </template>
 
@@ -114,7 +114,7 @@ export default {
 
   data () {
     return {
-      clasId: '',
+      idClass: '',
       classes: []
     }
   },
@@ -152,22 +152,30 @@ export default {
             }
             if (change.type === 'modified') {
               console.log('Modified city: ', change.doc.data())
+              this.classes.forEach((item, index) => {
+                if (change.doc.id === item.id) {
+                  this.$set(this.classes, index, change.doc.data())
+                }
+              })
             }
             if (change.type === 'removed') {
               console.log('Removed city: ', change.doc.data())
+              this.classes.forEach((item, index) => {
+                if (change.doc.id === item.id) {
+                  this.classes.splice(index, 1)
+                }
+              })
             }
           })
         })
     },
 
     editClas (id, button) {
-      this.clasId = id
+      this.idClass = id
       //this.$refs.modaledit.show();
       this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
     delClass (id) {
-      const refFirebase = this.$firebase.database().ref('turmas')
-
       this.$bvModal
         .msgBoxConfirm('Tem certeza que deseja deletar?', {
           title: 'Confirmação',
@@ -183,7 +191,17 @@ export default {
         })
         .then(value => {
           if (value) {
-            refFirebase.child(id).remove()
+            this.$firebase
+              .firestore()
+              .collection('turmas')
+              .doc(id)
+              .delete()
+              .then(() => {
+                console.log('apagado')
+              })
+              .catch(erro => {
+                console.error(error)
+              })
           }
         })
         .catch(e => {

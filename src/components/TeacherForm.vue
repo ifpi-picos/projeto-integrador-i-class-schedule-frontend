@@ -151,7 +151,7 @@ export default {
           .catch(error => console.error(error))
       }
     },
-    async fillForm () {
+    fillForm () {
       if (this.idTeacher) {
         this.$firebase
           .firestore()

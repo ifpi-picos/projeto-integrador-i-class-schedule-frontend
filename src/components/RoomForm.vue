@@ -25,7 +25,6 @@
         </b-row>
       </div>
     </b-form>
-    {{ idroom }}
   </b-modal>
 </template>
 
