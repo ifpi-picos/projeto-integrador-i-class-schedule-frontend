@@ -1,101 +1,104 @@
 <template>
   <div>
-    <el-table
-      v-if="classes"
-      class="table-responsive table"
-      header-row-class-name="thead-light"
-      :data="classes"
-    >
-      <el-table-column label="Turma" min-width="210px" prop="name">
-        <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
-            <b-media-body>
-              <span class="font-weight-600 name mb-0 text-sm">{{
-                row.nome
-              }}</span>
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column>
+    <Spinner :showLoad="true" v-if="loader" />
+     <div v-if="!loader">
+      <el-table
+        v-if="classes"
+        class="table-responsive table"
+        header-row-class-name="thead-light"
+        :data="classes"
+      >
+        <el-table-column label="Turma" min-width="210px" prop="name">
+          <template v-slot="{ row }">
+            <b-media no-body class="align-items-center">
+              <b-media-body>
+                <span class="font-weight-600 name mb-0 text-sm">{{
+                  row.nome
+                }}</span>
+              </b-media-body>
+            </b-media>
+          </template>
+        </el-table-column>
 
-      <el-table-column label="Curso" prop="budget" min-width="180px">
-        <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
-            <b-media-body>
-              <span class="font-weight-600 name mb-0 text-sm">{{
-                row.curso
-              }}</span>
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column>
+        <el-table-column label="Curso" prop="budget" min-width="180px">
+          <template v-slot="{ row }">
+            <b-media no-body class="align-items-center">
+              <b-media-body>
+                <span class="font-weight-600 name mb-0 text-sm">{{
+                  row.curso
+                }}</span>
+              </b-media-body>
+            </b-media>
+          </template>
+        </el-table-column>
 
-      <el-table-column label="Módulo" prop="budget" min-width="130px">
-        <template v-slot="{ row }">
-          <b-media no-body>
-            <b-media-body>
-              <span
-                class="d-flex justify-content-center font-weight-600 name mb-0 text-sm"
-                >{{ row.modulo }}</span
-              >
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column>
+        <el-table-column label="Módulo" prop="budget" min-width="130px">
+          <template v-slot="{ row }">
+            <b-media no-body>
+              <b-media-body>
+                <span
+                  class="d-flex justify-content-center font-weight-600 name mb-0 text-sm"
+                  >{{ row.modulo }}</span
+                >
+              </b-media-body>
+            </b-media>
+          </template>
+        </el-table-column>
 
-      <el-table-column label="Sala" min-width="130px">
-        <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
-            <b-media-body>
-              <span class="font-weight-600 name mb-0 text-sm">{{
-                row.local
-              }}</span>
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column>
+        <el-table-column label="Sala" min-width="130px">
+          <template v-slot="{ row }">
+            <b-media no-body class="align-items-center">
+              <b-media-body>
+                <span class="font-weight-600 name mb-0 text-sm">{{
+                  row.local
+                }}</span>
+              </b-media-body>
+            </b-media>
+          </template>
+        </el-table-column>
 
-      <!-- <el-table-column label="Turno" min-width="130px" prop="status">
-        <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
-            <b-media-body>
-              <span class="font-weight-600 name mb-0 text-sm">{{
-                row.turno
-              }}</span>
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column> -->
+        <!-- <el-table-column label="Turno" min-width="130px" prop="status">
+          <template v-slot="{ row }">
+            <b-media no-body class="align-items-center">
+              <b-media-body>
+                <span class="font-weight-600 name mb-0 text-sm">{{
+                  row.turno
+                }}</span>
+              </b-media-body>
+            </b-media>
+          </template>
+        </el-table-column> -->
 
-      <el-table-column label="Horário" min-width="160px" prop="status">
-        <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
-            <b-media-body>
-              <span class="font-weight-600 name mb-0 text-sm">{{
-                row.horario
-              }}</span>
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column>
+        <el-table-column label="Horário" min-width="160px" prop="status">
+          <template v-slot="{ row }">
+            <b-media no-body class="align-items-center">
+              <b-media-body>
+                <span class="font-weight-600 name mb-0 text-sm">{{
+                  row.horario
+                }}</span>
+              </b-media-body>
+            </b-media>
+          </template>
+        </el-table-column>
 
-      <el-table-column label="Ações" min-width="120px">
-        <template v-slot="{ row }">
-          <div class="d-flex align-items-center">
-            <b-button @click="editClas(row.id)" variant="outline-dark" size="sm"
-              ><i class="fas fa-pen"></i
-            ></b-button>
+        <el-table-column label="Ações" min-width="120px">
+          <template v-slot="{ row }">
+            <div class="d-flex align-items-center">
+              <b-button @click="editClas(row.id)" variant="outline-dark" size="sm"
+                ><i class="fas fa-pen"></i
+              ></b-button>
 
-            <b-button
-              @click="delClass(row.id, $event.target)"
-              variant="outline-danger"
-              size="sm"
-              ><i class="fas fa-trash"></i
-            ></b-button>
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
+              <b-button
+                @click="delClass(row.id, $event.target)"
+                variant="outline-danger"
+                size="sm"
+                ><i class="fas fa-trash"></i
+              ></b-button>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
     <class-form idModal="modalEdit" :idClass="idClass" />
   </div>
 </template>
@@ -103,23 +106,27 @@
 <script>
 import { Table, TableColumn } from 'element-ui'
 import ClassForm from './ClassForm.vue'
+import Spinner from '@/components/Spinner.vue'
 
 export default {
   name: 'ClassList',
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
-    ClassForm
+    ClassForm,
+    Spinner
   },
 
   data () {
     return {
       idClass: '',
-      classes: []
+      classes: [],
+      loader: true
     }
   },
   created () {
-    this.getClassesOnChange()
+    this.getClassesOnChange(),
+    this.getClasses()
   },
   methods: {
     async getClasses () {
@@ -130,6 +137,7 @@ export default {
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
             const classRom = doc.data()
+            this.loader = false;
             classRom.id = doc.id
             this.classes.push(classRom)
           })
