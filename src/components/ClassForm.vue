@@ -5,9 +5,9 @@
     centered
     :id="idModal"
     :ref="idModal"
-    title="Nova turma"
+    :title="title"
   >
-    <b-form ref="form" @submit.stop.prevent="Submit()">
+    <b-form ref="form" @submit.stop.prevent="handleSubmit">
       <h6 class="heading-small text-muted mb-4">Cadastro das turmas</h6>
 
       <div class="pl-lg-4">
@@ -114,6 +114,10 @@ export default {
       type: String,
       default: '',
       description: 'id da turma que vai ser atualizado'
+    },
+    title: {
+      type: String,
+      description: 'titulo do modal'
     }
   },
   methods: {
@@ -126,7 +130,6 @@ export default {
       // Prevent modal from closing
       bvModalEvt.preventDefault()
       // Trigger submit handler
-      this.checkFormValidity()
       this.handleSubmit()
     },
     handleSubmit () {
@@ -144,15 +147,61 @@ export default {
       if (!this.checkFormValidity()) {
         return
       }
-
-      this.$firebase
-        .firestore()
-        .collection('turmas')
-        .add(payload)
-        .then(() => {
-          console.log('foi')
-        })
-        .catch(error => console.error(error))
+      if (this.idClass) {
+        this.$firebase
+          .firestore()
+          .collection('turmas')
+          .doc(this.idClass)
+          .set(payload)
+          .then(() => {
+            this.$refs[this.idModal].hide()
+            if (!this.idClass) {
+              this.schoolClass = {}
+            }
+          })
+          .catch(error => console.error(error))
+      } else {
+        this.$firebase
+          .firestore()
+          .collection('turmas')
+          .add(payload)
+          .then(() => {
+            this.$refs[this.idModal].hide()
+            if (!this.idClass) {
+              this.schoolClass = {}
+            }
+          })
+          .catch(error => console.error(error))
+      }
+    },
+    async fillForm () {
+      if (this.idClass) {
+        this.$firebase
+          .firestore()
+          .collection('turmas')
+          .doc(this.idClass)
+          .get()
+          .then(querySnapshot => {
+            const data = querySnapshot.data()
+            this.schoolClass.username = data.nome
+            this.schoolClass.shift = data.turno
+            this.schoolClass.course = data.curso
+            this.schoolClass.module = data.modulo
+            this.schoolClass.location = data.local
+            this.schoolClass.houer = data.horario
+          })
+          .catch(error => {
+            console.log('Error getting documents: ', error)
+          })
+      }
+    }
+  },
+  watch: {
+    idClass () {
+      this.fillForm()
+    },
+    schoolClass () {
+      this.checkFormValidity()
     }
   }
 }
