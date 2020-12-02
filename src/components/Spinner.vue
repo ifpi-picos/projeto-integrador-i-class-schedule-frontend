@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <div v-show="showLoad" class="load">
       <div class="spin mb-4"></div>
       <div class="loading ml-3">Loading...</div>
