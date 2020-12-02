@@ -58,7 +58,6 @@
 <script>
 import { Table, TableColumn } from 'element-ui'
 import RoomForm from './RoomForm.vue'
-import Spinner from '@/components/Spinner.vue'
 
 export default {
   name: 'roomList',
@@ -66,7 +65,6 @@ export default {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
     RoomForm,
-    Spinner
   },
 
   data () {

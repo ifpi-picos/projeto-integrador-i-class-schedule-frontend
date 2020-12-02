@@ -88,7 +88,6 @@
 <script>
 import { Table, TableColumn } from 'element-ui'
 import TeacherForm from './TeacherForm.vue'
-import Spinner from '@/components/Spinner.vue'
 
 export default {
   name: 'TeacherList',
@@ -96,7 +95,6 @@ export default {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
     TeacherForm,
-    Spinner
   },
 
   data () {
