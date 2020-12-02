@@ -9,8 +9,11 @@
 
 <script>
 export default {
-  data: {
-    // showLoad: true
+  name: 'spinner',
+  data(){
+    return {
+      // showLoad: true
+    }
   },
   props: {
     showLoad: Boolean
