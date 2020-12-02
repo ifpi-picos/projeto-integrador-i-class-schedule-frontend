@@ -140,6 +140,7 @@ export default {
             this.loader = false;
             classRom.id = doc.id
             this.classes.push(classRom)
+            
           })
         })
         .catch(function (error) {
