@@ -4,6 +4,7 @@
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success"
     ></base-header>
     <TeacherForm idModal="addteacher" title="Novo Professor" />
+     
     <b-container fluid class="mt--7">
       <b-card>
         <b-card-header class="pt-0 pl-0 pr-0">
@@ -20,10 +21,15 @@
           </b-row>
         </b-card-header>
         <b-card-body class="p-0">
-          <teacher-list />
+
+          <teacher-list/>
+          
         </b-card-body>
+        
+       
       </b-card>
     </b-container>
+    
   </div>
 </template>
 
@@ -38,7 +44,8 @@ export default {
     TeacherList,
   },
   data() {
-    return {};
+    return {
+    };
   },
 };
 </script>

@@ -1,80 +1,82 @@
 <template>
   <div>
-    <el-table
-      v-if="teachers[0]"
-      class="table-responsive table"
-      header-row-class-name="thead-light"
-      :data="teachers"
-    >
-      <el-table-column label="Professor" min-width="300px" prop="name">
-        <template v-slot="{ row }">
-          <b-media no-body>
-            <b-media-body>
-              <span class="font-weight-600 name mb-0 text-sm">{{
-                row.nome
-              }}</span>
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column>
+    <Spinner :showLoad="true" v-if="loader" />
+      <div v-if="!loader">
+        <el-table
+          v-if="teachers[0]"
+          class="table-responsive table"
+          header-row-class-name="thead-light"
+          :data="teachers"
+        >
+          <el-table-column label="Professor" min-width="300px" prop="name">
+            <template v-slot="{ row }">
+              <b-media no-body>
+                <b-media-body>
+                  <span class="font-weight-600 name mb-0 text-sm">{{
+                    row.nome
+                  }}</span>
+                </b-media-body>
+              </b-media>
+            </template>
+          </el-table-column>
 
-      <el-table-column label="Area de Atuação" prop="budget" min-width="180px">
-        <template v-slot="{ row }">
-          <b-media no-body>
-            <b-media-body>
-              <span class="font-weight-600 name mb-0 text-sm">{{
-                row.area_de_ocupacao
-              }}</span>
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column>
+          <el-table-column label="Area de Atuação" prop="budget" min-width="180px">
+            <template v-slot="{ row }">
+              <b-media no-body>
+                <b-media-body>
+                  <span class="font-weight-600 name mb-0 text-sm">{{
+                    row.area_de_ocupacao
+                  }}</span>
+                </b-media-body>
+              </b-media>
+            </template>
+          </el-table-column>
 
-      <el-table-column
-        class="d-flex justify-content-center !important"
-        label="Turmas"
-        min-width="160px"
-      >
-        <template v-slot="{ row }">
-          <b-media no-body>
-            <b-media-body>
-              <span class="d-flex justify-content-center">1</span>
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column>
+          <el-table-column
+            class="d-flex justify-content-center !important"
+            label="Turmas"
+            min-width="160px"
+          >
+            <template v-slot="{ row }">
+              <b-media no-body>
+                <b-media-body>
+                  <span class="d-flex justify-content-center">1</span>
+                </b-media-body>
+              </b-media>
+            </template>
+          </el-table-column>
 
-      <el-table-column label="Disciplinas" min-width="150px">
-        <template v-slot="{ row }">
-          <b-media no-body>
-            <b-media-body>
-              <span>4</span>
-            </b-media-body>
-          </b-media>
-        </template>
-      </el-table-column>
+          <el-table-column label="Disciplinas" min-width="150px">
+            <template v-slot="{ row }">
+              <b-media no-body>
+                <b-media-body>
+                  <span>4</span>
+                </b-media-body>
+              </b-media>
+            </template>
+          </el-table-column>
 
-      <el-table-column label="Ações" min-width="140px">
-        <template v-slot="{ row }">
-          <div>
-            <b-button
-              @click="editTeacher(row.id)"
-              variant="outline-dark"
-              size="sm"
-              ><i class="fas fa-pen"></i
-            ></b-button>
+          <el-table-column label="Ações" min-width="140px">
+            <template v-slot="{ row }">
+              <div>
+                <b-button
+                  @click="editTeacher(row.id)"
+                  variant="outline-dark"
+                  size="sm"
+                  ><i class="fas fa-pen"></i
+                ></b-button>
 
-            <b-button
-              @click="delTeacher(row.id, $event.target)"
-              variant="outline-danger"
-              size="sm"
-              ><i class="fas fa-trash"></i
-            ></b-button>
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
-
+                <b-button
+                  @click="delTeacher(row.id, $event.target)"
+                  variant="outline-danger"
+                  size="sm"
+                  ><i class="fas fa-trash"></i
+                ></b-button>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
     <teacher-form
       idModal="modalEdit"
       :idTeacher="teacherId"
@@ -86,19 +88,22 @@
 <script>
 import { Table, TableColumn } from 'element-ui'
 import TeacherForm from './TeacherForm.vue'
+import Spinner from '@/components/Spinner.vue'
 
 export default {
   name: 'TeacherList',
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
-    TeacherForm
+    TeacherForm,
+    Spinner
   },
 
   data () {
     return {
       teacherId: '',
-      teachers: []
+      teachers: [],
+      loader: true
     }
   },
   created () {
@@ -113,6 +118,7 @@ export default {
           snapshot.docChanges().forEach(change => {
             const teacher = change.doc.data()
             console.log(change.type)
+            this.loader = false;
             if (change.type === 'added') {
               teacher.id = change.doc.id
               this.teachers.push(teacher)

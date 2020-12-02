@@ -17,7 +17,7 @@
               type="text"
               label="Nome da turma"
               placeholder="INFO III"
-              v-model="schoolClass.username"
+              v-model="schoolClass.name"
               error="teste"
               rules="required"
               required
@@ -95,7 +95,7 @@ export default {
   data () {
     return {
       schoolClass: {
-        username: '',
+        name: '',
         shift: '',
         course: '',
         module: '',
@@ -133,10 +133,8 @@ export default {
       this.handleSubmit()
     },
     handleSubmit () {
-      // const id = this.idClas ? this.idClas : refFirebase.push().key;
-
       const payload = {
-        nome: this.schoolClass.username,
+        nome: this.schoolClass.name,
         turno: this.schoolClass.shift,
         curso: this.schoolClass.course,
         modulo: this.schoolClass.module,
@@ -147,11 +145,11 @@ export default {
       if (!this.checkFormValidity()) {
         return
       }
+
+      const BD = this.$firebase.firestore().collection('turmas')
+
       if (this.idClass) {
-        this.$firebase
-          .firestore()
-          .collection('turmas')
-          .doc(this.idClass)
+        BD.doc(this.idClass)
           .set(payload)
           .then(() => {
             this.$refs[this.idModal].hide()
@@ -174,7 +172,8 @@ export default {
           .catch(error => console.error(error))
       }
     },
-    async fillForm () {
+    fillForm () {
+      console.log(this.idClass)
       if (this.idClass) {
         this.$firebase
           .firestore()
@@ -183,7 +182,8 @@ export default {
           .get()
           .then(querySnapshot => {
             const data = querySnapshot.data()
-            this.schoolClass.username = data.nome
+            console.log(data)
+            this.schoolClass.name = data.nome
             this.schoolClass.shift = data.turno
             this.schoolClass.course = data.curso
             this.schoolClass.module = data.modulo
