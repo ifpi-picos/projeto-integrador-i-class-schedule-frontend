@@ -15,6 +15,7 @@ import BaseHeader from '@/components/BaseHeader'
 import Spinner from '@/components/Spinner'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { Input, Tooltip, Popover } from 'element-ui'
+
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
  */
