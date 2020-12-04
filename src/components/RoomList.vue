@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Spinner :showLoad="true" v-if="loader" />
+    <spinner :showLoad="true" v-if="loader" />
     <div v-if="!loader">
       <el-table
         v-if="rooms"
@@ -58,7 +58,6 @@
 <script>
 import { Table, TableColumn } from 'element-ui'
 import RoomForm from './RoomForm.vue'
-import Spinner from '@/components/Spinner.vue'
 
 export default {
   name: 'roomList',
@@ -66,7 +65,6 @@ export default {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
     RoomForm,
-    Spinner
   },
 
   data () {

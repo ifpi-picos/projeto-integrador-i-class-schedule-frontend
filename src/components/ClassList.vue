@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Spinner :showLoad="true" v-if="loader" />
+    <spinner :showLoad="true" v-if="loader" />
      <div v-if="!loader">
       <el-table
         v-if="classes"
@@ -106,7 +106,7 @@
 <script>
 import { Table, TableColumn } from 'element-ui'
 import ClassForm from './ClassForm.vue'
-import Spinner from '@/components/Spinner.vue'
+// import Spinner from '@/components/Spinner.vue'
 
 export default {
   name: 'ClassList',
@@ -114,7 +114,7 @@ export default {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
     ClassForm,
-    Spinner
+    // Spinner
   },
 
   data () {
