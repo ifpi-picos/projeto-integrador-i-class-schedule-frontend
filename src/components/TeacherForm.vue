@@ -1,12 +1,5 @@
 <template>
-  <b-modal
-    @ok="handleOk"
-    size="lg"
-    centered
-    :id="idModal"
-    :ref="idModal"
-    :title="title"
-  >
+  <b-modal size="lg" centered :id="idModal" :ref="idModal" :title="title">
     <b-form ref="form" @submit.stop.prevent="handleSubmit">
       <h6 class="heading-small text-muted mb-4">Cadastro de professores</h6>
 
@@ -17,6 +10,7 @@
               type="text"
               label="Nome"
               placeholder="Nome"
+              name="Nome"
               v-model="teacher.username"
               required
             >
@@ -71,6 +65,19 @@
         </b-row>
       </div>
     </b-form>
+    <template #modal-footer="{ ok, cancel, hide }">
+      <!-- Emulate built in modal footer ok and cancel button actions -->
+      <b-button variant="secondary" @click="hide('forget')">
+        Cancelar
+      </b-button>
+      <b-button
+        :disabled="!checkFormValidity()"
+        variant="primary"
+        @click="handleOk()"
+      >
+        Salvar
+      </b-button>
+    </template>
   </b-modal>
 </template>
 
@@ -106,8 +113,7 @@ export default {
   },
   methods: {
     checkFormValidity () {
-      const valid = this.$refs.form.checkValidity()
-      console.log(valid)
+      const valid = this.$refs.form && this.$refs.form.checkValidity()
       return valid
     },
     handleOk (bvModalEvt) {

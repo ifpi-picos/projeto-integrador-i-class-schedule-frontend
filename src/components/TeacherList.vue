@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Spinner :showLoad="true" v-if="loader" />
+    <spinner :showLoad="true" v-if="loader" />
       <div v-if="!loader">
         <el-table
           v-if="teachers[0]"
