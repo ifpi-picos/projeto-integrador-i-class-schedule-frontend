@@ -1,12 +1,5 @@
 <template>
-  <b-modal
-    @ok="handleOk"
-    size="sm"
-    centered
-    :id="idModal"
-    :ref="idModal"
-    :title="title"
-  >
+  <b-modal size="sm" centered :id="idModal" :ref="idModal" :title="title">
     <b-form ref="form" @submit.stop.prevent="handleSubmit">
       <h6 class="heading-small text-muted mb-4">Cadastro de Sala de aulas</h6>
 
@@ -25,6 +18,19 @@
         </b-row>
       </div>
     </b-form>
+    <template #modal-footer="{ hide }">
+      <!-- Emulate built in modal footer ok and cancel button actions -->
+      <b-button variant="secondary" @click="hide('forget')">
+        Cancelar
+      </b-button>
+      <b-button
+        :disabled="!checkFormValidity()"
+        variant="primary"
+        @click="handleOk()"
+      >
+        Salvar
+      </b-button>
+    </template>
   </b-modal>
 </template>
 
@@ -56,20 +62,14 @@ export default {
   },
   methods: {
     checkFormValidity () {
-      const valid = this.$refs.form.checkValidity()
-      console.log(valid)
+      const valid = this.$refs.form && this.$refs.form.checkValidity()
       return valid
     },
     handleOk (bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault()
       // Trigger submit handler
       this.handleSubmit()
     },
     handleSubmit () {
-      // const refFirebase = this.$firebase.database().ref("salas");
-      // const id = this.idroom? this.idroom : refFirebase.push().key;
-
       const payload = {
         nome: this.room.name,
         createdAt: new Date().getTime()

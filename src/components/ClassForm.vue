@@ -86,6 +86,20 @@
         </b-row>
       </div>
     </b-form>
+
+    <template #modal-footer="{ hide }">
+      <!-- Emulate built in modal footer ok and cancel button actions -->
+      <b-button variant="secondary" @click="hide('forget')">
+        Cancelar
+      </b-button>
+      <b-button
+        :disabled="!checkFormValidity()"
+        variant="primary"
+        @click="handleOk()"
+      >
+        Salvar
+      </b-button>
+    </template>
   </b-modal>
 </template>
 
@@ -118,15 +132,11 @@ export default {
   },
   methods: {
     checkFormValidity () {
-      const valid = this.$refs.form.checkValidity()
-      console.log(valid)
+      const valid = this.$refs.form && this.$refs.form.checkValidity()
       return valid
     },
     handleOk (bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault()
       // Trigger submit handler
-      this.checkFormValidity()
       this.handleSubmit()
     },
     handleSubmit () {
@@ -167,7 +177,7 @@ export default {
       }
     },
     fillForm () {
-      console.log(this.idClass);
+      console.log(this.idClass)
       if (this.idClass) {
         this.$firebase
           .firestore()
@@ -176,7 +186,7 @@ export default {
           .get()
           .then(querySnapshot => {
             const data = querySnapshot.data()
-            console.log(data);
+            console.log(data)
             this.schoolClass.name = data.nome
             this.schoolClass.shift = data.turno
             this.schoolClass.course = data.curso

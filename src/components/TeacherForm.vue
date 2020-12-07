@@ -103,9 +103,9 @@ export default {
       ],
       occupationAreas: [
         { value: null, text: 'Please select an option' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: 'C', text: 'This is an option with object value' }
+        { value: 'informática', text: 'Infórmatica' },
+        { value: 'fisica', text: 'Fisica' },
+        { value: 'quimica', text: 'Quimica' }
       ]
     }
   },
