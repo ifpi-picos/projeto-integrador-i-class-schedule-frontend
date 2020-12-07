@@ -45,27 +45,29 @@
         <b-row>
           <b-col lg="6">
             <base-input label="Área de atuação" required>
-              <select v-model="teacher.occupationArea" class="form-control">
-                <option>Informatica</option>
-                <option>2</option>
-                <option>3</option>
-              </select>
+              <b-form-select
+                class="form-control"
+                required
+                v-model="teacher.occupationArea"
+                :options="occupationAreas"
+              ></b-form-select>
             </base-input>
           </b-col>
 
           <b-col lg="6">
             <base-input label="Coordenação" required>
-              <select v-model="teacher.coordination" class="form-control">
-                <option>Coordenação ADS</option>
-                <option>2</option>
-                <option>3</option>
-              </select>
+              <b-form-select
+                class="form-control"
+                required
+                v-model="teacher.coordination"
+                :options="coordinations"
+              ></b-form-select>
             </base-input>
           </b-col>
         </b-row>
       </div>
     </b-form>
-    <template #modal-footer="{ ok, cancel, hide }">
+    <template #modal-footer="{ hide }">
       <!-- Emulate built in modal footer ok and cancel button actions -->
       <b-button variant="secondary" @click="hide('forget')">
         Cancelar
@@ -90,9 +92,21 @@ export default {
         username: '',
         registration: '',
         email: '',
-        occupationArea: '',
-        coordination: ''
-      }
+        occupationArea: null,
+        coordination: null
+      },
+      coordinations: [
+        { value: null, text: 'Please select an option' },
+        { value: 'a', text: 'This is First option' },
+        { value: 'b', text: 'Selected Option' },
+        { value: 'C', text: 'This is an option with object value' }
+      ],
+      occupationAreas: [
+        { value: null, text: 'Please select an option' },
+        { value: 'a', text: 'This is First option' },
+        { value: 'b', text: 'Selected Option' },
+        { value: 'C', text: 'This is an option with object value' }
+      ]
     }
   },
   props: {
@@ -116,9 +130,7 @@ export default {
       const valid = this.$refs.form && this.$refs.form.checkValidity()
       return valid
     },
-    handleOk (bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault()
+    handleOk () {
       // Trigger submit handler
       this.handleSubmit()
     },

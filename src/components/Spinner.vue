@@ -31,7 +31,7 @@ export default {
     width: 50px;
     border-radius: 50vh;
     border: 5px solid #2dce89;
-    border-top: 5px solid #fff;
+    border-top: 5px solid rgba(255, 255, 255, 0);
     animation: loading 1.1s linear infinite;
   }
   .loading {
