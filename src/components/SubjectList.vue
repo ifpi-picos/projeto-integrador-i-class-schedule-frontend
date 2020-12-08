@@ -1,12 +1,13 @@
 <template>
   <div>
     <spinner :showLoad="true" v-if="loader" />
+
     <div v-if="!loader">
-      <el-table
-        v-if="rooms"
+      <!--  <el-table
+        v-if="subjects"
         class="table-responsive table"
         header-row-class-name="thead-light"
-        :data="rooms"
+        :data="subjects"
       >
         <el-table-column label="Sala" min-width="310px">
           <template v-slot="{ row }">
@@ -20,27 +21,17 @@
           </template>
         </el-table-column>
 
-        <!-- <el-table-column label="Turmas" prop="budget" min-width="180px">
-          <template v-slot="{ row }">
-            <b-media no-body class="align-items-center">
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">
-                  {{ row.nome }}
-                </span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column> -->
+        
 
         <el-table-column label="Ações" min-width="140px">
           <template v-slot="{ row }">
             <div class="d-flex align-items-center">
-              <b-button @click="editRoom(row.id)" variant="outline-dark" size="sm"
+              <b-button @click="editsubject(row.id)" variant="outline-dark" size="sm"
                 ><i class="fas fa-pen"></i
               ></b-button>
 
               <b-button
-                @click="delRoom(row.id, $event.target)"
+                @click="delsubject(row.id, $event.target)"
                 variant="outline-danger"
                 size="sm"
                 ><i class="fas fa-trash"></i
@@ -49,73 +40,64 @@
           </template>
         </el-table-column>
       </el-table>
+        -->
+      {{ subjects }}
     </div>
-
-    <room-form idModal="modalEdit" :idroom="roomId" title="Atulaizar Sala" />
   </div>
 </template>
 
 <script>
-import { Table, TableColumn } from 'element-ui'
-import RoomForm from './RoomForm.vue'
-
 export default {
-  name: 'roomList',
-  components: {
-    [Table.name]: Table,
-    [TableColumn.name]: TableColumn,
-    RoomForm,
-  },
-
+  name: 'SubjectsList',
   data () {
     return {
-      roomId: '',
-      rooms: [],
+      subjectId: '',
+      subjects: [],
       loader: true
     }
   },
   created () {
-    this.getRooms()
+    this.getSubjects()
   },
   methods: {
-    async getRooms () {
+    async getSubjects () {
       this.$firebase
         .firestore()
-        .collection('salas')
+        .collection('disciplinas')
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
-            const room = change.doc.data()
-            this.loader = false;
+            this.loader = false
             if (change.type === 'added') {
-              room.id = change.doc.id
-              this.rooms.push(room)
+              const subject = change.doc.data()
+              subject.id = change.doc.id
+              this.subjects.push(subject)
             }
             if (change.type === 'modified') {
               console.log('Modified: ', change.doc.data())
-              this.rooms.forEach((item, index) => {
+              this.subjects.forEach((item, index) => {
                 if (change.doc.id === item.id) {
-                  const roomUpdate = change.doc.data()
-                  roomUpdate.id = change.doc.id
-                  this.$set(this.rooms, index, roomUpdate)
+                  const subjectUpdate = change.doc.data()
+                  subjectUpdate.id = change.doc.id
+                  this.$set(this.subjects, index, subjectUpdate)
                 }
               })
             }
             if (change.type === 'removed') {
               console.log('Removed : ', change.doc.data())
-              this.rooms.forEach((item, index) => {
+              this.subjects.forEach((item, index) => {
                 if (change.doc.id === item.id) {
-                  this.rooms.splice(index, 1)
+                  this.subjects.splice(index, 1)
                 }
               })
             }
           })
         })
     },
-    editRoom (id, button) {
-      this.roomId = id
+    editsubject (id, button) {
+      this.subjectId = id
       this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
-    delRoom (id) {
+    delsubject (id) {
       this.$bvModal
         .msgBoxConfirm('Tem certeza que deseja deletar?', {
           title: 'Confirmação',
@@ -133,7 +115,7 @@ export default {
           if (value) {
             this.$firebase
               .firestore()
-              .collection('salas')
+              .collection('disciplinas')
               .doc(id)
               .delete()
               .then(() => {
@@ -152,4 +134,4 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style></style>

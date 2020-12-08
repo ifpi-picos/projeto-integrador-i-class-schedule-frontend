@@ -1,7 +1,7 @@
 <template>
   <div>
     <spinner :showLoad="true" v-if="loader" />
-     <div v-if="!loader">
+    <div v-if="!loader">
       <el-table
         v-if="classes"
         class="table-responsive table"
@@ -50,24 +50,12 @@
             <b-media no-body class="align-items-center">
               <b-media-body>
                 <span class="font-weight-600 name mb-0 text-sm">{{
-                  row.local
+                  row.local + " " + row.id
                 }}</span>
               </b-media-body>
             </b-media>
           </template>
         </el-table-column>
-
-        <!-- <el-table-column label="Turno" min-width="130px" prop="status">
-          <template v-slot="{ row }">
-            <b-media no-body class="align-items-center">
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">{{
-                  row.turno
-                }}</span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column> -->
 
         <el-table-column label="Horário" min-width="160px" prop="status">
           <template v-slot="{ row }">
@@ -84,7 +72,10 @@
         <el-table-column label="Ações" min-width="120px">
           <template v-slot="{ row }">
             <div class="d-flex align-items-center">
-              <b-button @click="editClas(row.id)" variant="outline-dark" size="sm"
+              <b-button
+                @click="editClas(row.id)"
+                variant="outline-dark"
+                size="sm"
                 ><i class="fas fa-pen"></i
               ></b-button>
 
@@ -106,14 +97,13 @@
 <script>
 import { Table, TableColumn } from 'element-ui'
 import ClassForm from './ClassForm.vue'
-// import Spinner from '@/components/Spinner.vue'
 
 export default {
   name: 'ClassList',
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
-    ClassForm,
+    ClassForm
     // Spinner
   },
 
@@ -125,8 +115,7 @@ export default {
     }
   },
   created () {
-    this.getClassesOnChange(),
-    this.getClasses()
+    this.getClassesOnChange(), this.getClasses()
   },
   methods: {
     async getClasses () {
@@ -136,11 +125,10 @@ export default {
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-            const classRom = doc.data()
-            this.loader = false;
-            classRom.id = doc.id
-            this.classes.push(classRom)
-            
+            const classRoom = doc.data()
+            this.loader = false
+            classRoom.id = doc.id
+            this.classes.push(classRoom)
           })
         })
         .catch(function (error) {
@@ -155,15 +143,17 @@ export default {
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
             if (change.type === 'added') {
-              const classRom = change.doc.data()
-              classRom.id = change.doc.id
-              this.classes.push(classRom)
+              const classRoom = change.doc.data()
+              classRoom.id = change.doc.id
+              this.classes.push(classRoom)
             }
             if (change.type === 'modified') {
               console.log('Modified city: ', change.doc.data())
               this.classes.forEach((item, index) => {
                 if (change.doc.id === item.id) {
-                  this.$set(this.classes, index, change.doc.data())
+                  const classUpdate =  change.doc.data()
+                  classUpdate.id = change.doc.id
+                  this.$set(this.classes, index, classUpdate)
                 }
               })
             }

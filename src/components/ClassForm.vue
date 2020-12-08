@@ -86,6 +86,20 @@
         </b-row>
       </div>
     </b-form>
+
+    <template #modal-footer="{ hide }">
+      <!-- Emulate built in modal footer ok and cancel button actions -->
+      <b-button variant="secondary" @click="hide('forget')">
+        Cancelar
+      </b-button>
+      <b-button
+        :disabled="!checkFormValidity()"
+        variant="primary"
+        @click="handleOk()"
+      >
+        Salvar
+      </b-button>
+    </template>
   </b-modal>
 </template>
 
@@ -122,13 +136,10 @@ export default {
   },
   methods: {
     checkFormValidity () {
-      const valid = this.$refs.form.checkValidity()
-      console.log(valid)
+      const valid = this.$refs.form && this.$refs.form.checkValidity()
       return valid
     },
     handleOk (bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault()
       // Trigger submit handler
       this.handleSubmit()
     },
