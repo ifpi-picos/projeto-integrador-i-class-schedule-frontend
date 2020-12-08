@@ -43,6 +43,11 @@ const routes = [
           import(/* webpackChunkName: "Disciplinas" */ '../views/Subjects.vue')
       },
       {
+        path: '/coordenacoes',
+        name: 'coordenacoes',
+        component: () => import(/* webpackChunkName: "Coordenacoes" */ '../views/Coordination.vue')
+      },
+      {
         path: '/icons',
         name: 'icons',
         component: () =>

@@ -44,25 +44,15 @@
           }"
         >
         </sidebar-item>
-
-        <!--  <sidebar-item
-          :link="{
-            name: 'Icons',
-            path: '/icons',
-            icon: 'ni ni-planet text-blue'
-          }"
-        >
-        </sidebar-item>
-
         <sidebar-item
           :link="{
-            name: 'Maps',
-            path: '/maps',
-            icon: 'ni ni-pin-3 text-orange'
+            name: 'Coordenações',
+            path: '/Coordenacoes',
+            icon: 'far fa-address-card text-red'
           }"
         >
         </sidebar-item>
-        -->
+
         <sidebar-item
           :link="{
             name: 'User Profile',
