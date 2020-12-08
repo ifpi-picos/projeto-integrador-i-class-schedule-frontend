@@ -7,7 +7,7 @@
           :link="{
             name: 'Dashboard',
             path: '/dashboard',
-            icon: 'ni ni-tv-2 text-primary',
+            icon: 'ni ni-tv-2 text-primary'
           }"
         >
         </sidebar-item>
@@ -16,7 +16,7 @@
           :link="{
             name: 'Professores',
             path: '/professores',
-            icon: 'fas fa-chalkboard-teacher text-orange',
+            icon: 'fas fa-chalkboard-teacher text-orange'
           }"
         ></sidebar-item>
 
@@ -24,7 +24,7 @@
           :link="{
             name: 'Turmas',
             path: '/turmas',
-            icon: 'ni ni-collection text-green',
+            icon: 'ni ni-collection text-green'
           }"
         >
         </sidebar-item>
@@ -36,6 +36,15 @@
           }"
         >
         </sidebar-item>
+        <sidebar-item
+          :link="{
+            name: 'Disciplinas',
+            path: '/disciplinas',
+            icon: 'fas fa-book-reader text-yellow'
+          }"
+        >
+        </sidebar-item>
+
         <!--  <sidebar-item
           :link="{
             name: 'Icons',
@@ -58,7 +67,7 @@
           :link="{
             name: 'User Profile',
             path: '/profile',
-            icon: 'ni ni-single-02 text-yellow',
+            icon: 'ni ni-single-02 text-yellow'
           }"
         >
         </sidebar-item>
@@ -76,7 +85,7 @@
           :link="{
             name: 'Login',
             path: '/login',
-            icon: 'ni ni-key-25 text-info',
+            icon: 'ni ni-key-25 text-info'
           }"
         >
         </sidebar-item>
@@ -84,7 +93,7 @@
           :link="{
             name: 'Register',
             path: '/register',
-            icon: 'ni ni-circle-08 text-pink',
+            icon: 'ni ni-circle-08 text-pink'
           }"
         >
         </sidebar-item>
@@ -120,58 +129,61 @@
       <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>
 
       <div @click="$sidebar.displaySidebar(false)" class="flex-grow-1">
-        <fade-transition :duration="200" origin="center top" mode="out-in" >
+        <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
           <router-view></router-view>
         </fade-transition>
       </div>
-      <content-footer v-if="!$route.meta.hideFooter" class="position-relative container-fluid"></content-footer>
+      <content-footer
+        v-if="!$route.meta.hideFooter"
+        class="position-relative container-fluid"
+      ></content-footer>
     </div>
   </div>
 </template>
 <script>
 /* eslint-disable no-new */
-import PerfectScrollbar from "perfect-scrollbar";
-import "perfect-scrollbar/css/perfect-scrollbar.css";
+import PerfectScrollbar from 'perfect-scrollbar'
+import 'perfect-scrollbar/css/perfect-scrollbar.css'
 
-function hasElement(className) {
-  return document.getElementsByClassName(className).length > 0;
+function hasElement (className) {
+  return document.getElementsByClassName(className).length > 0
 }
 
-function initScrollbar(className) {
+function initScrollbar (className) {
   if (hasElement(className)) {
-    new PerfectScrollbar(`.${className}`);
+    new PerfectScrollbar(`.${className}`)
   } else {
     // try to init it later in case this component is loaded async
     setTimeout(() => {
-      initScrollbar(className);
-    }, 100);
+      initScrollbar(className)
+    }, 100)
   }
 }
 
-import DashboardNavbar from "./DashboardNavbar.vue";
-import ContentFooter from "./ContentFooter.vue";
-import DashboardContent from "./Content.vue";
-import { FadeTransition } from "vue2-transitions";
+import DashboardNavbar from './DashboardNavbar.vue'
+import ContentFooter from './ContentFooter.vue'
+import DashboardContent from './Content.vue'
+import { FadeTransition } from 'vue2-transitions'
 
 export default {
   components: {
     DashboardNavbar,
     ContentFooter,
     DashboardContent,
-    FadeTransition,
+    FadeTransition
   },
   methods: {
-    initScrollbar() {
-      let isWindows = navigator.platform.startsWith("Win");
+    initScrollbar () {
+      let isWindows = navigator.platform.startsWith('Win')
       if (isWindows) {
-        initScrollbar("sidenav");
+        initScrollbar('sidenav')
       }
-    },
+    }
   },
-  mounted() {
-    this.initScrollbar();
-  },
-};
+  mounted () {
+    this.initScrollbar()
+  }
+}
 </script>
 <style lang="scss"></style>
