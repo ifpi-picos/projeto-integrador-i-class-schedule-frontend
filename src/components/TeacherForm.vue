@@ -128,6 +128,7 @@ export default {
   methods: {
     checkFormValidity () {
       const valid = this.$refs.form && this.$refs.form.checkValidity()
+      console.log('ta validando')
       return valid
     },
     handleOk () {
