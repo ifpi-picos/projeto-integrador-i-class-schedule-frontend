@@ -4,7 +4,7 @@
       <h6 class="heading-small text-muted mb-4">Cadastro das coordenações</h6>
       <div class="pl-lg-4">
         <b-row>
-          <b-col lg="10">
+          <b-col lg="11">
             <base-input
               type="text"
               label="Nome da coordenação"
@@ -18,7 +18,7 @@
         </b-row>
 
         <b-row>
-          <b-col lg="10">
+          <b-col lg="11">
             <base-input
               type="text"
               label="Nome do responsável"
@@ -32,7 +32,7 @@
         </b-row>
 
         <b-row>
-          <b-col lg="10">
+          <b-col lg="11">
             <base-input
               type="email"
               label="email do responsável"

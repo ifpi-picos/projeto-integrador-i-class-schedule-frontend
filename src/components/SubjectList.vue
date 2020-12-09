@@ -3,6 +3,25 @@
     <spinner :showLoad="true" v-if="loader" />
 
     <div v-if="!loader">
+      <b-table striped hover :items="subjects" :fields="fields">
+        <template v-slot:cell(actions)="data">
+          <div class="d-flex align-items-center">
+            <b-button
+              @click="editsubject(data.item.id)"
+              variant="outline-dark"
+              size="sm"
+              ><i class="fas fa-pen"></i
+            ></b-button>
+
+            <b-button
+              @click="delsubject(data.item.id, $event.target)"
+              variant="outline-danger"
+              size="sm"
+              ><i class="fas fa-trash"></i
+            ></b-button>
+          </div>
+        </template>
+      </b-table>
       <!--  <el-table
         v-if="subjects"
         class="table-responsive table"
@@ -41,18 +60,39 @@
         </el-table-column>
       </el-table>
         -->
-      {{ subjects }}
     </div>
+    <subject-form idModal="modalEdit" title="Editar Disciplina" :subjectId="subjectId"/>
+
   </div>
 </template>
 
 <script>
+import SubjectForm from "../components/SubjectForm"
 export default {
+  components: {
+    SubjectForm
+  },
   name: 'SubjectsList',
   data () {
     return {
       subjectId: '',
       subjects: [],
+      fields: [
+        {
+          key: 'carga_horaria',
+          label: 'CArga Horária',
+          sortable: true
+        },
+        {
+          key: 'nome',
+          label: 'Nome da discipina',
+          sortable: true
+        },
+        {
+          key: 'actions',
+          label: 'Ações'
+        }
+      ],
       loader: true
     }
   },
