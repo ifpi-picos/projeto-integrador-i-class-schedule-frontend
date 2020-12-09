@@ -50,7 +50,7 @@
             <b-media no-body class="align-items-center">
               <b-media-body>
                 <span class="font-weight-600 name mb-0 text-sm">{{
-                  row.local + " " + row.id
+                  row.local
                 }}</span>
               </b-media-body>
             </b-media>

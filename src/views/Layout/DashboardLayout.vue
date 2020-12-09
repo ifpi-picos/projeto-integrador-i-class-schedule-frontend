@@ -47,7 +47,7 @@
         <sidebar-item
           :link="{
             name: 'Coordenações',
-            path: '/Coordenacoes',
+            path: '/coordenacoes',
             icon: 'far fa-address-card text-red'
           }"
         >

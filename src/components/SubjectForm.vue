@@ -1,11 +1,11 @@
 <template>
-  <b-modal size="lg" centered :id="idModal" :ref="idModal" :title="title">
+  <b-modal size="sm" centered :id="idModal" :ref="idModal" :title="title">
     <b-form ref="form" @submit.stop.prevent="handleSubmit">
       <h6 class="heading-small text-muted mb-4">Cadastro de disciplinas</h6>
 
-      <div class="pl-lg-4">
+      <div class="lg-4">
         <b-row>
-          <b-col lg="6">
+          <b-col lg="12">
             <base-input
               type="text"
               label="Nome"
@@ -17,7 +17,7 @@
             </base-input>
           </b-col>
 
-          <b-col lg="6">
+          <b-col lg="12">
             <base-input
               type="number"
               min="1"
@@ -47,7 +47,6 @@
         Salvar
       </b-button>
     </template>
-    {{subjectId}}
   </b-modal>
 </template>
 

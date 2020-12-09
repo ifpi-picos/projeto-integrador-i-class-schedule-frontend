@@ -3,9 +3,9 @@
     <spinner :showLoad="true" v-if="loader" />
 
     <div v-if="!loader">
-      <b-table striped hover :items="subjects" :fields="fields">
+      <b-table borderless hover :responsive="true" :items="subjects" :fields="fields">
         <template v-slot:cell(actions)="data">
-          <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center"  >
             <b-button
               @click="editsubject(data.item.id)"
               variant="outline-dark"
