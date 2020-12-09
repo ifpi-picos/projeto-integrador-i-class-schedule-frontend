@@ -3,6 +3,7 @@
     <base-header
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success"
     ></base-header>
+    <!-- FORMULÁRIO DE CADASTRO DAS COORDENAÇÕES -->
     <CoordinationForm idModal="addcoordination" title="Nova coordenação" />
 
     <b-container fluid class="mt--7">
@@ -21,6 +22,7 @@
           </b-row>
         </b-card-header>
         <b-card-body class="p-0">
+          <!-- LISTA DAS CORDENAÇÕES -->
           <coordination-list />
         </b-card-body>
       </b-card>

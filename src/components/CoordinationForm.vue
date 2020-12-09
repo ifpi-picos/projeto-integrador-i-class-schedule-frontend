@@ -36,7 +36,7 @@
             <base-input
               type="email"
               label="email do responsável"
-              placeholder="email do responsável"
+              placeholder="coordenacao.edu@gmail.com"
               name="email"
               v-model="coordination.email"
               required
@@ -46,6 +46,19 @@
         </b-row>
       </div>
     </b-form>
+    <template #modal-footer="{ hide }">
+      <!-- Emulate built in modal footer ok and cancel button actions -->
+      <b-button variant="secondary" @click="hide('forget')">
+        Cancelar
+      </b-button>
+      <b-button
+        :disabled="!checkFormValidity()"
+        variant="primary"
+        @click="handleOk()"
+      >
+        Salvar
+      </b-button>
+    </template>
   </b-modal>
 </template>
 
@@ -75,6 +88,49 @@ export default {
     title: {
       type: String,
       description: 'titulo do modal'
+    }
+  },
+  methods: {
+    checkFormValidity () {
+      const valid = this.$refs.form && this.$refs.form.checkValidity()
+      console.log('ta validando')
+      return valid
+    },
+    handleOk () {
+      this.handleSubmit()
+    },
+    handleSubmit () {
+      const payload = {
+        nome: this.coordination.username,
+        responsavel: this.coordination.responsible,
+        email: this.coordination.email,
+        createdAt: new Date().getTime()
+      }
+      if (!this.checkFormValidity()) {
+        return
+      }
+      const bd = this.$firebase.firestore().collection('coordenacoes')
+
+      if (this.IdCoordination) {
+        bd.doc(this.IdCoordination)
+          .set(payload)
+          .then(() => {
+            this.$refs[this.idModal].hide()
+            if (!this.IdCoordination) {
+              this.coordination = {}
+            }
+          })
+          .catch(error => console.error(error))
+      } else {
+        bd.add(payload)
+          .then(() => {
+            this.$refs[this.idModal].hide()
+            if (!this.IdCoordination) {
+              this.coordination = {}
+            }
+          })
+          .catch(error => console.error(error))
+      }
     }
   }
 }
