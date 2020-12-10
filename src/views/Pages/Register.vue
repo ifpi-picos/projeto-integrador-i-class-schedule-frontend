@@ -5,8 +5,7 @@
       <b-container class="container">
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
-            <b-col xl="5" lg="6" 
-md="8" class="px-5">
+            <b-col xl="5" lg="6" md="8" class="px-5">
               <h1 class="text-white">Create an account</h1>
               <p class="text-lead text-white">
                 Use these awesome forms to login or create new account in your
@@ -124,8 +123,7 @@ md="8" class="px-5">
                     </b-col>
                   </b-row>
                   <div class="text-center">
-                    <b-button type="submit" 
-variant="primary" class="mt-4"
+                    <b-button type="submit" variant="primary" class="mt-4"
                       >Create account</b-button
                     >
                   </div>
@@ -140,22 +138,35 @@ variant="primary" class="mt-4"
 </template>
 <script>
 export default {
-  name: "register",
-  data() {
+  name: 'register',
+  data () {
     return {
       model: {
-        name: "",
-        email: "",
-        password: "",
+        name: '',
+        email: '',
+        password: '',
         agree: false
       }
-    };
+    }
   },
   methods: {
-    onSubmit() {
-      // this will be called only after form is valid. You can do an api call here to register users
+    onSubmit () {
+      const email = this.model.email
+      const password = this.model.password
+      this.$firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(user => {
+          console.log(user);
+        })
+        .catch(error => {
+          const errorCode = error.code
+          const errorMessage = error.message
+          console.error(errorCode);
+          console.error(errorMessage);
+        })
     }
   }
-};
+}
 </script>
 <style></style>

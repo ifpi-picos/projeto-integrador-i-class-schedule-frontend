@@ -106,14 +106,12 @@ export default {
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
             const coordination = change.doc.data()
-            console.log(change.type)
             this.loader = false
             if (change.type === 'added') {
               coordination.id = change.doc.id
               this.coordinations.push(coordination)
             }
             if (change.type === 'modified') {
-              console.log('Modified: ', change.doc.data())
               this.coordinations.forEach((item, index) => {
                 if (change.doc.id === item.id) {
                   const coordinationUpdate = change.doc.data()
@@ -123,7 +121,6 @@ export default {
               })
             }
             if (change.type === 'removed') {
-              console.log('Removed : ', change.doc.data())
               this.coordinations.forEach((item, index) => {
                 if (change.doc.id === item.id) {
                   this.coordinations.splice(index, 1)

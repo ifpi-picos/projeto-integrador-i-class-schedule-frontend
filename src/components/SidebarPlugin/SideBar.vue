@@ -7,14 +7,12 @@
       <!--Toggler-->
       <navbar-toggle-button @click.native="showSidebar"> </navbar-toggle-button>
       <router-link class="navbar-brand" to="/">
-        <img :src="logo" class="navbar-brand-img" 
-alt="..." />
+        <img :src="logo" class="navbar-brand-img" alt="..." />
       </router-link>
 
       <slot name="mobile-right">
         <ul class="nav align-items-center d-md-none">
-          <base-dropdown class="nav-item" menu-on-right 
-tag="li" title-tag="a">
+          <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
             <a
               slot="title-container"
               class="nav-link nav-link-icon"
@@ -31,10 +29,8 @@ tag="li" title-tag="a">
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>
           </base-dropdown>
-          <base-dropdown class="nav-item" menu-on-right 
-tag="li" title-tag="a">
-            <a slot="title-container" class="nav-link" 
-href="#" role="button">
+          <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
+            <a slot="title-container" class="nav-link" href="#" role="button">
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
                   <img alt="Image placeholder" src="img/theme/team-1.jpg" />
@@ -129,43 +125,43 @@ href="#" role="button">
   </nav>
 </template>
 <script>
-import NavbarToggleButton from "@/components/NavbarToggleButton";
+import NavbarToggleButton from '@/components/NavbarToggleButton'
 
 export default {
-  name: "sidebar",
+  name: 'sidebar',
   components: {
     NavbarToggleButton
   },
   props: {
     logo: {
       type: String,
-      default: "img/brand/ifpi.png",
-      description: "Sidebar app logo"
+      default: 'img/brand/ifpi.png',
+      description: 'Sidebar app logo'
     },
     autoClose: {
       type: Boolean,
       default: true,
       description:
-        "Whether sidebar should autoclose on mobile when clicking an item"
+        'Whether sidebar should autoclose on mobile when clicking an item'
     }
   },
-  provide() {
+  provide () {
     return {
       autoClose: this.autoClose
-    };
+    }
   },
   methods: {
-    closeSidebar() {
-      this.$sidebar.displaySidebar(false);
+    closeSidebar () {
+      this.$sidebar.displaySidebar(false)
     },
-    showSidebar() {
-      this.$sidebar.displaySidebar(true);
+    showSidebar () {
+      this.$sidebar.displaySidebar(true)
     }
   },
-  beforeDestroy() {
+  beforeDestroy () {
     if (this.$sidebar.showSidebar) {
-      this.$sidebar.showSidebar = false;
+      this.$sidebar.showSidebar = false
     }
   }
-};
+}
 </script>

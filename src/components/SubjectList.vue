@@ -3,9 +3,15 @@
     <spinner :showLoad="true" v-if="loader" />
 
     <div v-if="!loader">
-      <b-table borderless hover :responsive="true" :items="subjects" :fields="fields">
+      <b-table
+        head-variant="light"
+        hover
+        :responsive="true"
+        :items="subjects"
+        :fields="fields"
+      >
         <template v-slot:cell(actions)="data">
-          <div class="d-flex align-items-center"  >
+          <div class="d-flex align-items-center">
             <b-button
               @click="editsubject(data.item.id)"
               variant="outline-dark"
@@ -22,52 +28,17 @@
           </div>
         </template>
       </b-table>
-      <!--  <el-table
-        v-if="subjects"
-        class="table-responsive table"
-        header-row-class-name="thead-light"
-        :data="subjects"
-      >
-        <el-table-column label="Sala" min-width="310px">
-          <template v-slot="{ row }">
-            <b-media no-body class="align-items-center">
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">{{
-                  row.nome
-                }}</span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
-
-        
-
-        <el-table-column label="Ações" min-width="140px">
-          <template v-slot="{ row }">
-            <div class="d-flex align-items-center">
-              <b-button @click="editsubject(row.id)" variant="outline-dark" size="sm"
-                ><i class="fas fa-pen"></i
-              ></b-button>
-
-              <b-button
-                @click="delsubject(row.id, $event.target)"
-                variant="outline-danger"
-                size="sm"
-                ><i class="fas fa-trash"></i
-              ></b-button>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
-        -->
     </div>
-    <subject-form idModal="modalEdit" title="Editar Disciplina" :subjectId="subjectId"/>
-
+    <subject-form
+      idModal="modalEdit"
+      title="Editar Disciplina"
+      :subjectId="subjectId"
+    />
   </div>
 </template>
 
 <script>
-import SubjectForm from "../components/SubjectForm"
+import SubjectForm from '../components/SubjectForm'
 export default {
   components: {
     SubjectForm

@@ -5,8 +5,7 @@
       <b-container>
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
-            <b-col xl="5" lg="6" 
-md="8" class="px-5">
+            <b-col xl="5" lg="6" md="8" class="px-5">
               <h1 class="text-white">Welcome!</h1>
               <p class="text-lead text-white">
                 Use these awesome forms to login or create new account in your
@@ -105,38 +104,51 @@ md="8" class="px-5">
           </b-card>
           <b-row class="mt-3">
             <b-col cols="6">
-              <router-link to="/dashboard" 
-class="text-light"
+              <router-link to="/dashboard" class="text-light"
                 ><small>Forgot password?</small></router-link
               >
             </b-col>
             <b-col cols="6" class="text-right">
-              <router-link to="/register" 
-class="text-light"
+              <router-link to="/register" class="text-light"
                 ><small>Create new account</small></router-link
               >
             </b-col>
           </b-row>
         </b-col>
       </b-row>
+      
     </b-container>
   </div>
 </template>
 <script>
 export default {
-  data() {
+  name: "login",
+  data () {
     return {
       model: {
-        email: "",
-        password: "",
+        email: '',
+        password: '',
         rememberMe: false
       }
-    };
+    }
   },
   methods: {
-    onSubmit() {
-      // this will be called only after form is valid. You can do api call here to login
+    onSubmit () {
+      const email = this.model.email
+      const password = this.model.password
+      this.$firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(user => {
+          console.log(user);
+        })
+        .catch(error => {
+          const errorCode = error.code
+          const errorMessage = error.message
+          console.error(errorCode);
+          console.error(errorMessage);
+        })
     }
   }
-};
+}
 </script>

@@ -147,10 +147,10 @@ export default {
       if (!this.checkFormValidity()) {
         return
       }
-      const BD = this.$firebase.firestore().collection('professores')
+      const DB = this.$firebase.firestore().collection('professores')
 
       if (this.idTeacher) {
-        BD.doc(this.idTeacher)
+        DB.doc(this.idTeacher)
           .set(payload)
           .then(() => {
             this.$refs[this.idModal].hide()
@@ -160,7 +160,7 @@ export default {
           })
           .catch(error => console.error(error))
       } else {
-        BD.add(payload)
+        DB.add(payload)
           .then(() => {
             this.$refs[this.idModal].hide()
             if (!this.idTeacher) {
