@@ -37,7 +37,7 @@
         </el-table-column>
 
         <el-table-column
-          class="d-flex justify-content-center !important"
+          class="d-flex justify-content-center"
           label="Turmas"
           min-width="160px"
         >

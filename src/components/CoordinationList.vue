@@ -20,7 +20,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="Inresponsável" min-width="250px" prop="name">
+        <el-table-column label="Responsável" min-width="250px" prop="name">
           <template v-slot="{ row }">
             <b-media no-nody>
               <b-media-body>
@@ -33,7 +33,7 @@
         </el-table-column>
 
         <el-table-column
-          label="Email do inresponsável"
+          label="E-mail do responsável"
           min-width="300px"
           prop="name"
         >
@@ -48,7 +48,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="Ações" min-width="140px" class="centralizar">
+        <el-table-column label="Ações" min-width="140px">
           <template v-slot="{ row }">
             <div>
               <b-button
@@ -69,9 +69,9 @@
         </el-table-column>
       </el-table>
     </div>
-    <teacher-form
+    <coordination-form
       idModal="modalEdit"
-      :idCoordination="coordinationId"
+      :IdCoordination="coordinationId"
       title="Atulaizar Coordenação"
     />
   </div>
@@ -79,7 +79,7 @@
 
 <script>
 import { Table, TableColumn } from 'element-ui'
-import CoordinationForm from './CoordinationForm'
+import CoordinationForm from './CoordinationForm.vue'
 // import Spinner from './Spinner.vue'
 export default {
   name: 'CoordinationList',
@@ -136,6 +136,7 @@ export default {
 
     editCoordination (id, button) {
       this.coordinationId = id
+      console.log(id)
       this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
     delCoordination (id) {

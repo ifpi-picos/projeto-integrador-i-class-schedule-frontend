@@ -2,6 +2,7 @@
   <b-modal size="lg" centered :id="idModal" :ref="idModal" :title="title">
     <b-form ref="form" @submit.stop.prevent="handleSubmit">
       <h6 class="heading-small text-muted mb-4">Cadastro das coordenações</h6>
+
       <div class="pl-lg-4">
         <b-row>
           <b-col lg="11">
@@ -78,7 +79,7 @@ export default {
     idModal: {
       type: String,
       default: '',
-      description: 'referencia d modal'
+      description: 'referencia do modal'
     },
     IdCoordination: {
       type: String,
@@ -131,6 +132,33 @@ export default {
           })
           .catch(error => console.error(error))
       }
+    },
+    fillForm () {
+      console.log('Aqui é o fill form')
+      if (this.IdCoordination) {
+        this.$firebase
+          .firestore()
+          .collection('coordenacoes')
+          .doc(this.IdCoordination)
+          .get()
+          .then(querySnapshot => {
+            const data = querySnapshot.data()
+            this.coordination.username = data.nome
+            this.coordination.responsible = data.responsavel
+            this.coordination.email = data.email
+          })
+          .catch(error => {
+            console.log('Error getting documents: ', error)
+          })
+      }
+    }
+  },
+  watch: {
+    IdCoordination () {
+      this.fillForm()
+    },
+    coordination () {
+      this.checkFormValidity()
     }
   }
 }
