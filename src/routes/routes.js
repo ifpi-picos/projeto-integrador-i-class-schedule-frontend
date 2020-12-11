@@ -68,6 +68,12 @@ const routes = [
           import(/* webpackChunkName: "demo" */ '../views/GoogleMaps.vue')
       },
       {
+        path: '/disp',
+        name: 'disp',
+        component: () =>
+          import(/* webpackChunkName: "disp" */ '../views/dispo.vue')
+      },
+      {
         path: '/tables',
         name: 'tables',
         component: () =>

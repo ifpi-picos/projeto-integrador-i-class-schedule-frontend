@@ -14,6 +14,14 @@
 
         <sidebar-item
           :link="{
+            name: 'disp',
+            path: '/disp',
+            icon: 'fas fa-chalkboard-teacher text-orange'
+          }"
+        ></sidebar-item>
+
+        <sidebar-item
+          :link="{
             name: 'Professores',
             path: '/professores',
             icon: 'fas fa-chalkboard-teacher text-orange'
