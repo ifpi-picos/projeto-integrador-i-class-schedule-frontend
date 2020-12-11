@@ -48,6 +48,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "Coordenacoes" */ '../views/Coordination.vue')
       },
       {
+        path: '/turnos',
+        name: 'turnos',
+        component: () => import(/* webpackChunkName: "Coordenacoes" */ '../views/Schedule.vue')
+      },
+      {
         path: '/icons',
         name: 'icons',
         component: () =>

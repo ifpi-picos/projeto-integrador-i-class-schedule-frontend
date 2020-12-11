@@ -5,6 +5,14 @@
       <template slot="links">
         <sidebar-item
           :link="{
+            name: 'disp',
+            path: '/disp',
+            icon: 'fas fa-chalkboard-teacher text-orange'
+          }"
+        ></sidebar-item>
+
+        <sidebar-item
+          :link="{
             name: 'Dashboard',
             path: '/dashboard',
             icon: 'ni ni-tv-2 text-primary'
@@ -14,11 +22,39 @@
 
         <sidebar-item
           :link="{
-            name: 'disp',
-            path: '/disp',
-            icon: 'fas fa-chalkboard-teacher text-orange'
+            name: 'Turnos',
+            path: '/turnos',
+            icon: 'fas fa-clock text-orange'
           }"
-        ></sidebar-item>
+        >
+        </sidebar-item>
+
+        <sidebar-item
+          :link="{
+            name: 'Salas',
+            path: '/salas',
+            icon: 'fas fa-university text-pink'
+          }"
+        >
+        </sidebar-item>
+
+        <sidebar-item
+          :link="{
+            name: 'Coordenações',
+            path: '/coordenacoes',
+            icon: 'far fa-address-card text-red'
+          }"
+        >
+        </sidebar-item>
+
+        <sidebar-item
+          :link="{
+            name: 'Disciplinas',
+            path: '/disciplinas',
+            icon: 'fas fa-book-reader text-yellow'
+          }"
+        >
+        </sidebar-item>
 
         <sidebar-item
           :link="{
@@ -33,30 +69,6 @@
             name: 'Turmas',
             path: '/turmas',
             icon: 'ni ni-collection text-green'
-          }"
-        >
-        </sidebar-item>
-        <sidebar-item
-          :link="{
-            name: 'Salas',
-            path: '/salas',
-            icon: 'fas fa-university text-pink'
-          }"
-        >
-        </sidebar-item>
-        <sidebar-item
-          :link="{
-            name: 'Disciplinas',
-            path: '/disciplinas',
-            icon: 'fas fa-book-reader text-yellow'
-          }"
-        >
-        </sidebar-item>
-        <sidebar-item
-          :link="{
-            name: 'Coordenações',
-            path: '/coordenacoes',
-            icon: 'far fa-address-card text-red'
           }"
         >
         </sidebar-item>
