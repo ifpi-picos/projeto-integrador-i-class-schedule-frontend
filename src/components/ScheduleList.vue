@@ -3,75 +3,19 @@
     <spinner :showLoad="true" v-if="loader" />
 
     <div v-if="!loader">
-      <table
-        role="table"
-        aria-busy="false"
-        aria-colcount="3"
-        class="table b-table table-hover"
-        id="__BVID__233"
+      <b-table
+        head-variant="light"
+        hover
+        :responsive="true"
+        :items="schedules"
+        :fields="fields"
       >
-        <thead role="rowgroup" class="thead-light">
-          <tr role="row" class="">
-            <th
-              role="columnheader"
-              scope="col"
-              tabindex="0"
-              aria-colindex="1"
-              aria-sort="none"
-              class=""
-            >
-              Turno
-            </th>
-            <th
-              role="columnheader"
-              scope="col"
-              tabindex="0"
-              aria-colindex="2"
-              aria-sort="none"
-              class=""
-            >
-              Horário
-            </th>
-            <th role="columnheader" scope="col" aria-colindex="3" class="">
-              Ações
-            </th>
-          </tr>
-        </thead>
+        <template #cell(horario)="data">
+          {{ data.item.inicio_horario }} - {{ data.item.fim_horario }}
+        </template>
 
-        <tbody role="rowgroup">
-          <tr
-            role="row"
-            class=""
-            v-for="schedule in schedules"
-            :key="schedule.id"
-          >
-            <td aria-colindex="1" role="cell" class="">{{ schedule.turno }}</td>
-            <td aria-colindex="2" role="cell" class="">
-              {{ schedule.inicio_horario }} - {{ schedule.fim_horario }}
-            </td>
-            <td aria-colindex="3" role="cell" class="">
-              <div class="d-flex align-items-center">
-                <b-button
-                  @click="editschedule(schedule.id)"
-                  variant="outline-dark"
-                  size="sm"
-                  ><i class="fas fa-pen"></i
-                ></b-button>
-
-                <b-button
-                  @click="delschedule(schedule.id, $event.target)"
-                  variant="outline-danger"
-                  size="sm"
-                  ><i class="fas fa-trash"></i
-                ></b-button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- <b-table borderless hover :responsive="true" :items="schedules" :fields="fields">
         <template v-slot:cell(actions)="data">
-          <div class="d-flex align-items-center"  >
+          <div class="d-flex align-items-center">
             <b-button
               @click="editschedule(data.item.id)"
               variant="outline-dark"
@@ -87,7 +31,7 @@
             ></b-button>
           </div>
         </template>
-      </b-table> -->
+      </b-table>
     </div>
     <schedule-form
       idModal="modalEdit"
@@ -108,22 +52,22 @@ export default {
     return {
       scheduleId: '',
       schedules: [],
-      // fields: [
-      //   {
-      //     key: 'turno',
-      //     label: 'Turno',
-      //     sortable: true
-      //   },
-      //   {
-      //     key: 'horario',
-      //     label: 'Horário',
-      //     sortable: true
-      //   },
-      //   {
-      //     key: 'actions',
-      //     label: 'Ações'
-      //   }
-      // ],
+      fields: [
+        {
+          key: 'turno',
+          label: 'Turno',
+          sortable: true
+        },
+        {
+          key: 'horario',
+          label: 'Horário',
+          sortable: true
+        },
+        {
+          key: 'actions',
+          label: 'Ações'
+        }
+      ],
       loader: true
     }
   },
