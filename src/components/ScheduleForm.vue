@@ -25,21 +25,21 @@
               label="Inicio"
               placeholder="Select time"
               
-              v-model="schedule.time"
+              v-model="schedule.StartTime"
               required
             >
             </base-input>
 
-            <!-- <base-input
+            <base-input
               type="time"
               min="06:00"
               max="22:00"
               label="Fim"
               placeholder="Select time"
-              v-model="schedule.time.endTime"
+              v-model="schedule.endTime"
               required
             >
-            </base-input> -->
+            </base-input>
           </b-col>
         </b-row>
       </div>
@@ -71,7 +71,8 @@ export default {
         //   startTime: '',
         //   endTime: '',
         // },,
-        time: null
+        StartTime: null,
+        endTime: null
       }
     }
   },
@@ -103,7 +104,8 @@ export default {
     handleSubmit () {
       const payload = {
         turno: this.schedule.shift,
-        horario: this.schedule.time,
+        inicio_horario: this.schedule.StartTime,
+        fim_horario: this.schedule.endTime,
         createdAt: new Date().getTime()
       }
       if (!this.checkFormValidity()) {
@@ -142,8 +144,9 @@ export default {
           .then(querySnapshot => {
             const data = querySnapshot.data()
             this.schedule.shift = data.turno
-            this.schedule.time = data.horario
-            // this.schedule.time.endTime = data.horario.endTime
+            this.schedule.StartTime = data.inicio_horario
+            this.schedule.endTime = data.fim_horario
+            // this.schedule.time = data.horario
           })
           .catch(error => {
             console.log('Error getting documents: ', error)
