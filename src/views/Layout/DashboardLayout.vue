@@ -52,6 +52,14 @@
           }"
         >
         </sidebar-item>
+        <sidebar-item
+          :link="{
+            name: 'Turnos',
+            path: '/turnos',
+            icon: 'fas fa-clock text-orange'
+          }"
+        >
+        </sidebar-item>
 
         <sidebar-item
           :link="{
