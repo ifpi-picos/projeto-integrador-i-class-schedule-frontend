@@ -2,115 +2,86 @@
   <div>
     <spinner :showLoad="true" v-if="loader" />
     <div v-if="!loader">
-      <el-table
-        v-if="classes"
-        class="table-responsive table"
-        header-row-class-name="thead-light"
-        :data="classes"
+      <b-table
+        table-class="border-bottom"
+        head-variant="light"
+        hover
+        responsive
+        :items="classes"
+        :fields="fields"
       >
-        <el-table-column label="Turma" min-width="210px" prop="name">
-          <template v-slot="{ row }">
-            <b-media no-body class="align-items-center">
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">{{
-                  row.nome
-                }}</span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
+        <template v-slot:cell(actions)="data">
+          <div class="d-flex align-items-center">
+            <b-button
+              @click="editClass(data.item.id)"
+              variant="outline-dark"
+              size="sm"
+              ><i class="fas fa-pen"></i
+            ></b-button>
 
-        <el-table-column label="Curso" prop="budget" min-width="180px">
-          <template v-slot="{ row }">
-            <b-media no-body class="align-items-center">
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">{{
-                  row.curso
-                }}</span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Módulo" prop="budget" min-width="130px">
-          <template v-slot="{ row }">
-            <b-media no-body>
-              <b-media-body>
-                <span
-                  class="d-flex justify-content-center font-weight-600 name mb-0 text-sm"
-                  >{{ row.modulo }}</span
-                >
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Sala" min-width="130px">
-          <template v-slot="{ row }">
-            <b-media no-body class="align-items-center">
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">{{
-                  row.local
-                }}</span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Horário" min-width="160px" prop="status">
-          <template v-slot="{ row }">
-            <b-media no-body class="align-items-center">
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">{{
-                  row.horario
-                }}</span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Ações" min-width="120px">
-          <template v-slot="{ row }">
-            <div class="d-flex align-items-center">
-              <b-button
-                @click="editClas(row.id)"
-                variant="outline-dark"
-                size="sm"
-                ><i class="fas fa-pen"></i
-              ></b-button>
-
-              <b-button
-                @click="delClass(row.id, $event.target)"
-                variant="outline-danger"
-                size="sm"
-                ><i class="fas fa-trash"></i
-              ></b-button>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
+            <b-button
+              @click="delClass(data.item.id, $event.target)"
+              variant="outline-danger"
+              size="sm"
+              ><i class="fas fa-trash"></i
+            ></b-button>
+          </div>
+        </template>
+      </b-table>
     </div>
     <class-form idModal="modalEdit" :idClass="idClass" />
   </div>
 </template>
 
 <script>
-import { Table, TableColumn } from 'element-ui'
 import ClassForm from './ClassForm.vue'
 
 export default {
   name: 'ClassList',
   components: {
-    [Table.name]: Table,
-    [TableColumn.name]: TableColumn,
     ClassForm
-    // Spinner
   },
 
   data () {
     return {
       idClass: '',
       classes: [],
+      fields: [
+        {
+          key: 'nome',
+          label: 'Turma',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'curso',
+          label: 'curso',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'modulo',
+          label: 'Módulo',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'local',
+          label: 'sala',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'horario',
+          label: 'Horário',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'actions',
+          label: 'Ações'
+        }
+      ],
       loader: true
     }
   },
@@ -151,7 +122,7 @@ export default {
               console.log('Modified city: ', change.doc.data())
               this.classes.forEach((item, index) => {
                 if (change.doc.id === item.id) {
-                  const classUpdate =  change.doc.data()
+                  const classUpdate = change.doc.data()
                   classUpdate.id = change.doc.id
                   this.$set(this.classes, index, classUpdate)
                 }
@@ -169,7 +140,7 @@ export default {
         })
     },
 
-    editClas (id, button) {
+    editClass (id, button) {
       this.idClass = id
       //this.$refs.modaledit.show();
       this.$root.$emit('bv::show::modal', 'modalEdit', button)

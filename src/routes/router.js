@@ -23,7 +23,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('from: ', from, ' to: ', to)
   const LOGIN = 'login'
   const INITIAL_PAGE = 'dashboard'
   Firebase.auth().onAuthStateChanged(user => {

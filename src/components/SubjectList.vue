@@ -7,6 +7,7 @@
         head-variant="light"
         hover
         responsive
+        table-class="border-bottom"
         :items="subjects"
         :fields="fields"
       >
@@ -51,12 +52,14 @@ export default {
       fields: [
         {
           key: 'carga_horaria',
-          label: 'CArga Horária',
+          label: 'Carga Horária',
+          tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {
           key: 'nome',
           label: 'Nome da discipina',
+          tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {

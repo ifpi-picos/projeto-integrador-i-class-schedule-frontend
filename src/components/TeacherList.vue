@@ -2,84 +2,32 @@
   <div>
     <spinner :showLoad="true" v-if="loader" />
     <div v-if="!loader">
-      <el-table
-        v-if="teachers[0]"
-        class="table-responsive table"
-        header-row-class-name="thead-light"
-        :data="teachers"
+      <b-table
+        table-class="border-bottom"
+        head-variant="light"
+        hover
+        responsive
+        :items="teachers"
+        :fields="fields"
       >
-        <el-table-column label="Professor" min-width="300px" prop="name">
-          <template v-slot="{ row }">
-            <b-media no-body>
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">{{
-                  row.nome
-                }}</span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
+        <template v-slot:cell(actions)="data">
+          <div class="d-flex align-items-center">
+            <b-button
+              @click="editTeacher(data.item.id)"
+              variant="outline-dark"
+              size="sm"
+              ><i class="fas fa-pen"></i
+            ></b-button>
 
-        <el-table-column
-          label="Area de Atuação"
-          prop="budget"
-          min-width="180px"
-        >
-          <template v-slot="{ row }">
-            <b-media no-body>
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">{{
-                  row.area_de_ocupacao
-                }}</span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
-
-        <el-table-column
-          class="d-flex justify-content-center"
-          label="Turmas"
-          min-width="160px"
-        >
-          <template v-slot="{ row }">
-            <b-media no-body>
-              <b-media-body>
-                <span class="d-flex justify-content-center">1</span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Disciplinas" min-width="150px">
-          <template v-slot="{ row }">
-            <b-media no-body>
-              <b-media-body>
-                <span>4</span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Ações" min-width="140px">
-          <template v-slot="{ row }">
-            <div>
-              <b-button
-                @click="editTeacher(row.id)"
-                variant="outline-dark"
-                size="sm"
-                ><i class="fas fa-pen"></i
-              ></b-button>
-
-              <b-button
-                @click="delTeacher(row.id, $event.target)"
-                variant="outline-danger"
-                size="sm"
-                ><i class="fas fa-trash"></i
-              ></b-button>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
+            <b-button
+              @click="delTeacher(data.item.id, $event.target)"
+              variant="outline-danger"
+              size="sm"
+              ><i class="fas fa-trash"></i
+            ></b-button>
+          </div>
+        </template>
+      </b-table>
     </div>
     <teacher-form
       idModal="modalEdit"
@@ -90,14 +38,11 @@
 </template>
 
 <script>
-import { Table, TableColumn } from 'element-ui'
 import TeacherForm from './TeacherForm.vue'
 
 export default {
   name: 'TeacherList',
   components: {
-    [Table.name]: Table,
-    [TableColumn.name]: TableColumn,
     TeacherForm
   },
 
@@ -105,6 +50,36 @@ export default {
     return {
       teacherId: '',
       teachers: [],
+      fields: [
+        {
+          key: 'nome',
+          label: 'Professor',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'area_de_ocupacao',
+          label: 'Area de atuação',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'turmas',
+          label: 'Turmas',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'disciplinas',
+          label: 'Disciplinas',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'actions',
+          label: 'Ações'
+        }
+      ],
       loader: true
     }
   },

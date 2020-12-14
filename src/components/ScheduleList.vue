@@ -4,6 +4,7 @@
 
     <div v-if="!loader">
       <b-table
+        table-class="border-bottom"
         head-variant="light"
         hover
         :responsive="true"
@@ -17,14 +18,14 @@
         <template v-slot:cell(actions)="data">
           <div class="d-flex align-items-center">
             <b-button
-              @click="editschedule(data.item.id)"
+              @click="editSchedule(data.item.id)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
             ></b-button>
 
             <b-button
-              @click="delschedule(data.item.id, $event.target)"
+              @click="delSchedule(data.item.id, $event.target)"
               variant="outline-danger"
               size="sm"
               ><i class="fas fa-trash"></i
@@ -56,11 +57,13 @@ export default {
         {
           key: 'turno',
           label: 'Turno',
+          tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {
           key: 'horario',
           label: 'Horário',
+          tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {
@@ -108,11 +111,11 @@ export default {
           })
         })
     },
-    editschedule (id, button) {
+    editSchedule (id, button) {
       this.scheduleId = id
       this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
-    delschedule (id) {
+    delSchedule (id) {
       this.$bvModal
         .msgBoxConfirm('Tem certeza que deseja deletar?', {
           title: 'Confirmação',

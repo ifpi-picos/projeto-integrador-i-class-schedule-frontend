@@ -1,12 +1,5 @@
 <template>
-  <b-modal
-    @ok="handleOk"
-    size="lg"
-    centered
-    :id="idModal"
-    :ref="idModal"
-    :title="title"
-  >
+  <b-modal size="lg" centered :id="idModal" :ref="idModal" :title="title">
     <b-form ref="form" @submit.stop.prevent="handleSubmit">
       <h6 class="heading-small text-muted mb-4">Cadastro das turmas</h6>
 
@@ -139,8 +132,7 @@ export default {
       const valid = this.$refs.form && this.$refs.form.checkValidity()
       return valid
     },
-    handleOk (bvModalEvt) {
-      // Trigger submit handler
+    handleOk () {
       this.handleSubmit()
     },
     handleSubmit () {
@@ -170,6 +162,7 @@ export default {
           })
           .catch(error => console.error(error))
       } else {
+        console.log(this.idClass)
         this.$firebase
           .firestore()
           .collection('turmas')
@@ -184,7 +177,6 @@ export default {
       }
     },
     fillForm () {
-      console.log(this.idClass)
       if (this.idClass) {
         this.$firebase
           .firestore()

@@ -2,72 +2,35 @@
   <div>
     <spinner :showLoad="true" v-if="loader" />
     <div v-if="!loader">
-      <el-table
+      <b-table
         v-if="coordinations[0]"
-        class="table-responsive table"
-        header-row-class-name="thead-light"
-        :data="coordinations"
+        head-variant="light"
+        hover
+        responsive
+        thClass="text-red"
+        thead-tr-class="pb-4 pt-4"
+        tbody-tr-class=""
+        :items="coordinations"
+        :fields="fields"
       >
-        <el-table-column label="Curso" min-width="250px" prop="name">
-          <template v-slot="{ row }">
-            <b-media no-nody>
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm ">
-                  {{ row.nome }}
-                </span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
+        <template v-slot:cell(actions)="data">
+          <div class="d-flex justify-content-center">
+            <b-button
+              @click="editCoordination(data.item.id)"
+              variant="outline-dark"
+              size="sm"
+              ><i class="fas fa-pen"></i
+            ></b-button>
 
-        <el-table-column label="Responsável" min-width="250px" prop="name">
-          <template v-slot="{ row }">
-            <b-media no-nody>
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">
-                  {{ row.responsavel }}
-                </span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
-
-        <el-table-column
-          label="E-mail do responsável"
-          min-width="300px"
-          prop="name"
-        >
-          <template v-slot="{ row }">
-            <b-media no-nody>
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">
-                  {{ row.email }}
-                </span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="Ações" min-width="140px">
-          <template v-slot="{ row }">
-            <div>
-              <b-button
-                @click="editCoordination(row.id)"
-                variant="outline-dark"
-                size="sm"
-                ><i class="fas fa-pen"></i
-              ></b-button>
-
-              <b-button
-                @click="delCoordination(row.id, $event.target)"
-                variant="outline-danger"
-                size="sm"
-                ><i class="fas fa-trash"></i
-              ></b-button>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
+            <b-button
+              @click="delCoordination(data.item.id, $event.target)"
+              variant="outline-danger"
+              size="sm"
+              ><i class="fas fa-trash"></i
+            ></b-button>
+          </div>
+        </template>
+      </b-table>
     </div>
     <coordination-form
       idModal="modalEdit"
@@ -78,20 +41,40 @@
 </template>
 
 <script>
-import { Table, TableColumn } from 'element-ui'
 import CoordinationForm from './CoordinationForm.vue'
-// import Spinner from './Spinner.vue'
 export default {
   name: 'CoordinationList',
   components: {
-    [Table.name]: Table,
-    [TableColumn.name]: TableColumn,
     CoordinationForm
   },
   data () {
     return {
       coordinationId: '',
       coordinations: [],
+      fields: [
+        {
+          key: 'nome',
+          label: 'curso',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'responsavel',
+          label: 'Responsável',
+          tdClass: 'font-weight-600 name  text-sm ',
+          sortable: true
+        },
+        {
+          key: 'email',
+          label: 'E-mail',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'actions',
+          label: 'Ações'
+        }
+      ],
       loader: true
     }
   },

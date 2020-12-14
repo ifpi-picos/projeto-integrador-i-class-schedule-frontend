@@ -2,53 +2,35 @@
   <div>
     <spinner :showLoad="true" v-if="loader" />
     <div v-if="!loader">
-      <el-table
+      <b-table
         v-if="rooms"
-        class="table-responsive table"
-        header-row-class-name="thead-light"
-        :data="rooms"
+        head-variant="light"
+        hover
+        responsive
+        table-class="border-bottom"
+        thead-tr-class="text-center"
+        tbody-tr-class="text-center"
+        :items="rooms"
+        :fields="fields"
       >
-        <el-table-column label="Sala" min-width="310px">
-          <template v-slot="{ row }">
-            <b-media no-body class="align-items-center">
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">{{
-                  row.nome
-                }}</span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column>
+        <template v-slot:cell(actions)="data">
+          <div class="d-flex justify-content-center">
+            <b-button
+              @click="editRoom(data.item.id)"
+              variant="outline-dark"
+              size="sm"
+              ><i class="fas fa-pen"></i
+            ></b-button>
 
-        <!-- <el-table-column label="Turmas" prop="budget" min-width="180px">
-          <template v-slot="{ row }">
-            <b-media no-body class="align-items-center">
-              <b-media-body>
-                <span class="font-weight-600 name mb-0 text-sm">
-                  {{ row.nome }}
-                </span>
-              </b-media-body>
-            </b-media>
-          </template>
-        </el-table-column> -->
-
-        <el-table-column label="Ações" min-width="140px">
-          <template v-slot="{ row }">
-            <div class="d-flex align-items-center">
-              <b-button @click="editRoom(row.id)" variant="outline-dark" size="sm"
-                ><i class="fas fa-pen"></i
-              ></b-button>
-
-              <b-button
-                @click="delRoom(row.id, $event.target)"
-                variant="outline-danger"
-                size="sm"
-                ><i class="fas fa-trash"></i
-              ></b-button>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
+            <b-button
+              @click="delRoom(data.item.id, $event.target)"
+              variant="outline-danger"
+              size="sm"
+              ><i class="fas fa-trash"></i
+            ></b-button>
+          </div>
+        </template>
+      </b-table>
     </div>
 
     <room-form idModal="modalEdit" :idroom="roomId" title="Atulaizar Sala" />
@@ -56,21 +38,30 @@
 </template>
 
 <script>
-import { Table, TableColumn } from 'element-ui'
 import RoomForm from './RoomForm.vue'
 
 export default {
   name: 'roomList',
   components: {
-    [Table.name]: Table,
-    [TableColumn.name]: TableColumn,
-    RoomForm,
+    RoomForm
   },
 
   data () {
     return {
       roomId: '',
       rooms: [],
+      fields: [
+        {
+          key: 'nome',
+          label: 'Sala',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'actions',
+          label: 'Ações'
+        }
+      ],
       loader: true
     }
   },
@@ -85,7 +76,7 @@ export default {
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
             const room = change.doc.data()
-            this.loader = false;
+            this.loader = false
             if (change.type === 'added') {
               room.id = change.doc.id
               this.rooms.push(room)
