@@ -7,7 +7,7 @@
           :link="{
             name: 'disp',
             path: '/disp',
-            icon: 'fas fa-chalkboard-teacher text-orange'
+            icon: 'fas fa-chalkboard-teacher text-cyan'
           }"
         ></sidebar-item>
 
@@ -15,7 +15,7 @@
           :link="{
             name: 'Dashboard',
             path: '/dashboard',
-            icon: 'ni ni-tv-2 text-primary'
+            icon: 'ni ni-tv-2 text-cyan'
           }"
         >
         </sidebar-item>
@@ -24,7 +24,7 @@
           :link="{
             name: 'Turnos',
             path: '/turnos',
-            icon: 'fas fa-clock text-orange'
+            icon: 'fas fa-clock text-cyan'
           }"
         >
         </sidebar-item>
@@ -33,7 +33,7 @@
           :link="{
             name: 'Salas',
             path: '/salas',
-            icon: 'fas fa-university text-pink'
+            icon: 'fas fa-university text-cyan'
           }"
         >
         </sidebar-item>
@@ -42,7 +42,7 @@
           :link="{
             name: 'Coordenações',
             path: '/coordenacoes',
-            icon: 'far fa-address-card text-red'
+            icon: 'far fa-address-card text-cyan'
           }"
         >
         </sidebar-item>
@@ -51,7 +51,7 @@
           :link="{
             name: 'Disciplinas',
             path: '/disciplinas',
-            icon: 'fas fa-book-reader text-yellow'
+            icon: 'fas fa-book-reader text-cyan'
           }"
         >
         </sidebar-item>
@@ -60,7 +60,7 @@
           :link="{
             name: 'Professores',
             path: '/professores',
-            icon: 'fas fa-chalkboard-teacher text-orange'
+            icon: 'fas fa-chalkboard-teacher text-cyan'
           }"
         ></sidebar-item>
 
@@ -68,7 +68,7 @@
           :link="{
             name: 'Turmas',
             path: '/turmas',
-            icon: 'ni ni-collection text-green'
+            icon: 'ni ni-collection text-cyan'
           }"
         >
         </sidebar-item>
@@ -77,7 +77,7 @@
           :link="{
             name: 'User Profile',
             path: '/profile',
-            icon: 'ni ni-single-02 text-yellow'
+            icon: 'ni ni-single-02 text-cyan'
           }"
         >
         </sidebar-item>
@@ -86,7 +86,7 @@
           :link="{
             name: 'Tables',
             path: '/tables',
-            icon: 'ni ni-bullet-list-67 text-red',
+            icon: 'ni ni-bullet-list-67 text-cyan',
           }"
         >
         </sidebar-item>
@@ -95,7 +95,7 @@
           :link="{
             name: 'Login',
             path: '/login',
-            icon: 'ni ni-key-25 text-info'
+            icon: 'ni ni-key-25 text-cyan'
           }"
         >
         </sidebar-item>
@@ -103,7 +103,7 @@
           :link="{
             name: 'Register',
             path: '/register',
-            icon: 'ni ni-circle-08 text-pink'
+            icon: 'ni ni-circle-08 text-cyan'
           }"
         >
         </sidebar-item>

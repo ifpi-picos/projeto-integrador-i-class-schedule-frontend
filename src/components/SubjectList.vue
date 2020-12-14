@@ -6,7 +6,7 @@
       <b-table
         head-variant="light"
         hover
-        :responsive="true"
+        responsive
         :items="subjects"
         :fields="fields"
       >
