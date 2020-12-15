@@ -25,10 +25,22 @@ const routes = [
           import(/* webpackChunkName: "Professores" */ '../views/Teachers.vue')
       },
       {
+        path: '/cursos',
+        name: 'cursos',
+        component: () =>
+        import(/* webpackChunkName: "Cursos" */ '../views/Courses.vue')
+      },
+      {
         path: '/turmas',
         name: 'turmas',
         component: () =>
           import(/* webpackChunkName: "Turmas" */ '../views/Class.vue')
+      },
+      {
+        path: '/courseform',
+        name: 'courseform',
+        component: () =>
+          import(/* webpackChunkName: "Formulário de cursos" */ '../views/CourseForm.vue')
       },
       {
         path: '/salas',

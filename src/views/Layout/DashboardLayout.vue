@@ -22,6 +22,15 @@
 
         <sidebar-item
           :link="{
+            name: 'Cursos',
+            path: '/cursos',
+            icon: 'fas fa-book-open text-cyan'
+          }"
+        >
+        </sidebar-item>
+
+        <sidebar-item
+          :link="{
             name: 'Turnos',
             path: '/turnos',
             icon: 'fas fa-clock text-cyan'
