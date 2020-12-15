@@ -10,7 +10,7 @@
               type="text"
               label="Nome da coordenação"
               placeholder="Nome da coordenação"
-              name="nome"
+              name="Nome da coordenação"
               v-model="coordination.username"
               required
             >
@@ -24,7 +24,7 @@
               type="text"
               label="Nome do responsável"
               placeholder="Nome do responsável"
-              name="responsible"
+              name="Nome do responsável"
               v-model="coordination.responsible"
               required
             >

@@ -20,11 +20,12 @@
           <b-col lg="6">
             <base-input
               type="text"
-              label="Matricula"
+              label="Matrícula"
               placeholder="Ex.: SIAPE "
               v-model="teacher.registration"
               name="Matricula"
               required
+              rules="required|min:7|max:7"
             >
             </base-input>
           </b-col>
@@ -96,13 +97,13 @@ export default {
         coordination: null
       },
       coordinations: [
-        { value: null, text: 'Please select an option' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: 'C', text: 'This is an option with object value' }
+        { value: null, text: 'Por favor selecione uma opção' },
+        { value: 'id-cordenação', text: 'ADS' },
+        { value: 'id-cordenação', text: 'ADM' },
+        { value: 'id-cordenação', text: 'FIS' }
       ],
       occupationAreas: [
-        { value: null, text: 'Please select an option' },
+        { value: null, text: 'Por favor selecione uma opção' },
         { value: 'informática', text: 'Infórmatica' },
         { value: 'fisica', text: 'Fisica' },
         { value: 'quimica', text: 'Quimica' }

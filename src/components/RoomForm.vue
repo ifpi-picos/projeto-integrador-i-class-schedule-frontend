@@ -8,7 +8,8 @@
           <b-col lg="12">
             <base-input
               type="text"
-              label="Nome da Sala"
+              name="Sala"
+              label="Sala"
               placeholder="Sala"
               v-model="room.name"
               required

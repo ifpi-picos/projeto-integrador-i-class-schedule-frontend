@@ -19,18 +19,19 @@
 
           <b-col lg="12">
             <base-input
+              name="Inicio"
               type="time"
               min="06:00"
               max="22:00"
               label="Inicio"
               placeholder="Select time"
-              
               v-model="schedule.StartTime"
               required
             >
             </base-input>
 
             <base-input
+              name="Fim"
               type="time"
               min="06:00"
               max="22:00"

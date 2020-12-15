@@ -25,12 +25,11 @@
               label="Carga Horária"
               placeholder="Ex.: SIAPE "
               v-model="subject.workload"
-              name="Matricula"
+              name="Carga Horária"
               required
             >
             </base-input>
           </b-col>
-
         </b-row>
       </div>
     </b-form>
@@ -58,7 +57,7 @@ export default {
       subject: {
         name: '',
         workload: ''
-      },
+      }
     }
   },
   props: {
@@ -129,7 +128,6 @@ export default {
             const data = querySnapshot.data()
             this.subject.name = data.nome
             this.subject.workload = data.carga_horaria
-         
           })
           .catch(error => {
             console.log('Error getting documents: ', error)

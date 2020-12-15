@@ -11,8 +11,7 @@
               label="Nome da turma"
               placeholder="INFO III"
               v-model="schoolClass.name"
-              error="teste"
-              rules="required"
+              name="Nome da turma"
               required
             >
             </base-input>
@@ -67,7 +66,7 @@
             </base-input>
           </b-col>
 
-          <b-col lg="5">
+          <!--  <b-col lg="5">
             <base-input label="Horário" required>
               <select v-model="schoolClass.houer" class="form-control">
                 <option>7:00 - 17:30</option>
@@ -76,6 +75,7 @@
               </select>
             </base-input>
           </b-col>
+        -->
         </b-row>
       </div>
     </b-form>
@@ -105,8 +105,8 @@ export default {
         shift: null,
         course: null,
         module: null,
-        location: null,
-        houer: null
+        location: null
+        //houer: null
       },
       schedules: [
         { value: null, text: 'Por favor escolha uma opção' },
@@ -159,7 +159,7 @@ export default {
         curso: this.schoolClass.course,
         modulo: this.schoolClass.module,
         local: this.schoolClass.location,
-        horario: this.schoolClass.houer,
+        //  horario: this.schoolClass.houer,
         createdAt: new Date().getTime()
       }
       if (!this.checkFormValidity()) {
