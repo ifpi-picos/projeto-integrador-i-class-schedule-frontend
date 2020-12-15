@@ -20,25 +20,25 @@
 
           <b-col lg="4">
             <base-input label="Turno" required>
-              <select v-model="schoolClass.shift" class="form-control">
-                <option>Manhã</option>
-                <option>Tarde</option>
-                <option>Noite</option>
-              </select>
+              <b-form-select
+                class="form-control"
+                required
+                v-model="schoolClass.shift"
+                :options="schedules"
+              ></b-form-select>
             </base-input>
           </b-col>
         </b-row>
 
         <b-row>
           <b-col lg="6">
-            <base-input
-              type="text"
-              label="Curso"
-              placeholder="Informática"
-              v-model="schoolClass.course"
-              name="Curso"
-              required
-            >
+            <base-input label="Curso" name="Curso" required>
+              <b-form-select
+                class="form-control"
+                required
+                v-model="schoolClass.course"
+                :options="courses"
+              ></b-form-select>
             </base-input>
           </b-col>
 
@@ -58,12 +58,12 @@
         <b-row>
           <b-col lg="6">
             <base-input label="Sala" required>
-              <select v-model="schoolClass.location" class="form-control">
-                <option>Local 1</option>
-                <option>Local 2</option>
-                <option>Local 3</option>
-                <option>Local 4</option>
-              </select>
+              <b-form-select
+                class="form-control"
+                required
+                v-model="schoolClass.location"
+                :options="locations"
+              ></b-form-select>
             </base-input>
           </b-col>
 
@@ -81,7 +81,6 @@
     </b-form>
 
     <template #modal-footer="{ hide }">
-      <!-- Emulate built in modal footer ok and cancel button actions -->
       <b-button variant="secondary" @click="hide('forget')">
         Cancelar
       </b-button>
@@ -102,13 +101,31 @@ export default {
   data () {
     return {
       schoolClass: {
-        name: '',
-        shift: '',
-        course: '',
-        module: '',
-        location: '',
-        houer: ''
-      }
+        name: null,
+        shift: null,
+        course: null,
+        module: null,
+        location: null,
+        houer: null
+      },
+      schedules: [
+        { value: null, text: 'Por favor escolha uma opção' },
+        { value: 'id-manha', text: 'Manha' },
+        { value: 'id-tarde', text: 'Tarde' },
+        { value: 'id-noite', text: 'Noite' }
+      ],
+      locations: [
+        { value: null, text: 'Por favor escolha uma opção' },
+        { value: 'id-a1', text: 'A1' },
+        { value: 'id-a2', text: 'A2' },
+        { value: 'id-a3', text: 'A3' }
+      ],
+      courses: [
+        { value: null, text: 'Por favor escolha uma opção' },
+        { value: 'id-ads', text: 'ADS' },
+        { value: 'id-adm', text: 'ADM' },
+        { value: 'id-fis', text: 'FIS' }
+      ]
     }
   },
   props: {
