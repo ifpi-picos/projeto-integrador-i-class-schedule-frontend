@@ -66,7 +66,6 @@
   </validation-provider>
 </template>
 <script>
-import Portuguese from 'vee-validate/dist/locale/pt_BR'
 export default {
   inheritAttrs: false,
   name: 'base-input',

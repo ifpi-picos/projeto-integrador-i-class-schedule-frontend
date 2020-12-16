@@ -12,9 +12,9 @@
               <h3>Cursos</h3>
             </b-col>
             <b-col class="text-right">
-              <b-button variant="success" href="CourseForm">
+              <router-link class="btn btn-success" :to="{ name: 'novo-curso' }">
                 <i class="ni ni-fat-add"></i>
-                Adcionar</b-button
+                Adcionar</router-link
               >
             </b-col>
           </b-row>
@@ -29,13 +29,11 @@
 
 <script>
 import CourseList from '@/components/CourseList.vue'
-import CourseForm from './CourseForm.vue'
 
 export default {
   name: 'Courses',
   components: {
-    CourseList,
-    CourseForm
+    CourseList
   },
   data () {
     return {}

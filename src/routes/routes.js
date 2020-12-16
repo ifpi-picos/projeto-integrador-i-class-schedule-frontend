@@ -28,19 +28,32 @@ const routes = [
         path: '/cursos',
         name: 'cursos',
         component: () =>
-        import(/* webpackChunkName: "Cursos" */ '../views/Courses.vue')
+          import(/* webpackChunkName: "Cursos" */ '../views/Courses.vue')
       },
+      {
+        path: '/curso',
+        name: 'novo-curso',
+        component: () =>
+          import(
+            /* webpackChunkName: "Formulário de cursos" */ '../views/Course.vue'
+          ),
+        children: [
+          {
+            path: ':id',
+            name: 'editar-curso',
+            component: () =>
+              import(
+                /* webpackChunkName: "Formulário de cursos" */ '../views/Course.vue'
+              )
+          }
+        ]
+      },
+
       {
         path: '/turmas',
         name: 'turmas',
         component: () =>
           import(/* webpackChunkName: "Turmas" */ '../views/Class.vue')
-      },
-      {
-        path: '/courseform',
-        name: 'courseform',
-        component: () =>
-          import(/* webpackChunkName: "Formulário de cursos" */ '../views/CourseForm.vue')
       },
       {
         path: '/salas',
@@ -57,12 +70,16 @@ const routes = [
       {
         path: '/coordenacoes',
         name: 'coordenacoes',
-        component: () => import(/* webpackChunkName: "Coordenacoes" */ '../views/Coordination.vue')
+        component: () =>
+          import(
+            /* webpackChunkName: "Coordenacoes" */ '../views/Coordination.vue'
+          )
       },
       {
         path: '/turnos',
         name: 'turnos',
-        component: () => import(/* webpackChunkName: "Coordenacoes" */ '../views/Schedule.vue')
+        component: () =>
+          import(/* webpackChunkName: "Coordenacoes" */ '../views/Schedule.vue')
       },
       {
         path: '/icons',

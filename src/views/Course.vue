@@ -9,7 +9,7 @@
         <b-card-header>
           <b-row align-h="between">
             <b-col>
-              <h3>Cadastro de Cursos</h3>
+              <h3>Cadastrar curso</h3>
             </b-col>
           </b-row>
         </b-card-header>
@@ -17,9 +17,9 @@
         <b-card-body>
           <template>
             <b-form ref="form">
-              <div class="pl-lg-4">
+              <div>
                 <b-row>
-                  <b-col lg="10">
+                  <b-col lg="12">
                     <base-input
                       type="text"
                       label="Nome do curso"
@@ -33,7 +33,7 @@
                 </b-row>
 
                 <b-row>
-                  <b-col lg="5">
+                  <b-col lg="4">
                     <base-input label="Modalidade" required>
                       <b-form-select
                         class="form-control"
@@ -45,7 +45,7 @@
                     </base-input>
                   </b-col>
 
-                  <b-col lg="3">
+                  <b-col lg="4">
                     <base-input
                       type="number"
                       label="Módulos"
@@ -57,13 +57,13 @@
                     </base-input>
                   </b-col>
 
-                  <b-col lg="2">
+                  <b-col lg="4">
                     <base-input
-                      type="time"
-                      label="CH"
-                      v-model="course.ch"
+                      type="number"
+                      label="Carga Horária"
+                      v-model="course.workload"
                       placeholder=""
-                      name="CH"
+                      name="Carga Horária"
                       required
                     >
                     </base-input>
@@ -72,21 +72,25 @@
               </div>
             </b-form>
           </template>
-        </b-card-body>
-        <!-- <b-card-body class="p-0">
-          <b-table :items="items" :fields="fields" striped responsive="sm">
+          <h3 class="pt-3 pb-4">Disciplinas</h3>
+          <b-table :items="items" :fields="fields" responsive="sm">
             <template #cell(show_details)="row">
-              <b-button size="sm" @click="row.toggleDetails" class="mr-2">
-                {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
-              </b-button> -->
-
-        <!-- As `row.showDetails` is one-way, we call the toggleDetails function on @change -->
-        <!-- <b-form-checkbox
-                v-model="row.detailsShowing"
-                @change="row.toggleDetails"
+              <b-button
+                variant="success"
+                size="sm"
+                @click="row.toggleDetails"
+                class="mr-2"
               >
-                Details via check
-              </b-form-checkbox>
+                {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+              </b-button>
+
+              <!-- As `row.showDetails` is one-way, we call the toggleDetails function on @workloadange -->
+              <b-form-workloadeckbox
+                v-model="row.detailsShowing"
+                @workloadange="row.toggleDetails"
+              >
+                Details via workloadeck
+              </b-form-workloadeckbox>
             </template>
 
             <template #row-details="row">
@@ -101,13 +105,13 @@
                   <b-col>{{ row.item.isActive }}</b-col>
                 </b-row>
 
-                <b-button size="sm" @click="row.toggleDetails"
+                <b-button variant="success" size="sm" @click="row.toggleDetails"
                   >Hide Details</b-button
                 >
               </b-card>
             </template>
           </b-table>
-        </b-card-body> -->
+        </b-card-body>
       </b-card>
     </b-container>
   </div>
@@ -121,7 +125,7 @@ export default {
         name: '',
         modalities: '',
         module: '',
-        ch: ''
+        workload: ''
       },
       modalities: [
         { value: '', text: 'Modalidade 1' },
