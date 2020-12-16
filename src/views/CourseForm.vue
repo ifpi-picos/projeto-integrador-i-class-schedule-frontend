@@ -3,6 +3,7 @@
     <base-header
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success"
     ></base-header>
+
     <b-container fluid class="mt--7">
       <b-card>
         <b-card-header>
@@ -12,15 +13,75 @@
             </b-col>
           </b-row>
         </b-card-header>
-        <b-card-body class="p-0">
+
+        <b-card-body>
+          <template>
+            <b-form ref="form">
+              <div class="pl-lg-4">
+                <b-row>
+                  <b-col lg="10">
+                    <base-input
+                      type="text"
+                      label="Nome do curso"
+                      v-model="course.name"
+                      placeholder=""
+                      name="Nome do curso"
+                      required
+                    >
+                    </base-input>
+                  </b-col>
+                </b-row>
+
+                <b-row>
+                  <b-col lg="5">
+                    <base-input label="Modalidade" required>
+                      <b-form-select
+                        class="form-control"
+                        required
+                        v-model="course.modalities"
+                        :options="modalities"
+                      >
+                      </b-form-select>
+                    </base-input>
+                  </b-col>
+
+                  <b-col lg="3">
+                    <base-input
+                      type="number"
+                      label="Módulos"
+                      v-model="course.module"
+                      placeholder=""
+                      name="Módulos"
+                      required
+                    >
+                    </base-input>
+                  </b-col>
+
+                  <b-col lg="2">
+                    <base-input
+                      type="time"
+                      label="CH"
+                      v-model="course.ch"
+                      placeholder=""
+                      name="CH"
+                      required
+                    >
+                    </base-input>
+                  </b-col>
+                </b-row>
+              </div>
+            </b-form>
+          </template>
+        </b-card-body>
+        <!-- <b-card-body class="p-0">
           <b-table :items="items" :fields="fields" striped responsive="sm">
             <template #cell(show_details)="row">
               <b-button size="sm" @click="row.toggleDetails" class="mr-2">
                 {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
-              </b-button>
+              </b-button> -->
 
-              <!-- As `row.showDetails` is one-way, we call the toggleDetails function on @change -->
-              <b-form-checkbox
+        <!-- As `row.showDetails` is one-way, we call the toggleDetails function on @change -->
+        <!-- <b-form-checkbox
                 v-model="row.detailsShowing"
                 @change="row.toggleDetails"
               >
@@ -46,7 +107,7 @@
               </b-card>
             </template>
           </b-table>
-        </b-card-body>
+        </b-card-body> -->
       </b-card>
     </b-container>
   </div>
@@ -56,6 +117,18 @@
 export default {
   data () {
     return {
+      course: {
+        name: '',
+        modalities: '',
+        module: '',
+        ch: ''
+      },
+      modalities: [
+        { value: '', text: 'Modalidade 1' },
+        { value: '', text: 'Modalidade 2' },
+        { value: '', text: 'Modalidade 3' }
+      ],
+
       fields: ['first_name', 'last_name', 'show_details'],
       items: [
         {
