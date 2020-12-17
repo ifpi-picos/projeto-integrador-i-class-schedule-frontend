@@ -92,15 +92,47 @@
 
             <template #row-details="row">
               <b-card>
-                <b-row class="mb-2">
-                  <b-col sm="3" class="text-sm-right"><b>Age:</b></b-col>
-                  <b-col>{{ row.item.age }}</b-col>
+                <b-row class="mb-10 ">
+                  <!-- NOME DA DISCIPLINA -->
+                  <b-col lg="5" class="mb-10 ">
+                    <input
+                      v-for="i in discipline.inputs"
+                      :key="i"
+                      type="text"
+                      class="form-control"
+                      :id="'item' + i"
+                      placeholder=""
+                      v-model="discipline.name"
+                    />
+                  </b-col>
+                  <!-- CARGA HORÁRIA DA DISCIPLINA -->
+                  <b-col lg="2">
+                    <input
+                      v-for="i in discipline.inputs"
+                      :key="i"
+                      type="time"
+                      class="form-control mb-10"
+                      :id="'item' + i"
+                      placeholder=""
+                      v-model="discipline.ch"
+                    />
+                  </b-col>
                 </b-row>
+                <b-col class="text-right">
+                  <button
+                    style="border-radius:100%;"
+                    @click="discipline.inputs++"
+                    class="btn btn-success"
+                    type="button"
+                  >
+                    <i class="fa fa-plus "></i>
+                  </button>
+                </b-col>
 
-                <b-row class="mb-2">
+                <!-- <b-row class="mb-2">
                   <b-col sm="3" class="text-sm-right"><b>Is Active:</b></b-col>
                   <b-col>{{ row.item.isActive }}</b-col>
-                </b-row>
+                </b-row> -->
               </b-card>
             </template>
           </b-table>
@@ -120,6 +152,12 @@ export default {
         modalities: '',
         modules: null,
         workload: null
+      },
+      discipline: {
+        inputs: 1,
+        id: 1,
+        name: '',
+        ch: ''
       },
       modalities: [
         { value: 'Modalidade 1', text: 'Modalidade 1' },
