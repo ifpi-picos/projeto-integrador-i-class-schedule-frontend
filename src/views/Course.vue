@@ -105,11 +105,11 @@
                     />
                   </b-col>
                   <!-- CARGA HORÁRIA DA DISCIPLINA -->
-                  <b-col lg="5">
+                  <b-col lg="2">
                     <input
                       v-for="i in discipline.inputs"
                       :key="i"
-                      type="text"
+                      type="time"
                       class="form-control mb-10"
                       :id="'item' + i"
                       placeholder=""
