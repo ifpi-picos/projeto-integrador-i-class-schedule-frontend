@@ -71,6 +71,64 @@
 
           <h3 class="pt-3 pb-4">Disciplinas</h3>
 
+          <div class="border-top jumbotron jumbotron-fluid bg-white pt-2 pb-2">
+            <div class="container">
+              <b-row class="pt-3 pb-3">
+                <b-col>
+                  Modulo 1
+                </b-col>
+                <b-col>
+                  <b-button variant="success" size="sm" class="mr-2">
+                    Details
+                  </b-button>
+                </b-col>
+              </b-row>
+              <b-card>
+                <b-row
+                  v-for="(discipline, index) in disciplines"
+                  :key="index"
+                  class="mb-10 "
+                >
+                  {{ index }}
+                  <!-- NOME DA DISCIPLINA -->
+                  <b-col lg="5" class="mb-10 ">
+                    <base-input
+                      type="text"
+                      label="Disciplina"
+                      v-model="discipline.name"
+                      placeholder=""
+                      name="Disciplina"
+                      required
+                    >
+                    </base-input>
+                  </b-col>
+                  <!-- CARGA HORÁRIA DA DISCIPLINA -->
+                  <b-col lg="2">
+                    <base-input
+                      type="number"
+                      label="Carga Horária"
+                      v-model="discipline.workload"
+                      placeholder=""
+                      name="Carga Horária"
+                      required
+                    >
+                    </base-input>
+                  </b-col>
+                </b-row>
+                <b-col class="text-right">
+                  <button
+                    @click="addDiscipline"
+                    class="btn btn-success rounded "
+                  >
+                    <i class="fa fa-plus "></i>
+                  </button>
+                </b-col>
+                {{ disciplines }}
+              </b-card>
+            </div>
+          </div>
+
+          <!--
           <b-table
             stacked
             :items="items"
@@ -93,7 +151,7 @@
             <template #row-details="row">
               <b-card>
                 <b-row class="mb-10 ">
-                  <!-- NOME DA DISCIPLINA -->
+                 
                   <b-col lg="5" class="mb-10 ">
                     <input
                       v-for="i in discipline.inputs"
@@ -105,7 +163,7 @@
                       v-model="discipline.name"
                     />
                   </b-col>
-                  <!-- CARGA HORÁRIA DA DISCIPLINA -->
+              
                   <b-col lg="2">
                     <input
                       v-for="i in discipline.inputs"
@@ -129,13 +187,14 @@
                   </button>
                 </b-col>
 
-                <!-- <b-row class="mb-2">
+                 <b-row class="mb-2">
                   <b-col sm="3" class="text-sm-right"><b>Is Active:</b></b-col>
                   <b-col>{{ row.item.isActive }}</b-col>
-                </b-row> -->
+                </b-row> 
               </b-card>
             </template>
           </b-table>
+          -->
         </b-card-body>
       </b-card>
     </b-container>
@@ -143,7 +202,9 @@
 </template>
 
 <script>
+import BaseInput from '../components/Inputs/BaseInput.vue'
 export default {
+  components: { BaseInput },
   name: 'Course',
   data () {
     return {
@@ -153,6 +214,12 @@ export default {
         modules: null,
         workload: null
       },
+      disciplines: [
+        {
+          name: '',
+          workload: ''
+        }
+      ],
       discipline: {
         inputs: 1,
         id: 1,
@@ -167,18 +234,24 @@ export default {
 
       fields: ['modulo', 'show_details'],
       items: [
-        { isActive: false, modulo: `Modulo 1` },
-        { isActive: false, modulo: `Modulo 2` },
-        { isActive: false, modulo: `Modulo 3` },
-        { isActive: false, modulo: `Modulo 4` }
+        // { isActive: false, modulo: `Modulo 1` },
+        //{ isActive: false, modulo: `Modulo 2` },
+        //{ isActive: false, modulo: `Modulo 3` },
+        //{ isActive: false, modulo: `Modulo 4` }
       ]
     }
   },
   methods: {
     checkFormValidity () {
-      console.log('valid')
       const valid = this.$refs.form && this.$refs.form.checkValidity()
+      console.log(valid)
       return valid
+    },
+    addDiscipline () {
+      this.disciplines.push({
+        name: '',
+        workload: ''
+      })
     }
   }
 }
