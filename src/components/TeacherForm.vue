@@ -26,6 +26,7 @@
               name="Matricula"
               required
               rules="required|min:7|max:7"
+              maxlength="7"
             >
             </base-input>
           </b-col>
@@ -129,7 +130,7 @@ export default {
   methods: {
     checkFormValidity () {
       const valid = this.$refs.form && this.$refs.form.checkValidity()
-      console.log(valid)
+      //console.log(valid)
       return valid
     },
     handleOk () {
@@ -195,9 +196,6 @@ export default {
   watch: {
     idTeacher () {
       this.fillForm()
-    },
-    teacher () {
-      this.checkFormValidity()
     }
   }
 }

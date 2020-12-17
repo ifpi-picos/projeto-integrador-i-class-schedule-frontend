@@ -77,6 +77,7 @@
             :fields="fields"
             responsive="sm"
             details-td-class="bg-light"
+            v-if="checkFormValidity()"
           >
             <template #cell(show_details)="row">
               <b-button
@@ -117,8 +118,8 @@ export default {
       course: {
         name: '',
         modalities: '',
-        modules: '',
-        workload: ''
+        modules: null,
+        workload: null
       },
       modalities: [
         { value: 'Modalidade 1', text: 'Modalidade 1' },
@@ -140,11 +141,6 @@ export default {
       console.log('valid')
       const valid = this.$refs.form && this.$refs.form.checkValidity()
       return valid
-    }
-  },
-  watch: {
-    course () {
-      this.checkFormValidity()
     }
   }
 }
