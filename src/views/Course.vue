@@ -73,14 +73,17 @@
 
           <div class="border-top jumbotron jumbotron-fluid bg-white pt-2 pb-2">
             <div class="container">
-              <b-row class="pt-3 pb-3">
-                <b-col>
-                  Modulo 1
-                </b-col>
-                <b-col>
-                  <b-button variant="success" size="sm" class="mr-2">
-                    Details
-                  </b-button>
+              <b-row
+                class="pt-3 pb-3"
+                v-for="(modules, index) in modules"
+                :key="index"
+              >
+                <b-col> Módulo {{ index + 1 }} </b-col>
+
+                <b-col class="text-right">
+                  <button @click="addModule" class="btn btn-success rounded ">
+                    <i class="fa fa-plus "></i>
+                  </button>
                 </b-col>
               </b-row>
               <b-card>
@@ -220,12 +223,11 @@ export default {
           workload: ''
         }
       ],
-      discipline: {
-        inputs: 1,
-        id: 1,
-        name: '',
-        ch: ''
-      },
+      modules: [
+        {
+          name
+        }
+      ],
       modalities: [
         { value: 'Modalidade 1', text: 'Modalidade 1' },
         { value: 'Modalidade 2', text: 'Modalidade 2' },
@@ -252,6 +254,9 @@ export default {
         name: '',
         workload: ''
       })
+    },
+    addModule () {
+      this.modules.push([name])
     }
   }
 }
