@@ -47,7 +47,7 @@
                 <base-input
                   type="number"
                   label="Módulos"
-                  v-model="course.modules"
+                  v-model="modules"
                   placeholder=""
                   name="Módulos"
                   required
@@ -71,12 +71,14 @@
 
           <h3 class="pt-3 pb-4">Disciplinas</h3>
 
-          <div class="border-top jumbotron jumbotron-fluid bg-white pt-2 pb-2">
+          <div
+            class="border-top jumbotron jumbotron-fluid bg-white pt-2 pb-2"
+            v-for="n in Number(modules)"
+            :key="n"
+          >
             <div class="container">
               <b-row class="pt-3 pb-3">
-                <b-col>
-                  Modulo 1
-                </b-col>
+                <b-col> Modulo {{ n }} </b-col>
                 <b-col>
                   <b-button variant="success" size="sm" class="mr-2">
                     Details
@@ -85,7 +87,7 @@
               </b-row>
               <b-card>
                 <b-row
-                  v-for="(discipline, index) in disciplines"
+                  v-for="(discipline, index) in course.disciplines"
                   :key="index"
                   class="mb-10 "
                 >
@@ -123,7 +125,6 @@
                     <i class="fa fa-plus "></i>
                   </button>
                 </b-col>
-                {{ disciplines }}
               </b-card>
             </div>
           </div>
@@ -202,43 +203,46 @@
 </template>
 
 <script>
-import BaseInput from '../components/Inputs/BaseInput.vue'
 export default {
-  components: { BaseInput },
   name: 'Course',
   data () {
     return {
       course: {
         name: '',
         modalities: '',
-        modules: null,
-        workload: null
+        modules: [
+          {
+            module: 1,
+            disciplines: [
+              {
+                name: '',
+                workload: ''
+              }
+            ]
+          }
+        ],
+        workload: null,
+        disciplines: [
+          {
+            name: '',
+            workload: ''
+          }
+        ]
       },
-      disciplines: [
-        {
-          name: '',
-          workload: ''
-        }
-      ],
-      discipline: {
-        inputs: 1,
-        id: 1,
-        name: '',
-        ch: ''
-      },
+      modules: null,
       modalities: [
         { value: 'Modalidade 1', text: 'Modalidade 1' },
         { value: 'Modalidade 2', text: 'Modalidade 2' },
         { value: 'Modalidade 3', text: 'Modalidade 3' }
-      ],
-
-      fields: ['modulo', 'show_details'],
-      items: [
-        // { isActive: false, modulo: `Modulo 1` },
-        //{ isActive: false, modulo: `Modulo 2` },
-        //{ isActive: false, modulo: `Modulo 3` },
-        //{ isActive: false, modulo: `Modulo 4` }
       ]
+
+      //fields: ['modulo', 'show_details'],
+      //items: [
+      // { isActive: false, modulo: `Modulo 1` },
+      //{ isActive: false, modulo: `Modulo 2` },
+      //{ isActive: false, modulo: `Modulo 3` },
+      //{ isActive: false, modulo: `Modulo 4` }
+      //]
     }
   },
   methods: {
@@ -248,9 +252,14 @@ export default {
       return valid
     },
     addDiscipline () {
-      this.disciplines.push({
+      this.course.disciplines.push({
         name: '',
         workload: ''
+      })
+    },
+    addModule () {
+      this.course.modules.push({
+        number: 1
       })
     }
   }
