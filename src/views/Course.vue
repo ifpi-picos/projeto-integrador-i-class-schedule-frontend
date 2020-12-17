@@ -77,12 +77,17 @@
             :key="n"
           >
             <div class="container">
-              <b-row class="pt-3 pb-3">
-                <b-col> Modulo {{ n }} </b-col>
-                <b-col>
-                  <b-button variant="success" size="sm" class="mr-2">
-                    Details
-                  </b-button>
+              <b-row
+                class="pt-3 pb-3 bb-2"
+                v-for="(modules, index) in modules"
+                :key="index"
+              >
+                <b-col> Módulo {{ index + 1 }} </b-col>
+
+                <b-col class="text-right">
+                  <button @click="addModule" class="btn btn-success rounded ">
+                    <i class="fa fa-plus "></i>
+                  </button>
                 </b-col>
               </b-row>
               <b-card>
@@ -91,12 +96,11 @@
                   :key="index"
                   class="mb-10 "
                 >
-                  {{ index }}
                   <!-- NOME DA DISCIPLINA -->
                   <b-col lg="5" class="mb-10 ">
                     <base-input
                       type="text"
-                      label="Disciplina"
+                      :label="'Disciplina ' + (index + 1)"
                       v-model="discipline.name"
                       placeholder=""
                       name="Disciplina"
@@ -229,7 +233,11 @@ export default {
           }
         ]
       },
-      modules: null,
+      modules: [
+        {
+          name
+        }
+      ],
       modalities: [
         { value: 'Modalidade 1', text: 'Modalidade 1' },
         { value: 'Modalidade 2', text: 'Modalidade 2' },
@@ -258,9 +266,7 @@ export default {
       })
     },
     addModule () {
-      this.course.modules.push({
-        number: 1
-      })
+      this.modules.push([name])
     }
   }
 }
