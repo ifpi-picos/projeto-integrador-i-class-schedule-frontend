@@ -74,7 +74,7 @@
           <div class="border-top jumbotron jumbotron-fluid bg-white pt-2 pb-2">
             <div class="container">
               <b-row
-                class="pt-3 pb-3"
+                class="pt-3 pb-3 bb-2"
                 v-for="(modules, index) in modules"
                 :key="index"
               >
@@ -92,12 +92,11 @@
                   :key="index"
                   class="mb-10 "
                 >
-                  {{ index }}
                   <!-- NOME DA DISCIPLINA -->
                   <b-col lg="5" class="mb-10 ">
                     <base-input
                       type="text"
-                      label="Disciplina"
+                      :label="'Disciplina ' + (index + 1)"
                       v-model="discipline.name"
                       placeholder=""
                       name="Disciplina"
