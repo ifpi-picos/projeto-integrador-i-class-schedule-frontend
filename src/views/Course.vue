@@ -48,6 +48,7 @@
                   type="number"
                   label="Módulos"
                   placeholder=""
+                  v-model="modulesCount"
                   name="Módulos"
                   required
                 >
@@ -68,75 +69,67 @@
             </b-row>
           </b-form>
 
-          <h3 class="pt-3 pb-4">Disciplinas</h3>
-
-          <div
-            class="with-border rounded jumbotron jumbotron-fluid bg-white pt-2 pb-2"
-            v-for="(Module, i) in course.modules"
-            :key="i"
-          >
-            <div class="container">
-              <b-row class="pt-3 pb-3 bb-2">
-                <b-col> Módulo {{ i + 1 }} </b-col>
-
-                <b-col class="text-right">
-                  <!--<button
-                    @click="addModule(i)"
-                    class="btn btn-success rounded "
-                  >
-                    <i class="fa fa-plus "></i>
-                  </button>-->
-                </b-col>
-              </b-row>
-              <b-card>
-                <b-row
-                  v-for="(discipline, index) in Module.disciplines"
-                  :key="index"
-                  class="mb-10 "
-                >
-                  <!-- NOME DA DISCIPLINA -->
-                  <b-col lg="5" class="mb-10 ">
-                    <base-input
-                      type="text"
-                      :label="'Disciplina ' + (index + 1)"
-                      v-model="discipline.name"
-                      placeholder=""
-                      name="Disciplina"
-                      required
-                    >
-                    </base-input>
-                  </b-col>
-                  <!-- CARGA HORÁRIA DA DISCIPLINA -->
-                  <b-col lg="3">
-                    <base-input
-                      type="number"
-                      label="Carga Horária"
-                      v-model="discipline.workload"
-                      placeholder=""
-                      name="Carga Horária"
-                      required
-                    >
-                    </base-input>
-                  </b-col>
+          <div v-if="checkFormValidity()">
+            <h3 class="pt-3 pb-4">Disciplinas</h3>
+            <div
+              class="with-border rounded jumbotron jumbotron-fluid bg-white pt-2 pb-2"
+              v-for="(Module, i) in course.modules"
+              :key="i"
+            >
+              <div class="container">
+                <b-row class="pt-3 pb-3 bb-2">
+                  <b-col> Módulo {{ i + 1 }} </b-col>
                 </b-row>
-                <b-col class="text-right" lg="8">
-                  <button
-                    @click="addDiscipline(i)"
-                    class="btn btn-success rounded "
+                <b-card class="mb-2">
+                  <b-row
+                    v-for="(discipline, index) in Module.disciplines"
+                    :key="index"
+                    class="mb-10 "
                   >
-                    <i class="fa fa-plus "></i>
-                  </button>
-                </b-col>
-              </b-card>
+                    <!-- NOME DA DISCIPLINA -->
+                    <b-col lg="5" class="mb-10 ">
+                      <base-input
+                        type="text"
+                        :label="'Disciplina ' + (index + 1)"
+                        v-model="discipline.name"
+                        placeholder=""
+                        name="Disciplina"
+                        required
+                      >
+                      </base-input>
+                    </b-col>
+                    <!-- CARGA HORÁRIA DA DISCIPLINA -->
+                    <b-col lg="3">
+                      <base-input
+                        type="number"
+                        label="Carga Horária"
+                        v-model="discipline.workload"
+                        placeholder=""
+                        name="Carga Horária"
+                        required
+                      >
+                      </base-input>
+                    </b-col>
+                  </b-row>
+                  <b-col class="text-right" lg="8">
+                    <button
+                      @click="addDiscipline(i)"
+                      class="btn btn-success rounded "
+                    >
+                      <i class="fa fa-plus "></i>
+                    </button>
+                  </b-col>
+                </b-card>
+              </div>
             </div>
+            <b-row class="container" v-if="disabledAddModules">
+              <button @click="addModule()" class="btn btn-success rounded ">
+                <i class="fa fa-plus "></i>
+              </button>
+            </b-row>
           </div>
-
-          <b-row class="container">
-            <button @click="add()" class="btn btn-success rounded ">
-              <i class="fa fa-plus "></i>
-            </button>
-          </b-row>
         </b-card-body>
+        {{ course }}
       </b-card>
     </b-container>
   </div>
@@ -156,29 +149,28 @@ export default {
             disciplines: [
               {
                 name: '',
-                workload: ''
+                workload: null
               }
             ]
           }
         ],
-        workload: null,
-        disciplines: [
-          {
-            name: '',
-            workload: ''
-          }
-        ]
+        workload: null
       },
-      modules: [
-        {
-          name: ''
-        }
-      ],
+      modulesCount: null,
       modalities: [
         { value: 'Modalidade 1', text: 'Modalidade 1' },
         { value: 'Modalidade 2', text: 'Modalidade 2' },
         { value: 'Modalidade 3', text: 'Modalidade 3' }
       ]
+    }
+  },
+  computed: {
+    disabledAddModules () {
+      const modules = this.course.modules
+      if (modules.length < Number(this.modulesCount)) {
+        return true
+      }
+      return false
     }
   },
   methods: {
@@ -190,30 +182,19 @@ export default {
     addDiscipline (i) {
       console.log(i)
       this.course.modules[i].disciplines.push({
-        name: `${i}`,
-        workload: ''
+        name: '',
+        workload: null
       })
     },
-    addModule (i) {
-      const module = Number(i) + 1
-      this.course.modules.push({
-        module,
-        disciplines: [
-          {
-            name: '',
-            workload: ''
-          }
-        ]
-      })
-    },
-    add () {
+
+    addModule () {
       const module = this.course.modules.length + 1
       this.course.modules.push({
         module,
         disciplines: [
           {
             name: '',
-            workload: ''
+            workload: null
           }
         ]
       })
