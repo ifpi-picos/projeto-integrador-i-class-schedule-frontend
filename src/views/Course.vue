@@ -82,15 +82,15 @@
                 </b-row>
                 <b-card class="mb-2">
                   <b-row
-                    v-for="(discipline, index) in Module.disciplines"
-                    :key="index"
+                    v-for="(discipline, j) in Module.disciplines"
+                    :key="j"
                     class="mb-10 "
                   >
                     <!-- NOME DA DISCIPLINA -->
                     <b-col lg="5" class="mb-10 ">
                       <base-input
                         type="text"
-                        :label="'Disciplina ' + (index + 1)"
+                        :label="'Disciplina ' + (j + 1)"
                         v-model="discipline.name"
                         placeholder=""
                         name="Disciplina"
@@ -111,19 +111,27 @@
                       </base-input>
                     </b-col>
                   </b-row>
-                  <b-col class="text-right" lg="8">
-                    <button
-                      @click="addDiscipline(i)"
-                      class="btn btn-success rounded "
-                    >
-                      <i class="fa fa-plus "></i>
-                    </button>
-                  </b-col>
+                  <b-row>
+                    <b-col class="text-right" lg="8">
+                      <button
+                        @click="removeDiscipline(i)"
+                        class="btn btn-danger  rounded "
+                      >
+                        <i class="fa fa-minus "></i>
+                      </button>
+                      <button
+                        @click="addDiscipline(i)"
+                        class="btn btn-success rounded "
+                      >
+                        <i class="fa fa-plus "></i>
+                      </button>
+                    </b-col>
+                  </b-row>
                 </b-card>
               </div>
             </div>
             <b-row class="container" v-if="disabledAddModules">
-              <button @click="addModule()" class="btn btn-success rounded ">
+              <button @click="addModule()" class="btn btn-success rounded  ">
                 <i class="fa fa-plus "></i>
               </button>
             </b-row>
@@ -179,12 +187,18 @@ export default {
       console.log(valid)
       return valid
     },
-    addDiscipline (i) {
-      console.log(i)
-      this.course.modules[i].disciplines.push({
+
+    addDiscipline (j) {
+      console.log(j)
+      this.course.modules[j].disciplines.push({
         name: '',
         workload: null
       })
+    },
+
+    removeDiscipline (j) {
+      console.log(j)
+      this.course.modules[j].disciplines.pop()
     },
 
     addModule () {
