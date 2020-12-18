@@ -71,23 +71,26 @@
           <h3 class="pt-3 pb-4">Disciplinas</h3>
 
           <div
-            class="border-top jumbotron jumbotron-fluid bg-white pt-2 pb-2"
-            v-for="(modules, index) in course.modules"
-            :key="index"
+            class="with-border rounded jumbotron jumbotron-fluid bg-white pt-2 pb-2"
+            v-for="(Module, i) in course.modules"
+            :key="i"
           >
             <div class="container">
               <b-row class="pt-3 pb-3 bb-2">
-                <b-col> Módulo {{ index + 1 }} </b-col>
+                <b-col> Módulo {{ i + 1 }} </b-col>
 
                 <b-col class="text-right">
-                  <button @click="addModule" class="btn btn-success rounded ">
+                  <!--<button
+                    @click="addModule(i)"
+                    class="btn btn-success rounded "
+                  >
                     <i class="fa fa-plus "></i>
-                  </button>
+                  </button>-->
                 </b-col>
               </b-row>
               <b-card>
                 <b-row
-                  v-for="(discipline, index) in course.disciplines"
+                  v-for="(discipline, index) in Module.disciplines"
                   :key="index"
                   class="mb-10 "
                 >
@@ -104,7 +107,7 @@
                     </base-input>
                   </b-col>
                   <!-- CARGA HORÁRIA DA DISCIPLINA -->
-                  <b-col lg="2">
+                  <b-col lg="3">
                     <base-input
                       type="number"
                       label="Carga Horária"
@@ -116,9 +119,9 @@
                     </base-input>
                   </b-col>
                 </b-row>
-                <b-col class="text-right">
+                <b-col class="text-right" lg="8">
                   <button
-                    @click="addDiscipline"
+                    @click="addDiscipline(i)"
                     class="btn btn-success rounded "
                   >
                     <i class="fa fa-plus "></i>
@@ -127,6 +130,12 @@
               </b-card>
             </div>
           </div>
+
+          <b-row class="container">
+            <button @click="add()" class="btn btn-success rounded ">
+              <i class="fa fa-plus "></i>
+            </button>
+          </b-row>
         </b-card-body>
       </b-card>
     </b-container>
@@ -178,15 +187,43 @@ export default {
       console.log(valid)
       return valid
     },
-    addDiscipline () {
-      this.course.disciplines.push({
-        name: '',
+    addDiscipline (i) {
+      console.log(i)
+      this.course.modules[i].disciplines.push({
+        name: `${i}`,
         workload: ''
       })
     },
-    addModule () {
-      this.course.modules.push({ name: '' })
+    addModule (i) {
+      const module = Number(i) + 1
+      this.course.modules.push({
+        module,
+        disciplines: [
+          {
+            name: '',
+            workload: ''
+          }
+        ]
+      })
+    },
+    add () {
+      const module = this.course.modules.length + 1
+      this.course.modules.push({
+        module,
+        disciplines: [
+          {
+            name: '',
+            workload: ''
+          }
+        ]
+      })
     }
   }
 }
 </script>
+
+<style scoped>
+.with-border {
+  border: 1px solid #ced4da;
+}
+</style>
