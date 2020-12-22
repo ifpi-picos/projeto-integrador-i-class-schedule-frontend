@@ -188,17 +188,17 @@ export default {
       return valid
     },
 
-    addDiscipline (j) {
-      console.log(j)
-      this.course.modules[j].disciplines.push({
+    addDiscipline (index) {
+      console.log(index)
+      this.course.modules[index].disciplines.push({
         name: '',
         workload: null
       })
     },
 
-    removeDiscipline (j) {
-      console.log(j)
-      this.course.modules[j].disciplines.pop()
+    removeDiscipline (index) {
+      console.log(index)
+      this.course.modules[index].disciplines.pop()
     },
 
     addModule () {

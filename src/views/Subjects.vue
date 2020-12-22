@@ -12,10 +12,10 @@
               <h3>Disciplinas</h3>
             </b-col>
             <b-col class="text-right">
-              <b-button variant="success" v-b-modal.addSubject>
+              <!--b-button variant="success" v-b-modal.addSubject>
                 <i class="ni ni-fat-add"></i>
                 Adcionar</b-button
-              >
+              >-->
             </b-col>
           </b-row>
         </b-card-header>
