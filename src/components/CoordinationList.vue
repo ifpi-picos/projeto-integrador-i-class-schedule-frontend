@@ -72,7 +72,8 @@ export default {
         },
         {
           key: 'actions',
-          label: 'Ações'
+          label: 'Ações',
+          thClass: 'text-center'
         }
       ],
       loader: true

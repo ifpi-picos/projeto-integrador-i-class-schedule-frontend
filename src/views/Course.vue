@@ -115,13 +115,13 @@
                     <b-col class="text-right" lg="8">
                       <button
                         @click="removeDiscipline(i)"
-                        class="btn btn-danger  rounded "
+                        class="btn btn-outline-danger btn-sm rounded "
                       >
                         <i class="fa fa-minus "></i>
                       </button>
                       <button
                         @click="addDiscipline(i)"
-                        class="btn btn-success rounded "
+                        class="btn btn-success btn-sm rounded "
                       >
                         <i class="fa fa-plus "></i>
                       </button>

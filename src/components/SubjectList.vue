@@ -51,14 +51,14 @@ export default {
       subjects: [],
       fields: [
         {
-          key: 'carga_horaria',
-          label: 'Carga Horária',
+          key: 'nome',
+          label: 'Nome da discipina',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {
-          key: 'nome',
-          label: 'Nome da discipina',
+          key: 'carga_horaria',
+          label: 'Carga Horária',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },

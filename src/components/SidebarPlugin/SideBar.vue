@@ -7,7 +7,7 @@
       <!--Toggler-->
       <navbar-toggle-button @click.native="showSidebar"> </navbar-toggle-button>
       <router-link class="navbar-brand" to="/">
-        <img :src="logo" class="navbar-brand-img" alt="..." />
+        <img :src="logo" class="navbar-brand-img p-3 p-md-0" alt="..." />
       </router-link>
 
       <slot name="mobile-right">

@@ -81,12 +81,12 @@
     </b-form>
 
     <template #modal-footer="{ hide }">
-      <b-button variant="secondary" @click="hide('forget')">
+      <b-button variant="outline-danger" @click="hide('forget')">
         Cancelar
       </b-button>
       <b-button
         :disabled="!checkFormValidity()"
-        variant="primary"
+        variant="success"
         @click="handleOk()"
       >
         Salvar

@@ -49,12 +49,12 @@
     </b-form>
     <template #modal-footer="{ hide }">
       <!-- Emulate built in modal footer ok and cancel button actions -->
-      <b-button variant="secondary" @click="hide('forget')">
+      <b-button variant="outline-danger" @click="hide('forget')">
         Cancelar
       </b-button>
       <b-button
         :disabled="!checkFormValidity()"
-        variant="primary"
+        variant="success"
         @click="handleOk()"
       >
         Salvar

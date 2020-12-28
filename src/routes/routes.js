@@ -21,18 +21,21 @@ const routes = [
       {
         path: '/professores',
         name: 'professores',
+        meta: { name: 'professores' },
         component: () =>
           import(/* webpackChunkName: "Professores" */ '../views/Teachers.vue')
       },
       {
         path: '/cursos',
         name: 'cursos',
+        meta: { name: 'cursos' },
         component: () =>
           import(/* webpackChunkName: "Cursos" */ '../views/Courses.vue')
       },
       {
         path: '/curso',
         name: 'novo-curso',
+        meta: { name: 'novo curso' },
         component: () =>
           import(
             /* webpackChunkName: "Formulário de cursos" */ '../views/Course.vue'
@@ -41,6 +44,7 @@ const routes = [
           {
             path: ':id',
             name: 'editar-curso',
+            meta: { name: 'editar curso' },
             component: () =>
               import(
                 /* webpackChunkName: "Formulário de cursos" */ '../views/Course.vue'

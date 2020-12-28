@@ -12,11 +12,13 @@
         :fields="fields"
       >
         <template #cell(horario)="data">
-          {{ data.item.inicio_horario }} - {{ data.item.fim_horario }}
+          <div class="d-flex justify-content-center ">
+            {{ data.item.inicio_horario }} - {{ data.item.fim_horario }}
+          </div>
         </template>
 
         <template v-slot:cell(actions)="data">
-          <div class="d-flex align-items-center">
+          <div class="d-flex justify-content-center ">
             <b-button
               @click="editSchedule(data.item.id)"
               variant="outline-dark"
@@ -64,11 +66,13 @@ export default {
           key: 'horario',
           label: 'Horário',
           tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
+          sortable: true,
+          thClass: 'text-center'
         },
         {
           key: 'actions',
-          label: 'Ações'
+          label: 'Ações',
+          thClass: 'text-center'
         }
       ],
       loader: true
