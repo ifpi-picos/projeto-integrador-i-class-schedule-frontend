@@ -9,7 +9,7 @@
       aria-current="page"
       class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active"
     >
-      {{ $route.name }}
+      {{ $route.meta.name }}
     </a>
     <!-- Navbar links -->
     <b-navbar-nav class="align-items-center ml-md-auto">

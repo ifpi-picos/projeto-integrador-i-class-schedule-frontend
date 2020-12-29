@@ -12,6 +12,8 @@
         tbody-tr-class=""
         :items="coordinations"
         :fields="fields"
+         sort-by="nome"
+        sort-icon-left
       >
         <template v-slot:cell(actions)="data">
           <div class="d-flex justify-content-center">

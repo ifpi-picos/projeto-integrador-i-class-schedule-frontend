@@ -17,6 +17,8 @@ import locale from 'element-ui/lib/locale'
 
 // vue-bootstrap
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // asset imports
 import '@/assets/scss/argon.scss'

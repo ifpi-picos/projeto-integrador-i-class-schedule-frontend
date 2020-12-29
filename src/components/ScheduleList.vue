@@ -10,6 +10,8 @@
         :responsive="true"
         :items="schedules"
         :fields="fields"
+         sort-by="turno"
+        sort-icon-left
       >
         <template #cell(horario)="data">
           <div class="d-flex justify-content-center ">

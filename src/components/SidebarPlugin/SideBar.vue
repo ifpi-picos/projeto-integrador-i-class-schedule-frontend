@@ -11,7 +11,7 @@
       </router-link>
 
       <slot name="mobile-right">
-        <ul class="nav align-items-center d-md-none">
+        <ul class="nav align-items-center justify-content-end w-100 d-md-none">
           <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
             <a
               slot="title-container"
