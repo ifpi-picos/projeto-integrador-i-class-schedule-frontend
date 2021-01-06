@@ -3,14 +3,14 @@
     <notifications></notifications>
     <side-bar>
       <template slot="links">
-        <sidebar-item
+        <!--<sidebar-item
           :link="{
             name: 'disp',
             path: '/disp',
             icon: 'fas fa-chalkboard-teacher text-primary'
           }"
         ></sidebar-item>
-
+        -->
         <sidebar-item
           :link="{
             name: 'Dashboard',
@@ -49,6 +49,15 @@
 
         <sidebar-item
           :link="{
+            name: 'Áreas',
+            path: '/areas',
+            icon: 'fas fa-sitemap text-primary'
+          }"
+        >
+        </sidebar-item>
+
+        <sidebar-item
+          :link="{
             name: 'Coordenações',
             path: '/coordenacoes',
             icon: 'far fa-address-card text-primary'
@@ -60,7 +69,7 @@
           :link="{
             name: 'Disciplinas',
             path: '/disciplinas',
-            icon: 'fas fa-book-reader text-primary'
+            icon: 'fas fa-book text-primary'
           }"
         >
         </sidebar-item>

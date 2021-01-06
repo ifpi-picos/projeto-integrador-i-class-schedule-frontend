@@ -61,6 +61,13 @@ const routes = [
           import(/* webpackChunkName: "Turmas" */ '../views/Class.vue')
       },
       {
+        path: '/areas',
+        name: 'areas',
+        meta: { name: 'Áreas' },
+        component: () =>
+          import(/* webpackChunkName: "Turmas" */ '../views/Areas.vue')
+      },
+      {
         path: '/salas',
         name: 'salas',
         meta: { name: 'salas' },

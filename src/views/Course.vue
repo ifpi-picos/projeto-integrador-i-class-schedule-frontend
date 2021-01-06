@@ -137,7 +137,6 @@
             </b-row>
           </div>
         </b-card-body>
-        {{ course }}
       </b-card>
     </b-container>
   </div>

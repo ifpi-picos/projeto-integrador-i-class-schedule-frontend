@@ -4,6 +4,8 @@ O produto inicialmente tem como objetivo, facilitar o processo de Manter profess
 
 Em um futuro próximo receberá mais funcionalidades a fim de acelerar todo o processo descrito acima, que, segundo o diretor de ensino do IFPI-Picos “leva cerca de uma semana para preencher tudo”.
 
+O Sistema atuamente ja está on-line em https://class-schudele.web.app/
+
 ## Project setup
 
 ```

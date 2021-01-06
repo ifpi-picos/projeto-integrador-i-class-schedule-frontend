@@ -66,16 +66,6 @@
             </base-input>
           </b-col>
 
-          <!--  <b-col lg="5">
-            <base-input label="Horário" required>
-              <select v-model="schoolClass.houer" class="form-control">
-                <option>7:00 - 17:30</option>
-                <option>13:00 - 18:00</option>
-                <option>18:00 - 22:00</option>
-              </select>
-            </base-input>
-          </b-col>
-        -->
         </b-row>
       </div>
     </b-form>
