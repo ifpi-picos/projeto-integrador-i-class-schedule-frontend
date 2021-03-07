@@ -1,6 +1,6 @@
 <template>
   <skeleton>
-    <TeacherForm idModal="addteacher" title="Novo Professor" />
+    <teacher-form idModal="addteacher" title="Novo Professor" />
     <b-card>
       <b-card-header class="pt-0 pl-0 pr-0">
         <b-row align-h="between">
@@ -31,9 +31,6 @@ export default {
   components: {
     TeacherForm,
     TeacherList
-  },
-  data () {
-    return {}
   }
 }
 </script>

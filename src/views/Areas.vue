@@ -1,6 +1,6 @@
 <template>
   <skeleton>
-    <AreaForm idModal="addarea" title="Novo Área" />
+    <area-form idModal="addarea" title="Novo Área" />
     <b-card>
       <b-card-header class="pt-0 pl-0 pr-0">
         <b-row align-h="between">
@@ -16,7 +16,7 @@
         </b-row>
       </b-card-header>
       <b-card-body class="p-0">
-        <areas-list />
+        <!-- <areas-list /> -->
       </b-card-body>
     </b-card>
   </skeleton>

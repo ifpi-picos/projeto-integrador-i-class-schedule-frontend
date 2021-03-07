@@ -1,145 +1,139 @@
 <template>
-  <div>
-    <base-header
-      class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success"
-    ></base-header>
+  <skeleton>
+    <b-card>
+      <b-card-header>
+        <b-row align-h="between">
+          <b-col>
+            <h3>Cadastrar curso</h3>
+          </b-col>
+        </b-row>
+      </b-card-header>
 
-    <b-container fluid class="mt--7">
-      <b-card>
-        <b-card-header>
-          <b-row align-h="between">
-            <b-col>
-              <h3>Cadastrar curso</h3>
+      <b-card-body>
+        <b-form ref="form">
+          <b-row>
+            <b-col lg="12">
+              <base-input
+                type="text"
+                label="Nome do curso"
+                v-model="course.name"
+                placeholder=""
+                name="Nome do curso"
+                required
+              >
+              </base-input>
             </b-col>
           </b-row>
-        </b-card-header>
 
-        <b-card-body>
-          <b-form ref="form">
-            <b-row>
-              <b-col lg="12">
-                <base-input
-                  type="text"
-                  label="Nome do curso"
-                  v-model="course.name"
-                  placeholder=""
-                  name="Nome do curso"
+          <b-row>
+            <b-col lg="4">
+              <base-input label="Modalidade" required>
+                <b-form-select
+                  class="form-control"
                   required
+                  v-model="course.modalities"
+                  :options="modalities"
                 >
-                </base-input>
-              </b-col>
-            </b-row>
+                </b-form-select>
+              </base-input>
+            </b-col>
 
-            <b-row>
-              <b-col lg="4">
-                <base-input label="Modalidade" required>
-                  <b-form-select
-                    class="form-control"
-                    required
-                    v-model="course.modalities"
-                    :options="modalities"
-                  >
-                  </b-form-select>
-                </base-input>
-              </b-col>
+            <b-col lg="4">
+              <base-input
+                type="number"
+                label="Módulos"
+                placeholder=""
+                v-model="modulesCount"
+                name="Módulos"
+                required
+              >
+              </base-input>
+            </b-col>
 
-              <b-col lg="4">
-                <base-input
-                  type="number"
-                  label="Módulos"
-                  placeholder=""
-                  v-model="modulesCount"
-                  name="Módulos"
-                  required
+            <b-col lg="4">
+              <base-input
+                type="number"
+                label="Carga Horária"
+                v-model="course.workload"
+                placeholder=""
+                name="Carga Horária"
+                required
+              >
+              </base-input>
+            </b-col>
+          </b-row>
+        </b-form>
+
+        <div v-if="checkFormValidity()">
+          <h3 class="pt-3 pb-4">Disciplinas</h3>
+          <div
+            class="with-border rounded jumbotron jumbotron-fluid bg-white pt-2 pb-2"
+            v-for="(Module, i) in course.modules"
+            :key="i"
+          >
+            <div class="container">
+              <b-row class="pt-3 pb-3 bb-2">
+                <b-col> Módulo {{ i + 1 }} </b-col>
+              </b-row>
+              <b-card class="mb-2">
+                <b-row
+                  v-for="(discipline, j) in Module.disciplines"
+                  :key="j"
+                  class="mb-10 "
                 >
-                </base-input>
-              </b-col>
-
-              <b-col lg="4">
-                <base-input
-                  type="number"
-                  label="Carga Horária"
-                  v-model="course.workload"
-                  placeholder=""
-                  name="Carga Horária"
-                  required
-                >
-                </base-input>
-              </b-col>
-            </b-row>
-          </b-form>
-
-          <div v-if="checkFormValidity()">
-            <h3 class="pt-3 pb-4">Disciplinas</h3>
-            <div
-              class="with-border rounded jumbotron jumbotron-fluid bg-white pt-2 pb-2"
-              v-for="(Module, i) in course.modules"
-              :key="i"
-            >
-              <div class="container">
-                <b-row class="pt-3 pb-3 bb-2">
-                  <b-col> Módulo {{ i + 1 }} </b-col>
+                  <!-- NOME DA DISCIPLINA -->
+                  <b-col lg="5" class="mb-10 ">
+                    <base-input
+                      type="text"
+                      :label="'Disciplina ' + (j + 1)"
+                      v-model="discipline.name"
+                      placeholder=""
+                      name="Disciplina"
+                      required
+                    >
+                    </base-input>
+                  </b-col>
+                  <!-- CARGA HORÁRIA DA DISCIPLINA -->
+                  <b-col lg="3">
+                    <base-input
+                      type="number"
+                      label="Carga Horária"
+                      v-model="discipline.workload"
+                      placeholder=""
+                      name="Carga Horária"
+                      required
+                    >
+                    </base-input>
+                  </b-col>
                 </b-row>
-                <b-card class="mb-2">
-                  <b-row
-                    v-for="(discipline, j) in Module.disciplines"
-                    :key="j"
-                    class="mb-10 "
-                  >
-                    <!-- NOME DA DISCIPLINA -->
-                    <b-col lg="5" class="mb-10 ">
-                      <base-input
-                        type="text"
-                        :label="'Disciplina ' + (j + 1)"
-                        v-model="discipline.name"
-                        placeholder=""
-                        name="Disciplina"
-                        required
-                      >
-                      </base-input>
-                    </b-col>
-                    <!-- CARGA HORÁRIA DA DISCIPLINA -->
-                    <b-col lg="3">
-                      <base-input
-                        type="number"
-                        label="Carga Horária"
-                        v-model="discipline.workload"
-                        placeholder=""
-                        name="Carga Horária"
-                        required
-                      >
-                      </base-input>
-                    </b-col>
-                  </b-row>
-                  <b-row>
-                    <b-col class="text-right" lg="8">
-                      <button
-                        @click="removeDiscipline(i)"
-                        class="btn btn-outline-danger btn-sm rounded "
-                      >
-                        <i class="fa fa-minus "></i>
-                      </button>
-                      <button
-                        @click="addDiscipline(i)"
-                        class="btn btn-success btn-sm rounded "
-                      >
-                        <i class="fa fa-plus "></i>
-                      </button>
-                    </b-col>
-                  </b-row>
-                </b-card>
-              </div>
+                <b-row>
+                  <b-col class="text-right" lg="8">
+                    <button
+                      @click="removeDiscipline(i)"
+                      class="btn btn-outline-danger btn-sm rounded "
+                    >
+                      <i class="fa fa-minus "></i>
+                    </button>
+                    <button
+                      @click="addDiscipline(i)"
+                      class="btn btn-success btn-sm rounded "
+                    >
+                      <i class="fa fa-plus "></i>
+                    </button>
+                  </b-col>
+                </b-row>
+              </b-card>
             </div>
-            <b-row class="container" v-if="disabledAddModules">
-              <button @click="addModule()" class="btn btn-success rounded  ">
-                <i class="fa fa-plus "></i>
-              </button>
-            </b-row>
           </div>
-        </b-card-body>
-      </b-card>
-    </b-container>
-  </div>
+          <b-row class="container" v-if="disabledAddModules">
+            <button @click="addModule()" class="btn btn-success rounded  ">
+              <i class="fa fa-plus "></i>
+            </button>
+          </b-row>
+        </div>
+      </b-card-body>
+    </b-card>
+  </skeleton>
 </template>
 
 <script>
