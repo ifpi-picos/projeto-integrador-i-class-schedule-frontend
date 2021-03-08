@@ -1,7 +1,15 @@
 <template>
   <div>
-    <spinner :showLoad="true" v-if="loader" />
-    <div v-if="!loader">
+    <!-- <spinner :showLoad="true" v-if="loader" /> -->
+    <div class="d-flex justify-content-center mt-3 mb-3" v-if="loading">
+      <b-spinner
+        style="width: 3rem; height: 3rem"
+        variant="success"
+        label="Spinning"
+      ></b-spinner>
+    </div>
+
+    <div v-if="coordinations">
       <b-table
         v-if="coordinations[0]"
         head-variant="light"
@@ -12,7 +20,7 @@
         tbody-tr-class=""
         :items="coordinations"
         :fields="fields"
-         sort-by="nome"
+        sort-by="nome"
         sort-icon-left
       >
         <template v-slot:cell(actions)="data">
@@ -78,7 +86,7 @@ export default {
           thClass: 'text-center'
         }
       ],
-      loader: true
+      loading: true
     }
   },
   created () {
@@ -86,16 +94,19 @@ export default {
   },
   methods: {
     async getCoordinations () {
+      this.loading = true
+      this.coordinations = []
       this.$firebase
         .firestore()
         .collection('coordenacoes')
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
             const coordination = change.doc.data()
-            this.loader = false
             if (change.type === 'added') {
               coordination.id = change.doc.id
+              console.log('array: ' + this.coordinations)
               this.coordinations.push(coordination)
+              this.loading = false
             }
             if (change.type === 'modified') {
               this.coordinations.forEach((item, index) => {

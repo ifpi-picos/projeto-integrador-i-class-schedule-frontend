@@ -1,8 +1,14 @@
 <template>
   <div>
-    <spinner :showLoad="true" v-if="loader" />
+    <div class="d-flex justify-content-center mt-3 mb-3" v-if="loading">
+      <b-spinner
+        style="width: 3rem; height: 3rem"
+        variant="success"
+        label="Spinning"
+      ></b-spinner>
+    </div>
 
-    <div v-if="!loader">
+    <div v-if="!loading">
       <b-table
         table-class="border-bottom"
         head-variant="light"
@@ -10,7 +16,7 @@
         :responsive="true"
         :items="schedules"
         :fields="fields"
-         sort-by="turno"
+        sort-by="turno"
         sort-icon-left
       >
         <template #cell(horario)="data">
@@ -47,113 +53,115 @@
 </template>
 
 <script>
-import ScheduleForm from '../components/ScheduleForm'
+import ScheduleForm from "../components/ScheduleForm";
 export default {
   components: {
-    ScheduleForm
+    ScheduleForm,
   },
-  name: 'ScheduleList',
-  data () {
+  name: "ScheduleList",
+  data() {
     return {
-      scheduleId: '',
+      scheduleId: "",
       schedules: [],
       fields: [
         {
-          key: 'turno',
-          label: 'Turno',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'horario',
-          label: 'Horário',
-          tdClass: 'font-weight-600 name text-sm ',
+          key: "turno",
+          label: "Turno",
+          tdClass: "font-weight-600 name text-sm ",
           sortable: true,
-          thClass: 'text-center'
         },
         {
-          key: 'actions',
-          label: 'Ações',
-          thClass: 'text-center'
-        }
+          key: "horario",
+          label: "Horário",
+          tdClass: "font-weight-600 name text-sm ",
+          sortable: true,
+          thClass: "text-center",
+        },
+        {
+          key: "actions",
+          label: "Ações",
+          thClass: "text-center",
+        },
       ],
-      loader: true
-    }
+      loading: true,
+    };
   },
-  created () {
-    this.getSchedule()
+  created() {
+    this.getSchedule();
   },
   methods: {
-    async getSchedule () {
+    async getSchedule() {
+      this.loading = true;
+      this.schedules = [];
       this.$firebase
         .firestore()
-        .collection('turnos')
-        .onSnapshot(snapshot => {
-          snapshot.docChanges().forEach(change => {
-            this.loader = false
-            if (change.type === 'added') {
-              const schedule = change.doc.data()
-              schedule.id = change.doc.id
-              this.schedules.push(schedule)
+        .collection("turnos")
+        .onSnapshot((snapshot) => {
+          snapshot.docChanges().forEach((change) => {
+            if (change.type === "added") {
+              const schedule = change.doc.data();
+              schedule.id = change.doc.id;
+              this.schedules.push(schedule);
+              this.loading = false;
             }
-            if (change.type === 'modified') {
-              console.log('Modified: ', change.doc.data())
+            if (change.type === "modified") {
+              console.log("Modified: ", change.doc.data());
               this.schedules.forEach((item, index) => {
                 if (change.doc.id === item.id) {
-                  const scheduleUpdate = change.doc.data()
-                  scheduleUpdate.id = change.doc.id
-                  this.$set(this.schedules, index, scheduleUpdate)
+                  const scheduleUpdate = change.doc.data();
+                  scheduleUpdate.id = change.doc.id;
+                  this.$set(this.schedules, index, scheduleUpdate);
                 }
-              })
+              });
             }
-            if (change.type === 'removed') {
-              console.log('Removed : ', change.doc.data())
+            if (change.type === "removed") {
+              console.log("Removed : ", change.doc.data());
               this.schedules.forEach((item, index) => {
                 if (change.doc.id === item.id) {
-                  this.schedules.splice(index, 1)
+                  this.schedules.splice(index, 1);
                 }
-              })
+              });
             }
-          })
-        })
+          });
+        });
     },
-    editSchedule (id, button) {
-      this.scheduleId = id
-      this.$root.$emit('bv::show::modal', 'modalEdit', button)
+    editSchedule(id, button) {
+      this.scheduleId = id;
+      this.$root.$emit("bv::show::modal", "modalEdit", button);
     },
-    delSchedule (id) {
+    delSchedule(id) {
       this.$bvModal
-        .msgBoxConfirm('Tem certeza que deseja deletar?', {
-          title: 'Confirmação',
-          size: 'sm',
-          buttonSize: 'sm',
-          okVariant: 'danger',
-          cancelVariant: 'primary',
-          headerClass: 'p-2 border-bottom-0',
-          footerClass: 'p-2 border-top-0',
+        .msgBoxConfirm("Tem certeza que deseja deletar?", {
+          title: "Confirmação",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "danger",
+          cancelVariant: "primary",
+          headerClass: "p-2 border-bottom-0",
+          footerClass: "p-2 border-top-0",
           centered: true,
-          okTitle: 'Sim',
-          cancelTitle: 'Não'
+          okTitle: "Sim",
+          cancelTitle: "Não",
         })
-        .then(value => {
+        .then((value) => {
           if (value) {
             this.$firebase
               .firestore()
-              .collection('turnos')
+              .collection("turnos")
               .doc(id)
               .delete()
               .then(() => {
-                console.log('apagado')
+                console.log("apagado");
               })
-              .catch(erro => {
-                console.error(error)
-              })
+              .catch((erro) => {
+                console.error(error);
+              });
           }
         })
-        .catch(e => {
-          console.log(e)
-        })
-    }
-  }
-}
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+};
 </script>

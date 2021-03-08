@@ -13,7 +13,6 @@ import BaseAlert from '@/components/BaseAlert'
 import BaseNav from '@/components/Navbar/BaseNav'
 import BaseHeader from '@/components/BaseHeader'
 import Skeleton from '@/components/Skeleton'
-import Spinner from '@/components/Spinner'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { Input, Tooltip, Popover } from 'element-ui'
 
@@ -37,7 +36,6 @@ const GlobalComponents = {
     Vue.component(Card.name, Card)
     Vue.component(Modal.name, Modal)
     Vue.component(StatsCard.name, StatsCard)
-    Vue.component(Spinner.name, Spinner)
     Vue.component(Skeleton.name, Skeleton)
     Vue.component(Input.name, Input)
     Vue.component('validation-provider', ValidationProvider)

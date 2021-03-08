@@ -1,7 +1,13 @@
 <template>
   <div>
-    <spinner :showLoad="true" v-if="loader" />
-    <div v-if="!loader">
+    <div class="d-flex justify-content-center mt-3 mb-3" v-if="loading">
+      <b-spinner
+        style="width: 3rem; height: 3rem"
+        variant="success"
+        label="Spinning"
+      ></b-spinner>
+    </div>
+    <div v-if="!loading">
       <b-table
         table-class="border-bottom"
         head-variant="light"
@@ -82,7 +88,7 @@ export default {
           label: 'Ações'
         }
       ],
-      loader: true
+      loading: true
     }
   },
   created () {
@@ -90,6 +96,8 @@ export default {
   },
   methods: {
     async getTeachers () {
+      this.loading = true
+      this.teachers = []
       this.$firebase
         .firestore()
         .collection('professores')
@@ -97,10 +105,10 @@ export default {
           snapshot.docChanges().forEach(change => {
             const teacher = change.doc.data()
             console.log(change.type)
-            this.loader = false
             if (change.type === 'added') {
               teacher.id = change.doc.id
               this.teachers.push(teacher)
+              this.loading = false
             }
             if (change.type === 'modified') {
               console.log('Modified: ', change.doc.data())

@@ -1,8 +1,14 @@
 <template>
   <div>
-    <spinner :showLoad="true" v-if="loader" />
+    <div class="d-flex justify-content-center mt-3 mb-3" v-if="loading">
+      <b-spinner
+        style="width: 3rem; height: 3rem"
+        variant="success"
+        label="Spinning"
+      ></b-spinner>
+    </div>
 
-    <div v-if="!loader">
+    <div v-if="!loading">
       <b-table
         head-variant="light"
         hover
@@ -10,7 +16,7 @@
         table-class="border-bottom"
         :items="subjects"
         :fields="fields"
-         sort-by="nome"
+        sort-by="nome"
         sort-icon-left
       >
         <template v-slot:cell(actions)="data">
@@ -69,7 +75,7 @@ export default {
           label: 'Ações'
         }
       ],
-      loader: true
+      loading: true
     }
   },
   created () {
@@ -77,16 +83,18 @@ export default {
   },
   methods: {
     async getSubjects () {
+      this.loading = true
       this.$firebase
         .firestore()
         .collection('disciplinas')
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
-            this.loader = false
             if (change.type === 'added') {
               const subject = change.doc.data()
               subject.id = change.doc.id
+              console.log(this.subjects)
               this.subjects.push(subject)
+              this.loading = false
             }
             if (change.type === 'modified') {
               console.log('Modified: ', change.doc.data())
