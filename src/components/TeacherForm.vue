@@ -30,7 +30,9 @@
             >
             </base-input>
           </b-col>
+        </b-row>
 
+        <b-row>
           <b-col lg="6">
             <base-input
               type="email"
@@ -42,9 +44,6 @@
             >
             </base-input>
           </b-col>
-        </b-row>
-
-        <b-row>
           <b-col lg="6">
             <base-input label="Área de atuação" required>
               <b-form-select
@@ -56,7 +55,7 @@
             </base-input>
           </b-col>
 
-          <b-col lg="6">
+          <!--  <b-col lg="6">
             <base-input label="Coordenação" required>
               <b-form-select
                 class="form-control"
@@ -65,7 +64,7 @@
                 :options="coordinations"
               ></b-form-select>
             </base-input>
-          </b-col>
+          </b-col>-->
         </b-row>
       </div>
     </b-form>
