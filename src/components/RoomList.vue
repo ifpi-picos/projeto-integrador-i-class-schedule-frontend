@@ -7,16 +7,16 @@
         label="Spinning"
       ></b-spinner>
     </div>
-    <div v-if="!loading">
+    <div v-if="true">
       <b-table
-        v-if="rooms"
+        v-if="true"
         head-variant="light"
         hover
         responsive
         table-class="border-bottom"
         thead-tr-class="text-center"
         tbody-tr-class="text-center"
-        :items="rooms"
+        :items="dataBase.rows"
         :fields="fields"
         sort-by="nome"
         sort-icon-left
@@ -39,6 +39,7 @@
           </div>
         </template>
       </b-table>
+      {{ dataBase }}
     </div>
 
     <room-form idModal="modalEdit" :idroom="roomId" title="Atulaizar Sala" />
@@ -46,111 +47,44 @@
 </template>
 
 <script>
-import RoomForm from "./RoomForm.vue";
+import RoomForm from './RoomForm.vue'
+import handleData from '../mixins/handleData.js'
 
 export default {
-  name: "roomList",
+  name: 'roomList',
   components: {
-    RoomForm,
+    RoomForm
   },
+  mixins: [handleData],
 
-  data() {
+  data () {
     return {
-      roomId: "",
-      rooms: [],
+      roomId: '',
+      rooms: true,
       fields: [
         {
-          key: "nome",
-          label: "Sala",
-          tdClass: "font-weight-600 name text-sm ",
-          sortable: true,
+          key: 'name',
+          label: 'Sala',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
         },
         {
-          key: "actions",
-          label: "Ações",
-        },
+          key: 'actions',
+          label: 'Ações'
+        }
       ],
-      loading: true,
-    };
+      loading: true
+    }
   },
-  created() {
-    this.getRooms();
+  created () {
+    this.get('rooms')
   },
   methods: {
-    async getRooms() {
-      this.loading = true;
-      this.rooms = [];
-      this.$firebase
-        .firestore()
-        .collection("salas")
-        .onSnapshot((snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            const room = change.doc.data();
-            if (change.type === "added") {
-              room.id = change.doc.id;
-              this.rooms.push(room);
-              this.loading = false;
-            }
-            if (change.type === "modified") {
-              console.log("Modified: ", change.doc.data());
-              this.rooms.forEach((item, index) => {
-                if (change.doc.id === item.id) {
-                  const roomUpdate = change.doc.data();
-                  roomUpdate.id = change.doc.id;
-                  this.$set(this.rooms, index, roomUpdate);
-                }
-              });
-            }
-            if (change.type === "removed") {
-              console.log("Removed : ", change.doc.data());
-              this.rooms.forEach((item, index) => {
-                if (change.doc.id === item.id) {
-                  this.rooms.splice(index, 1);
-                }
-              });
-            }
-          });
-        });
-    },
-    editRoom(id, button) {
-      this.roomId = id;
-      this.$root.$emit("bv::show::modal", "modalEdit", button);
-    },
-    delRoom(id) {
-      this.$bvModal
-        .msgBoxConfirm("Tem certeza que deseja deletar?", {
-          title: "Confirmação",
-          size: "sm",
-          buttonSize: "sm",
-          okVariant: "danger",
-          cancelVariant: "primary",
-          headerClass: "p-2 border-bottom-0",
-          footerClass: "p-2 border-top-0",
-          centered: true,
-          okTitle: "Sim",
-          cancelTitle: "Não",
-        })
-        .then((value) => {
-          if (value) {
-            this.$firebase
-              .firestore()
-              .collection("salas")
-              .doc(id)
-              .delete()
-              .then(() => {
-                console.log("apagado");
-              })
-              .catch((erro) => {
-                console.error(error);
-              });
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-  },
-};
+    // async getRooms () {},
+    editRoom (id, button) {},
+    delRoom (id) {}
+  }
+}
 </script>
 
 <style scoped></style>
