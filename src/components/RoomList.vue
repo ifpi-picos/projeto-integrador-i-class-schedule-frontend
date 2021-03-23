@@ -47,6 +47,7 @@
 
 <script>
 import RoomForm from "./RoomForm.vue";
+import { api } from "@/services.js";
 
 export default {
   name: "roomList",
@@ -77,78 +78,89 @@ export default {
     this.getRooms();
   },
   methods: {
-    async getRooms() {
-      this.loading = true;
-      this.rooms = [];
-      this.$firebase
-        .firestore()
-        .collection("salas")
-        .onSnapshot((snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            const room = change.doc.data();
-            if (change.type === "added") {
-              room.id = change.doc.id;
-              this.rooms.push(room);
-              this.loading = false;
-            }
-            if (change.type === "modified") {
-              console.log("Modified: ", change.doc.data());
-              this.rooms.forEach((item, index) => {
-                if (change.doc.id === item.id) {
-                  const roomUpdate = change.doc.data();
-                  roomUpdate.id = change.doc.id;
-                  this.$set(this.rooms, index, roomUpdate);
-                }
-              });
-            }
-            if (change.type === "removed") {
-              console.log("Removed : ", change.doc.data());
-              this.rooms.forEach((item, index) => {
-                if (change.doc.id === item.id) {
-                  this.rooms.splice(index, 1);
-                }
-              });
-            }
+    getRooms() {
+      (this.rooms = []),
+        api
+          .get("/Rooms")
+          .then((response) => {
+            this.rooms = response.data;
+          })
+          .catch((erro) => {
+            console.log(erro);
           });
-        });
     },
-    editRoom(id, button) {
-      this.roomId = id;
-      this.$root.$emit("bv::show::modal", "modalEdit", button);
-    },
-    delRoom(id) {
-      this.$bvModal
-        .msgBoxConfirm("Tem certeza que deseja deletar?", {
-          title: "Confirmação",
-          size: "sm",
-          buttonSize: "sm",
-          okVariant: "danger",
-          cancelVariant: "primary",
-          headerClass: "p-2 border-bottom-0",
-          footerClass: "p-2 border-top-0",
-          centered: true,
-          okTitle: "Sim",
-          cancelTitle: "Não",
-        })
-        .then((value) => {
-          if (value) {
-            this.$firebase
-              .firestore()
-              .collection("salas")
-              .doc(id)
-              .delete()
-              .then(() => {
-                console.log("apagado");
-              })
-              .catch((erro) => {
-                console.error(error);
-              });
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
+    // async getRooms() {
+    //   this.loading = true;
+    //   this.rooms = [];
+    //   this.$firebase
+    //     .firestore()
+    //     .collection("salas")
+    //     .onSnapshot((snapshot) => {
+    //       snapshot.docChanges().forEach((change) => {
+    //         const room = change.doc.data();
+    //         if (change.type === "added") {
+    //           room.id = change.doc.id;
+    //           this.rooms.push(room);
+    //           this.loading = false;
+    //         }
+    //         if (change.type === "modified") {
+    //           console.log("Modified: ", change.doc.data());
+    //           this.rooms.forEach((item, index) => {
+    //             if (change.doc.id === item.id) {
+    //               const roomUpdate = change.doc.data();
+    //               roomUpdate.id = change.doc.id;
+    //               this.$set(this.rooms, index, roomUpdate);
+    //             }
+    //           });
+    //         }
+    //         if (change.type === "removed") {
+    //           console.log("Removed : ", change.doc.data());
+    //           this.rooms.forEach((item, index) => {
+    //             if (change.doc.id === item.id) {
+    //               this.rooms.splice(index, 1);
+    //             }
+    //           });
+    //         }
+    //       });
+    //     });
+    // },
+    // editRoom(id, button) {
+    //   this.roomId = id;
+    //   this.$root.$emit("bv::show::modal", "modalEdit", button);
+    // },
+    // delRoom(id) {
+    //   this.$bvModal
+    //     .msgBoxConfirm("Tem certeza que deseja deletar?", {
+    //       title: "Confirmação",
+    //       size: "sm",
+    //       buttonSize: "sm",
+    //       okVariant: "danger",
+    //       cancelVariant: "primary",
+    //       headerClass: "p-2 border-bottom-0",
+    //       footerClass: "p-2 border-top-0",
+    //       centered: true,
+    //       okTitle: "Sim",
+    //       cancelTitle: "Não",
+    //     })
+    //     .then((value) => {
+    //       if (value) {
+    //         this.$firebase
+    //           .firestore()
+    //           .collection("salas")
+    //           .doc(id)
+    //           .delete()
+    //           .then(() => {
+    //             console.log("apagado");
+    //           })
+    //           .catch((erro) => {
+    //             console.error(error);
+    //           });
+    //       }
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
+    // },
   },
 };
 </script>

@@ -42,155 +42,155 @@
 </template>
 
 <script>
-import { Loading } from "element-ui";
-import ClassForm from "./ClassForm.vue";
+// import { Loading } from "element-ui";
+import ClassForm from './ClassForm.vue'
 
 export default {
-  name: "ClassList",
+  name: 'ClassList',
   components: {
-    ClassForm,
+    ClassForm
   },
 
-  data() {
+  data () {
     return {
-      idClass: "",
+      idClass: '',
       classes: [],
       fields: [
         {
-          key: "nome",
-          label: "Turma",
-          tdClass: "font-weight-600 name text-sm ",
-          sortable: true,
+          key: 'nome',
+          label: 'Turma',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
         },
         {
-          key: "curso",
-          label: "curso",
-          tdClass: "font-weight-600 name text-sm ",
-          sortable: true,
+          key: 'curso',
+          label: 'curso',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
         },
         {
-          key: "modulo",
-          label: "Módulo",
-          tdClass: "font-weight-600 name text-sm ",
-          sortable: true,
+          key: 'modulo',
+          label: 'Módulo',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
         },
         {
-          key: "local",
-          label: "sala",
-          tdClass: "font-weight-600 name text-sm ",
-          sortable: true,
+          key: 'local',
+          label: 'sala',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
         },
         {
-          key: "horario",
-          label: "Horário",
-          tdClass: "font-weight-600 name text-sm ",
-          sortable: true,
+          key: 'horario',
+          label: 'Horário',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
         },
         {
-          key: "actions",
-          label: "Ações",
-        },
+          key: 'actions',
+          label: 'Ações'
+        }
       ],
-      loading: true,
-    };
+      loading: true
+    }
   },
-  created() {
-    this.getClassesOnChange(), this.getClasses();
+  created () {
+    this.getClassesOnChange(), this.getClasses()
   },
   methods: {
-    async getClasses() {
-      this.loading = true;
-      this.classes = [];
+    async getClasses () {
+      this.loading = true
+      this.classes = []
       this.$firebase
         .firestore()
-        .collection("turmas")
+        .collection('turmas')
         .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const classRoom = doc.data();
-            classRoom.id = doc.id;
-            this.classes.push(classRoom);
-            this.loading = false;
-          });
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            const classRoom = doc.data()
+            classRoom.id = doc.id
+            this.classes.push(classRoom)
+            this.loading = false
+          })
         })
-        .catch(function(error) {
-          console.log("Error getting documents: ", error);
-        });
+        .catch(function (error) {
+          console.log('Error getting documents: ', error)
+        })
     },
 
-    getClassesOnChange() {
+    getClassesOnChange () {
       this.$firebase
         .firestore()
-        .collection("turmas")
-        .onSnapshot((snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            if (change.type === "added") {
-              const classRoom = change.doc.data();
-              classRoom.id = change.doc.id;
-              this.classes.push(classRoom);
+        .collection('turmas')
+        .onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(change => {
+            if (change.type === 'added') {
+              const classRoom = change.doc.data()
+              classRoom.id = change.doc.id
+              this.classes.push(classRoom)
             }
-            if (change.type === "modified") {
-              console.log("Modified city: ", change.doc.data());
+            if (change.type === 'modified') {
+              console.log('Modified city: ', change.doc.data())
               this.classes.forEach((item, index) => {
                 if (change.doc.id === item.id) {
-                  const classUpdate = change.doc.data();
-                  classUpdate.id = change.doc.id;
-                  this.$set(this.classes, index, classUpdate);
+                  const classUpdate = change.doc.data()
+                  classUpdate.id = change.doc.id
+                  this.$set(this.classes, index, classUpdate)
                 }
-              });
+              })
             }
-            if (change.type === "removed") {
-              console.log("Removed city: ", change.doc.data());
+            if (change.type === 'removed') {
+              console.log('Removed city: ', change.doc.data())
               this.classes.forEach((item, index) => {
                 if (change.doc.id === item.id) {
-                  this.classes.splice(index, 1);
+                  this.classes.splice(index, 1)
                 }
-              });
+              })
             }
-          });
-        });
+          })
+        })
     },
 
-    editClass(id, button) {
-      this.idClass = id;
+    editClass (id, button) {
+      this.idClass = id
       //this.$refs.modaledit.show();
-      this.$root.$emit("bv::show::modal", "modalEdit", button);
+      this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
-    delClass(id) {
+    delClass (id) {
       this.$bvModal
-        .msgBoxConfirm("Tem certeza que deseja deletar?", {
-          title: "Confirmação",
-          size: "sm",
-          buttonSize: "sm",
-          okVariant: "danger",
-          cancelVariant: "primary",
-          headerClass: "p-2 border-bottom-0",
-          footerClass: "p-2 border-top-0",
+        .msgBoxConfirm('Tem certeza que deseja deletar?', {
+          title: 'Confirmação',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          cancelVariant: 'primary',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
           centered: true,
-          okTitle: "Sim",
-          cancelTitle: "Não",
+          okTitle: 'Sim',
+          cancelTitle: 'Não'
         })
-        .then((value) => {
+        .then(value => {
           if (value) {
             this.$firebase
               .firestore()
-              .collection("turmas")
+              .collection('turmas')
               .doc(id)
               .delete()
               .then(() => {
-                console.log("apagado");
+                console.log('apagado')
               })
-              .catch((erro) => {
-                console.error(error);
-              });
+              .catch(erro => {
+                console.error(error)
+              })
           }
         })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-  },
-};
+        .catch(e => {
+          console.log(e)
+        })
+    }
+  }
+}
 </script>
 
 <style scoped></style>
