@@ -1,13 +1,16 @@
 <template>
   <div>
-    <div class="d-flex justify-content-center mt-3 mb-3" v-if="loading">
+    <div
+      v-if="dataBase === null"
+      class="d-flex justify-content-center mt-3 mb-3"
+    >
       <b-spinner
         style="width: 3rem; height: 3rem"
         variant="success"
         label="Spinning"
       ></b-spinner>
     </div>
-    <div v-if="true">
+    <div v-else>
       <b-table
         v-if="true"
         head-variant="light"
@@ -20,6 +23,7 @@
         :fields="fields"
         sort-by="nome"
         sort-icon-left
+        show-empty
       >
         <template v-slot:cell(actions)="data">
           <div class="d-flex justify-content-center">
@@ -37,6 +41,10 @@
               ><i class="fas fa-trash"></i
             ></b-button>
           </div>
+        </template>
+
+        <template #empty>
+          <h4>Sem dados</h4>
         </template>
       </b-table>
       {{ dataBase }}
