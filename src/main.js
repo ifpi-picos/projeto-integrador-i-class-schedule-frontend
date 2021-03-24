@@ -1,10 +1,7 @@
 import Vue from 'vue'
 import DashboardPlugin from './plugins/dashboard-plugin'
 import App from './App.vue'
-import firebase from './firebbase'
-
-// 
-
+import firebase from './firebase'
 
 // router setup
 import router from './routes/router'

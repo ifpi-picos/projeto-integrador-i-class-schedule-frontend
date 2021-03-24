@@ -1,21 +1,21 @@
 import Axios from 'axios'
 
-const axios = Axios.create({
+const axiosInstance = Axios.create({
   baseURL: 'http://localhost:3000/api/'
 })
 
 const api = {
   get (url) {
-    return axios.get(url)
+    return axiosInstance.get(url)
   },
   post (url, body) {
-    return axios.post(url, body)
+    return axiosInstance.post(url, body)
   },
   put (url, body) {
-    return axios.put(url, body)
+    return axiosInstance.put(url, body)
   },
   delete (url) {
-    return axios.delete(url)
+    return axiosInstance.delete(url)
   }
 }
 
