@@ -36,6 +36,7 @@
 
 <script>
 import { api } from "../services/index";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "RoomForm",
@@ -62,6 +63,9 @@ export default {
       description: "titulo do modal",
     },
   },
+  computed: {
+    ...mapState(["data_base"]),
+  },
   methods: {
     checkFormValidity() {
       const valid = this.$refs.form && this.$refs.form.checkValidity();
@@ -79,27 +83,45 @@ export default {
       if (!this.checkFormValidity()) {
         return;
       }
-      api
-        .post("/rooms", payload)
-        .then((response) => {
+      if (this.idroom) {
+        console.log(this.idroom);
+        // this.$store.dispatch("getDatabase");
+        api.put(`/rooms/${this.idroom}`, payload).then((response) => {
           this.$store.dispatch("getDatabase");
-        })
-        .catch();
+        });
+      } else {
+        console.log("idroom nao existe");
+        api
+          .post("/rooms", payload)
+          .then((response) => {
+            this.$store.dispatch("getDatabase");
+          })
+          .catch();
+      }
     },
     async fillForm() {
+      const roomIndex = this.data_base.rows.findIndex(
+        (data) => data.id === Number(this.idroom)
+      );
+      console.log(roomIndex);
+      this.room.name = this.data_base.rows[roomIndex].name;
+      // const payload = {
+      //   name: this.room.name,
+      // };
       if (this.idroom) {
-        this.$firebase
-          .firestore()
-          .collection("salas")
-          .doc(this.idroom)
-          .get()
-          .then((querySnapshot) => {
-            const data = querySnapshot.data();
-            this.room.name = data.nome;
-          })
-          .catch((error) => {
-            console.log("Error getting documents: ", error);
-          });
+        console.log(this.idroom);
+        // this.$firebase
+        //   .firestore()
+        //   .collection("salas")
+        //   .doc(this.idroom)
+        //   .get()
+        //   .then((querySnapshot) => {
+        //     const data = querySnapshot.data();
+        //     this.room.name = data.nome;
+        //   })
+        //   .catch((error) => {
+        //     console.log("Error getting documents: ", error);
+        //   });
       }
     },
   },

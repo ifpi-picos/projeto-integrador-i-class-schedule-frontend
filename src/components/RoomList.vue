@@ -19,7 +19,7 @@
         table-class="border-bottom"
         thead-tr-class="text-center"
         tbody-tr-class="text-center"
-        :items="dataBase.rows"
+        :items="data_base.rows"
         :fields="fields"
         sort-by="nome"
         sort-icon-left
@@ -124,6 +124,7 @@ export default {
                 (data) => data.id === id
               );
               this.dataBase.rows.splice(roomIndex, 1);
+              this.$store.dispatch("getDatabase");
             });
           }
         });

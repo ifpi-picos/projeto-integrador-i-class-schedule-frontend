@@ -4,7 +4,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      dataBase: this.data_base
+      dataBase: null
     }
   },
   computed: {
@@ -18,8 +18,5 @@ export default {
       this.dataBase = Response.data.data
     },
     delete (url) {}
-  },
-  watch: {
-    data_base () {}
   }
 }

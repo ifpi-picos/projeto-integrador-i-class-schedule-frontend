@@ -12,13 +12,6 @@ export default new Vuex.Store({
   mutations: {
     UPDATE_DATABASE (state, payload) {
       state.data_base = payload
-    },
-    // ADD_DATABASE (state, payload) {
-    //   state.data_base.unshit(payload)
-    // },
-    ADD_DATABASE (state, payload) {
-      state.data_base.name = payload
-      // state.data_base.push(payload)
     }
   },
   actions: {
