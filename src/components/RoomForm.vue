@@ -35,98 +35,84 @@
 </template>
 
 <script>
+import { api } from "../services/index";
+
 export default {
-  name: 'RoomForm',
-  data () {
+  name: "RoomForm",
+  data() {
     return {
       room: {
-        name: ''
-      }
-    }
+        name: "",
+      },
+    };
   },
   props: {
     idModal: {
       type: String,
-      default: '',
-      description: 'referencia do modal'
+      default: "",
+      description: "referencia do modal",
     },
     idroom: {
       type: String,
-      default: '',
-      description: 'id do sala que vai ser atualizado'
+      default: "",
+      description: "id do sala que vai ser atualizado",
     },
     title: {
       type: String,
-      description: 'titulo do modal'
-    }
+      description: "titulo do modal",
+    },
   },
   methods: {
-    checkFormValidity () {
-      const valid = this.$refs.form && this.$refs.form.checkValidity()
-      return valid
+    checkFormValidity() {
+      const valid = this.$refs.form && this.$refs.form.checkValidity();
+      return valid;
     },
-    handleOk (bvModalEvt) {
+    async handleOk(bvModalEvt) {
       // Trigger submit handler
-      this.handleSubmit()
+      const a = await this.handleSubmit();
+      this.$refs[this.idModal].hide();
     },
-    handleSubmit () {
+    handleSubmit() {
       const payload = {
-        nome: this.room.name,
-        createdAt: new Date().getTime()
-      }
+        name: this.room.name,
+      };
       if (!this.checkFormValidity()) {
-        return
+        return;
       }
-
-      const BD = this.$firebase.firestore().collection('salas')
-      if (this.idroom) {
-        BD.doc(this.idroom)
-          .set(payload)
-          .then(() => {
-            this.$refs[this.idModal].hide()
-            if (!this.idroom) {
-              this.room = {}
-            }
-          })
-          .catch(error => console.error(error))
-      } else {
-        BD.add(payload)
-          .then(() => {
-            this.$refs[this.idModal].hide()
-            if (!this.idroom) {
-              this.room = {}
-            }
-          })
-          .catch(error => console.error(error))
-      }
+      api
+        .post("/rooms", payload)
+        .then((response) => {
+          this.$store.dispatch("getDatabase");
+        })
+        .catch();
     },
-    async fillForm () {
+    async fillForm() {
       if (this.idroom) {
         this.$firebase
           .firestore()
-          .collection('salas')
+          .collection("salas")
           .doc(this.idroom)
           .get()
-          .then(querySnapshot => {
-            const data = querySnapshot.data()
-            this.room.name = data.nome
+          .then((querySnapshot) => {
+            const data = querySnapshot.data();
+            this.room.name = data.nome;
           })
-          .catch(error => {
-            console.log('Error getting documents: ', error)
-          })
+          .catch((error) => {
+            console.log("Error getting documents: ", error);
+          });
       }
-    }
+    },
   },
 
   watch: {
-    idroom () {
-      this.fillForm()
+    idroom() {
+      this.fillForm();
     },
-    room () {
-      this.checkFormValidity()
-    }
-  }
-}
+    room() {
+      this.checkFormValidity();
+    },
+  },
+};
 </script>
 
 <style></style>

@@ -47,52 +47,89 @@
           <h4>Sem dados</h4>
         </template>
       </b-table>
-      {{ dataBase }}
+      <p>{{ dataBase }}</p>
+
+      <p>{{ data_base }}</p>
     </div>
 
-    <room-form idModal="modalEdit" :idroom="roomId" title="Atulaizar Sala" />
+    <room-form idModal="modalEdit" :idroom="roomId" title="Atualizar Sala" />
   </div>
 </template>
 
 <script>
-import RoomForm from './RoomForm.vue'
-import handleData from '../mixins/handleData.js'
+import RoomForm from "./RoomForm.vue";
+import handleData from "../mixins/handleData.js";
+import { mapState, mapActions } from "vuex";
+import { api } from "../services";
 
 export default {
-  name: 'roomList',
+  name: "roomList",
   components: {
-    RoomForm
+    RoomForm,
   },
   mixins: [handleData],
 
-  data () {
+  data() {
     return {
-      roomId: '',
+      roomId: "",
       rooms: true,
       fields: [
         {
-          key: 'name',
-          label: 'Sala',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
+          key: "name",
+          label: "Sala",
+          tdClass: "font-weight-600 name text-sm ",
+          sortable: true,
         },
         {
-          key: 'actions',
-          label: 'Ações'
-        }
+          key: "actions",
+          label: "Ações",
+        },
       ],
-      loading: true
-    }
+      loading: true,
+      ultimo: null,
+    };
   },
-  created () {
-    this.get('rooms')
+  computed: {
+    ...mapState(["data_base"]),
+  },
+  created() {
+    this.get("rooms");
+    this.getDatabase();
   },
   methods: {
+    ...mapActions(["getDatabase"]),
     // async getRooms () {},
-    editRoom (id, button) {},
-    delRoom (id) {}
-  }
-}
+    editRoom(id, button) {
+      this.roomId = "" + id;
+      this.$root.$emit("bv::show::modal", "modalEdit", button);
+    },
+    delRoom(id) {
+      this.$bvModal
+        .msgBoxConfirm("Tem certeza que deseja deletar?", {
+          title: "Confirmação",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "danger",
+          cancelVariant: "primary",
+          headerClass: "p-2 border-bottom-0",
+          footerClass: "p-2 border-top-0",
+          centered: true,
+          okTitle: "Sim",
+          cancelTitle: "Não",
+        })
+        .then((value) => {
+          if (value) {
+            api.delete(`/rooms/${id}`).then(() => {
+              const roomIndex = this.dataBase.rows.findIndex(
+                (data) => data.id === id
+              );
+              this.dataBase.rows.splice(roomIndex, 1);
+            });
+          }
+        });
+    },
+  },
+};
 </script>
 
 <style scoped></style>
