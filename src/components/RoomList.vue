@@ -12,7 +12,6 @@
     </div>
     <div v-else>
       <b-table
-        v-if="true"
         head-variant="light"
         hover
         responsive
@@ -72,7 +71,6 @@ export default {
   data() {
     return {
       roomId: "",
-      rooms: true,
       fields: [
         {
           key: "name",

@@ -13,9 +13,9 @@ export default {
   methods: {
     ...mapActions(['getDatabase']),
     async get (url) {
-      this.dataBase = null
       const Response = await api.get(url)
-      this.dataBase = Response.data.data
+      const { data } = Response
+      this.dataBase = data.data
     },
     delete (url) {}
   }

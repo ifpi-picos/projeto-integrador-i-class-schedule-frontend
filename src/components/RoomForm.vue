@@ -35,106 +35,97 @@
 </template>
 
 <script>
-import { api } from "../services/index";
-import { mapState, mapActions } from "vuex";
+import { api } from '../services/index'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: "RoomForm",
-  data() {
+  name: 'RoomForm',
+  data () {
     return {
       room: {
-        name: "",
-      },
-    };
+        name: ''
+      }
+    }
   },
   props: {
     idModal: {
       type: String,
-      default: "",
-      description: "referencia do modal",
+      default: '',
+      description: 'referencia do modal'
     },
     idroom: {
       type: String,
-      default: "",
-      description: "id do sala que vai ser atualizado",
+      default: '',
+      description: 'id do sala que vai ser atualizado'
     },
     title: {
       type: String,
-      description: "titulo do modal",
-    },
+      description: 'titulo do modal'
+    }
   },
   computed: {
-    ...mapState(["data_base"]),
+    ...mapState(['data_base'])
   },
   methods: {
-    checkFormValidity() {
-      const valid = this.$refs.form && this.$refs.form.checkValidity();
-      return valid;
+    checkFormValidity () {
+      const valid = this.$refs.form && this.$refs.form.checkValidity()
+      return valid
     },
-    async handleOk(bvModalEvt) {
+
+    async handleOk (bvModalEvt) {
       // Trigger submit handler
       const a = await this.handleSubmit();
       this.$refs[this.idModal].hide();
     },
-    handleSubmit() {
+
+    handleSubmit () {
       const payload = {
-        name: this.room.name,
-      };
+        name: this.room.name
+      }
+
       if (!this.checkFormValidity()) {
-        return;
+        return
       }
+      
       if (this.idroom) {
-        console.log(this.idroom);
+        console.log(this.idroom)
         // this.$store.dispatch("getDatabase");
-        api.put(`/rooms/${this.idroom}`, payload).then((response) => {
-          this.$store.dispatch("getDatabase");
-        });
+        api.put(`/rooms/${this.idroom}`, payload).then(response => {
+          this.$store.dispatch('getDatabase')
+        })
       } else {
-        console.log("idroom nao existe");
+        console.log('idroom nao existe')
         api
-          .post("/rooms", payload)
-          .then((response) => {
-            this.$store.dispatch("getDatabase");
+          .post('/rooms', payload)
+          .then(response => {
+            this.$store.dispatch('getDatabase')
           })
-          .catch();
+          .catch()
       }
     },
-    async fillForm() {
+
+    async fillForm () {
       const roomIndex = this.data_base.rows.findIndex(
-        (data) => data.id === Number(this.idroom)
-      );
-      console.log(roomIndex);
-      this.room.name = this.data_base.rows[roomIndex].name;
-      // const payload = {
-      //   name: this.room.name,
-      // };
+        data => data.id === Number(this.idroom)
+      )
+      console.log(roomIndex)
+      this.room.name = this.data_base.rows[roomIndex].name
+
       if (this.idroom) {
-        console.log(this.idroom);
-        // this.$firebase
-        //   .firestore()
-        //   .collection("salas")
-        //   .doc(this.idroom)
-        //   .get()
-        //   .then((querySnapshot) => {
-        //     const data = querySnapshot.data();
-        //     this.room.name = data.nome;
-        //   })
-        //   .catch((error) => {
-        //     console.log("Error getting documents: ", error);
-        //   });
+        console.log(this.idroom)
       }
-    },
+    }
   },
 
   watch: {
-    idroom() {
-      this.fillForm();
+    idroom () {
+      this.fillForm()
     },
-    room() {
-      this.checkFormValidity();
-    },
-  },
-};
+    room () {
+      this.checkFormValidity()
+    }
+  }
+}
 </script>
 
 <style></style>
