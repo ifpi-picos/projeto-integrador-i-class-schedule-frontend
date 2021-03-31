@@ -67,10 +67,6 @@ export default {
     return {
       schedule: {
         shift: '',
-        // time: {
-        //   startTime: '',
-        //   endTime: '',
-        // },,
         StartTime: null,
         endTime: null
       }

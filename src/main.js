@@ -10,6 +10,8 @@ import router from './routes/router'
 Vue.use(DashboardPlugin)
 Vue.use(firebase)
 
+export const eventBus = new Vue()
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

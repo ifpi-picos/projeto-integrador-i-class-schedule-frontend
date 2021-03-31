@@ -18,7 +18,7 @@
         table-class="border-bottom"
         thead-tr-class="text-center"
         tbody-tr-class="text-center"
-        :items="data_base.rows"
+        :items="dataBase.rows"
         :fields="fields"
         sort-by="nome"
         sort-icon-left
@@ -27,7 +27,7 @@
         <template v-slot:cell(actions)="data">
           <div class="d-flex justify-content-center">
             <b-button
-              @click="editRoom(data.item.id)"
+              @click="editRoom(data.item.id, data.item)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
@@ -56,79 +56,111 @@
 </template>
 
 <script>
-import RoomForm from "./RoomForm.vue";
-import handleData from "../mixins/handleData.js";
-import { mapState, mapActions } from "vuex";
-import { api } from "../services";
+import RoomForm from './RoomForm.vue'
+import handleData from '../mixins/handleData.js'
+import { mapState, mapActions } from 'vuex'
+import { api } from '../services'
+import { eventBus } from '../main'
 
 export default {
-  name: "roomList",
+  name: 'roomList',
+
   components: {
-    RoomForm,
+    RoomForm
   },
+
   mixins: [handleData],
 
-  data() {
+  data () {
     return {
-      roomId: "",
+      roomId: '',
       fields: [
         {
-          key: "name",
-          label: "Sala",
-          tdClass: "font-weight-600 name text-sm ",
-          sortable: true,
+          key: 'name',
+          label: 'Sala',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
         },
         {
-          key: "actions",
-          label: "Ações",
-        },
+          key: 'actions',
+          label: 'Ações'
+        }
       ],
       loading: true,
-      ultimo: null,
-    };
+      ultimo: null
+    }
   },
+
   computed: {
-    ...mapState(["data_base"]),
+    ...mapState(['data_base'])
   },
-  created() {
-    this.get("rooms");
-    this.getDatabase();
-  },
-  methods: {
-    ...mapActions(["getDatabase"]),
-    // async getRooms () {},
-    editRoom(id, button) {
-      this.roomId = "" + id;
-      this.$root.$emit("bv::show::modal", "modalEdit", button);
-    },
-    delRoom(id) {
-      this.$bvModal
-        .msgBoxConfirm("Tem certeza que deseja deletar?", {
-          title: "Confirmação",
-          size: "sm",
-          buttonSize: "sm",
-          okVariant: "danger",
-          cancelVariant: "primary",
-          headerClass: "p-2 border-bottom-0",
-          footerClass: "p-2 border-top-0",
-          centered: true,
-          okTitle: "Sim",
-          cancelTitle: "Não",
+
+  created () {
+    this.get('rooms')
+    this.getDatabase()
+    eventBus.$on('update', (payload, changeType) => {
+      console.log('event: ', changeType, payload)
+
+      if (changeType === 'added') {
+        const arrayLength = this.dataBase.rows.length
+        this.$set(this.dataBase.rows, arrayLength, payload)
+      }
+
+      if (changeType === 'modified') {
+        this.dataBase.rows.forEach((item, index) => {
+          if (payload.id === item.id) {
+            this.$set(this.dataBase.rows, index, payload)
+          }
         })
-        .then((value) => {
+      }
+
+      // this.set(this.dataBase.rows, 1)
+      // this.dataBase.rows.forEach((item, index) => {
+      //   if (payload.id === item.id) {
+      //     const scheduleUpdate = change.doc.data()
+      //      scheduleUpdate.id = change.doc.id
+      //      this.$set(this.schedules, index, scheduleUpdate)
+      //    }
+      // })
+    })
+  },
+
+  methods: {
+    ...mapActions(['getDatabase']),
+    // async getRooms () {},
+    editRoom (id, button, item) {
+      this.room = item
+      this.roomId = '' + id
+      this.$root.$emit('bv::show::modal', 'modalEdit', button)
+    },
+    delRoom (id) {
+      this.$bvModal
+        .msgBoxConfirm('Tem certeza que deseja deletar?', {
+          title: 'Confirmação',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          cancelVariant: 'primary',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
+          centered: true,
+          okTitle: 'Sim',
+          cancelTitle: 'Não'
+        })
+        .then(value => {
           if (value) {
             api.delete(`/rooms/${id}`).then(() => {
               const roomIndex = this.dataBase.rows.findIndex(
-                (data) => data.id === id
-              );
-              this.dataBase.rows.splice(roomIndex, 1);
-              this.$store.dispatch("getDatabase");
-            });
+                data => data.id === id
+              )
+              this.dataBase.rows.splice(roomIndex, 1)
+              this.$store.dispatch('getDatabase')
+            })
           }
-        });
-    },
-  },
-};
+        })
+    }
+  }
+}
 </script>
 
 <style scoped></style>

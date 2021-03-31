@@ -30,6 +30,7 @@
       >
         Salvar
       </b-button>
+      {{ dataForm }}
     </template>
   </b-modal>
 </template>
@@ -37,6 +38,7 @@
 <script>
 import { api } from '../services/index'
 import { mapState, mapActions } from 'vuex'
+import { eventBus } from '../main'
 
 export default {
   name: 'RoomForm',
@@ -52,6 +54,9 @@ export default {
       type: String,
       default: '',
       description: 'referencia do modal'
+    },
+    dataForm: {
+      type: Object
     },
     idroom: {
       type: String,
@@ -74,8 +79,8 @@ export default {
 
     async handleOk (bvModalEvt) {
       // Trigger submit handler
-      const a = await this.handleSubmit();
-      this.$refs[this.idModal].hide();
+      const a = await this.handleSubmit()
+      this.$refs[this.idModal].hide()
     },
 
     handleSubmit () {
@@ -86,19 +91,21 @@ export default {
       if (!this.checkFormValidity()) {
         return
       }
-      
+
       if (this.idroom) {
         console.log(this.idroom)
         // this.$store.dispatch("getDatabase");
         api.put(`/rooms/${this.idroom}`, payload).then(response => {
-          this.$store.dispatch('getDatabase')
+          // //this.$store.dispatch('getDatabase')
+          eventBus.$emit('update', response.data.data, 'modified')
         })
       } else {
         console.log('idroom nao existe')
         api
           .post('/rooms', payload)
           .then(response => {
-            this.$store.dispatch('getDatabase')
+            // //this.$store.dispatch('getDatabase')
+            eventBus.$emit('update', response.data.data, 'added')
           })
           .catch()
       }
@@ -109,7 +116,7 @@ export default {
         data => data.id === Number(this.idroom)
       )
       console.log(roomIndex)
-      this.room.name = this.data_base.rows[roomIndex].name
+      this.room = this.data_base.rows[roomIndex]
 
       if (this.idroom) {
         console.log(this.idroom)
