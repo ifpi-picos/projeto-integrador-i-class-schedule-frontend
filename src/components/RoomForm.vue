@@ -30,7 +30,6 @@
       >
         Salvar
       </b-button>
-      {{ dataForm }}
     </template>
   </b-modal>
 </template>
@@ -49,28 +48,39 @@ export default {
       }
     }
   },
+
+  created () {
+    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+      console.log('Modal is about to be shown', bvEvent, modalId)
+      this.room = this.roomProp
+    })
+  },
+
   props: {
     idModal: {
       type: String,
       default: '',
       description: 'referencia do modal'
     },
-    dataForm: {
-      type: Object
-    },
-    idroom: {
-      type: String,
-      default: '',
-      description: 'id do sala que vai ser atualizado'
+    roomProp: {
+      type: Object,
+      default: function () {
+        return {}
+      },
+      description: 'sala que vai ser atualizado'
     },
     title: {
       type: String,
       description: 'titulo do modal'
     }
   },
+
   computed: {
-    ...mapState(['data_base'])
+    fillForm () {
+      return (this.room = this.roomProp)
+    }
   },
+
   methods: {
     checkFormValidity () {
       const valid = this.$refs.form && this.$refs.form.checkValidity()
@@ -79,7 +89,7 @@ export default {
 
     async handleOk (bvModalEvt) {
       // Trigger submit handler
-      const a = await this.handleSubmit()
+      await this.handleSubmit()
       this.$refs[this.idModal].hide()
     },
 
@@ -92,11 +102,10 @@ export default {
         return
       }
 
-      if (this.idroom) {
-        console.log(this.idroom)
-        // this.$store.dispatch("getDatabase");
-        api.put(`/rooms/${this.idroom}`, payload).then(response => {
-          // //this.$store.dispatch('getDatabase')
+      const room = this.roomProp
+
+      if (room.id) {
+        api.put(`/rooms/${room.id}`, payload).then(response => {
           eventBus.$emit('update', response.data.data, 'modified')
         })
       } else {
@@ -104,30 +113,17 @@ export default {
         api
           .post('/rooms', payload)
           .then(response => {
-            // //this.$store.dispatch('getDatabase')
             eventBus.$emit('update', response.data.data, 'added')
           })
           .catch()
-      }
-    },
-
-    async fillForm () {
-      const roomIndex = this.data_base.rows.findIndex(
-        data => data.id === Number(this.idroom)
-      )
-      console.log(roomIndex)
-      this.room = this.data_base.rows[roomIndex]
-
-      if (this.idroom) {
-        console.log(this.idroom)
       }
     }
   },
 
   watch: {
-    idroom () {
-      this.fillForm()
-    },
+    // roomProp () {
+    //   this.fillForm()
+    // },
     room () {
       this.checkFormValidity()
     }

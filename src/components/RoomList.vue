@@ -27,7 +27,7 @@
         <template v-slot:cell(actions)="data">
           <div class="d-flex justify-content-center">
             <b-button
-              @click="editRoom(data.item.id, data.item)"
+              @click="editRoom(data.item)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
@@ -46,19 +46,15 @@
           <h4>Sem dados</h4>
         </template>
       </b-table>
-      <p>{{ dataBase }}</p>
-
-      <p>{{ data_base }}</p>
     </div>
 
-    <room-form idModal="modalEdit" :idroom="roomId" title="Atualizar Sala" />
+    <room-form idModal="modalEdit" :roomProp="room" title="Atualizar Sala" />
   </div>
 </template>
 
 <script>
 import RoomForm from './RoomForm.vue'
 import handleData from '../mixins/handleData.js'
-import { mapState, mapActions } from 'vuex'
 import { api } from '../services'
 import { eventBus } from '../main'
 
@@ -73,7 +69,7 @@ export default {
 
   data () {
     return {
-      roomId: '',
+      room: {},
       fields: [
         {
           key: 'name',
@@ -91,16 +87,10 @@ export default {
     }
   },
 
-  computed: {
-    ...mapState(['data_base'])
-  },
-
   created () {
     this.get('rooms')
-    this.getDatabase()
-    eventBus.$on('update', (payload, changeType) => {
-      console.log('event: ', changeType, payload)
 
+    eventBus.$on('update', (payload, changeType) => {
       if (changeType === 'added') {
         const arrayLength = this.dataBase.rows.length
         this.$set(this.dataBase.rows, arrayLength, payload)
@@ -113,26 +103,15 @@ export default {
           }
         })
       }
-
-      // this.set(this.dataBase.rows, 1)
-      // this.dataBase.rows.forEach((item, index) => {
-      //   if (payload.id === item.id) {
-      //     const scheduleUpdate = change.doc.data()
-      //      scheduleUpdate.id = change.doc.id
-      //      this.$set(this.schedules, index, scheduleUpdate)
-      //    }
-      // })
     })
   },
 
   methods: {
-    ...mapActions(['getDatabase']),
-    // async getRooms () {},
-    editRoom (id, button, item) {
+    editRoom (item, button) {
       this.room = item
-      this.roomId = '' + id
       this.$root.$emit('bv::show::modal', 'modalEdit', button)
     },
+
     delRoom (id) {
       this.$bvModal
         .msgBoxConfirm('Tem certeza que deseja deletar?', {
