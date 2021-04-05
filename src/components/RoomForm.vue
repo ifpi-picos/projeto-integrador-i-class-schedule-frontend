@@ -36,23 +36,24 @@
 
 <script>
 import { api } from '../services/index'
-import { mapState, mapActions } from 'vuex'
 import { eventBus } from '../main'
 
 export default {
   name: 'RoomForm',
   data () {
     return {
-      room: {
-        name: ''
-      }
+      room: {}
     }
   },
 
-  created () {
-    this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
-      console.log('Modal is about to be shown', bvEvent, modalId)
-      this.room = this.roomProp
+  mounted () {
+    this.$root.$on('bv::show::modal', (modalId, room) => {
+      if (room.id) {
+        console.log(room)
+        this.room = room
+      } else {
+        this.room = {}
+      }
     })
   },
 
@@ -62,22 +63,9 @@ export default {
       default: '',
       description: 'referencia do modal'
     },
-    roomProp: {
-      type: Object,
-      default: function () {
-        return {}
-      },
-      description: 'sala que vai ser atualizado'
-    },
     title: {
       type: String,
       description: 'titulo do modal'
-    }
-  },
-
-  computed: {
-    fillForm () {
-      return (this.room = this.roomProp)
     }
   },
 
@@ -101,15 +89,13 @@ export default {
       if (!this.checkFormValidity()) {
         return
       }
-
-      const room = this.roomProp
-
+      const room = this.room
       if (room.id) {
         api.put(`/rooms/${room.id}`, payload).then(response => {
+          console.log('modified')
           eventBus.$emit('update', response.data.data, 'modified')
         })
       } else {
-        console.log('idroom nao existe')
         api
           .post('/rooms', payload)
           .then(response => {
@@ -121,9 +107,6 @@ export default {
   },
 
   watch: {
-    // roomProp () {
-    //   this.fillForm()
-    // },
     room () {
       this.checkFormValidity()
     }

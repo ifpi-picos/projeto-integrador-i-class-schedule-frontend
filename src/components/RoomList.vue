@@ -48,7 +48,7 @@
       </b-table>
     </div>
 
-    <room-form idModal="modalEdit" :roomProp="room" title="Atualizar Sala" />
+    <room-form idModal="modalEdit" title="Atualizar Sala" />
   </div>
 </template>
 
@@ -107,9 +107,8 @@ export default {
   },
 
   methods: {
-    editRoom (item, button) {
-      this.room = item
-      this.$root.$emit('bv::show::modal', 'modalEdit', button)
+    editRoom (item) {
+      this.$root.$emit('bv::show::modal', 'modalEdit', item)
     },
 
     delRoom (id) {
@@ -133,7 +132,6 @@ export default {
                 data => data.id === id
               )
               this.dataBase.rows.splice(roomIndex, 1)
-              this.$store.dispatch('getDatabase')
             })
           }
         })
