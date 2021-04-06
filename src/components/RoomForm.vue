@@ -50,7 +50,7 @@ export default {
     this.$root.$on('bv::show::modal', (modalId, room) => {
       if (room.id) {
         console.log(room)
-        this.room = room
+        this.room = room ///passivel error
       } else {
         this.room = {}
       }
