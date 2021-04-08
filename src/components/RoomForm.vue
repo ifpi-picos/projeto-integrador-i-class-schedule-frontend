@@ -48,10 +48,9 @@ export default {
 
   mounted () {
     this.$root.$on('bv::show::modal', (modalId, room) => {
-      if (room.id) {
-        console.log(room)
-        this.room = room ///passivel error
-      } else {
+      if (modalId === 'modalEdit') {
+        this.room = Object.assign({}, room)
+      } else if (modalId === 'addRoom') {
         this.room = {}
       }
     })
@@ -82,22 +81,18 @@ export default {
     },
 
     handleSubmit () {
-      const payload = {
-        name: this.room.name
-      }
-
       if (!this.checkFormValidity()) {
         return
       }
       const room = this.room
       if (room.id) {
-        api.put(`/rooms/${room.id}`, payload).then(response => {
+        api.put(`/rooms/${room.id}`, room).then(response => {
           console.log('modified')
           eventBus.$emit('update', response.data.data, 'modified')
         })
       } else {
         api
-          .post('/rooms', payload)
+          .post('/rooms', room)
           .then(response => {
             eventBus.$emit('update', response.data.data, 'added')
           })

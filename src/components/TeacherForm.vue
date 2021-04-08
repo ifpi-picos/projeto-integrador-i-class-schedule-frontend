@@ -129,7 +129,6 @@ export default {
   methods: {
     checkFormValidity () {
       const valid = this.$refs.form && this.$refs.form.checkValidity()
-      //console.log(valid)
       return valid
     },
     handleOk () {
@@ -137,60 +136,30 @@ export default {
       this.handleSubmit()
     },
     handleSubmit () {
-      const payload = {
-        nome: this.teacher.username,
-        matricula: this.teacher.registration,
-        email: this.teacher.email,
-        area_de_ocupacao: this.teacher.occupationArea,
-        coordenacao: this.teacher.coordination,
-        createdAt: new Date().getTime()
-      }
       if (!this.checkFormValidity()) {
         return
       }
-      const DB = this.$firebase.firestore().collection('professores')
-
-      if (this.idTeacher) {
-        DB.doc(this.idTeacher)
-          .set(payload)
-          .then(() => {
-            this.$refs[this.idModal].hide()
-            if (!this.idTeacher) {
-              this.teacher = {}
-            }
-          })
-          .catch(error => console.error(error))
-      } else {
-        DB.add(payload)
-          .then(() => {
-            this.$refs[this.idModal].hide()
-            if (!this.idTeacher) {
-              this.teacher = {}
-            }
-          })
-          .catch(error => console.error(error))
-      }
-    },
-    fillForm () {
-      if (this.idTeacher) {
-        this.$firebase
-          .firestore()
-          .collection('professores')
-          .doc(this.idTeacher)
-          .get()
-          .then(querySnapshot => {
-            const data = querySnapshot.data()
-            this.teacher.username = data.nome
-            this.teacher.registration = data.matricula
-            this.teacher.email = data.email
-            this.teacher.occupationArea = data.area_de_ocupacao
-            this.teacher.coordination = data.coordenacao
-          })
-          .catch(error => {
-            console.log('Error getting documents: ', error)
-          })
-      }
     }
+    // fillForm () {
+    //   if (this.idTeacher) {
+    //     this.$firebase
+    //       .firestore()
+    //       .collection('professores')
+    //       .doc(this.idTeacher)
+    //       .get()
+    //       .then(querySnapshot => {
+    //         const data = querySnapshot.data()
+    //         this.teacher.username = data.nome
+    //         this.teacher.registration = data.matricula
+    //         this.teacher.email = data.email
+    //         this.teacher.occupationArea = data.area_de_ocupacao
+    //         this.teacher.coordination = data.coordenacao
+    //       })
+    //       .catch(error => {
+    //         console.log('Error getting documents: ', error)
+    //       })
+    //   }
+    // }
   },
   watch: {
     idTeacher () {
