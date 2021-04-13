@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div
-      v-if="dataBase === null"
-      class="d-flex justify-content-center mt-3 mb-3"
-    >
+    <div v-if="loading" class="d-flex justify-content-center mt-3 mb-3">
       <b-spinner
         style="width: 3rem; height: 3rem"
         variant="success"
@@ -56,7 +53,6 @@
 <script>
 import RoomForm from './RoomForm.vue'
 import handleData from '../mixins/handleData.js'
-// import { eventBus } from '../main'
 
 export default {
   name: 'roomList',
@@ -81,34 +77,12 @@ export default {
           key: 'actions',
           label: 'Ações'
         }
-      ],
-      loading: true
+      ]
     }
   },
 
   created () {
     this.get('rooms')
-
-    // eventBus.$on('update', (payload, changeType) => {
-    //   if (changeType === 'added') {
-    //     if (!this.dataBase.rows) {
-    //       this.dataBase = {
-    //         count: 0,
-    //         rows: []
-    //       }
-    //     }
-    //     const arrayLength = this.dataBase.rows.length
-    //     this.$set(this.dataBase.rows, arrayLength, payload)
-    //   }
-
-    //   if (changeType === 'modified') {
-    //     this.dataBase.rows.forEach((item, index) => {
-    //       if (payload.id === item.id) {
-    //         this.$set(this.dataBase.rows, index, payload)
-    //       }
-    //     })
-    //   }
-    // })
   },
 
   methods: {
@@ -118,32 +92,6 @@ export default {
     delRoom (id) {
       this.delete('rooms', id)
     }
-
-    // delRoom (id) {
-    //   this.$bvModal
-    //     .msgBoxConfirm('Tem certeza que deseja deletar?', {
-    //       title: 'Confirmação',
-    //       size: 'sm',
-    //       buttonSize: 'sm',
-    //       okVariant: 'danger',
-    //       cancelVariant: 'primary',
-    //       headerClass: 'p-2 border-bottom-0',
-    //       footerClass: 'p-2 border-top-0',
-    //       centered: true,
-    //       okTitle: 'Sim',
-    //       cancelTitle: 'Não'
-    //     })
-    //     .then(value => {
-    //       if (value) {
-    //         api.delete(`/rooms/${id}`).then(() => {
-    //           const roomIndex = this.dataBase.rows.findIndex(
-    //             data => data.id === id
-    //           )
-    //           this.dataBase.rows.splice(roomIndex, 1)
-    //         })
-    //       }
-    //     })
-    // }
   }
 }
 </script>

@@ -26,7 +26,7 @@
       <b-button
         :disabled="!checkFormValidity()"
         variant="success"
-        @click="handleOk()"
+        @click="handleSubmit()"
       >
         Salvar
       </b-button>
@@ -74,12 +74,6 @@ export default {
       return valid
     },
 
-    async handleOk (bvModalEvt) {
-      // Trigger submit handler
-      await this.handleSubmit()
-      this.$refs[this.idModal].hide()
-    },
-
     handleSubmit () {
       if (!this.checkFormValidity()) {
         return
@@ -98,6 +92,7 @@ export default {
           })
           .catch()
       }
+      this.$refs[this.idModal].hide()
     }
   },
 

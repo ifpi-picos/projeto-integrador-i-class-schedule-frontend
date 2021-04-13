@@ -4,14 +4,19 @@ import { eventBus } from '../main'
 export default {
   data () {
     return {
-      dataBase: null
+      dataBase: null,
+      loading: true
     }
   },
   methods: {
     async get (url) {
+      this.loading = true
       const Response = await api.get(url)
       const { data } = Response
       this.dataBase = data.data
+      setTimeout(() => {
+        this.loading = false
+      }, 1000)
     },
     delete (url, id) {
       this.$bvModal
@@ -42,12 +47,6 @@ export default {
   created () {
     eventBus.$on('update', (payload, changeType) => {
       if (changeType === 'added') {
-        if (!this.dataBase.rows) {
-          this.dataBase = {
-            count: 0,
-            rows: []
-          }
-        }
         const arrayLength = this.dataBase.rows.length
         this.$set(this.dataBase.rows, arrayLength, payload)
       }
