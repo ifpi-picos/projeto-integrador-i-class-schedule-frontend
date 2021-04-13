@@ -14,14 +14,14 @@
         head-variant="light"
         hover
         :responsive="true"
-        :items="schedules"
+        :items="dataBase.rows"
         :fields="fields"
         sort-by="turno"
         sort-icon-left
       >
-        <template #cell(horario)="data">
+        <template #cell(schedule)="row">
           <div class="d-flex justify-content-center ">
-            {{ data.item.inicio_horario }} - {{ data.item.fim_horario }}
+            {{ row.item.start.slice(0, -3) }} - {{ row.item.end.slice(0, -3) }}
           </div>
         </template>
 
@@ -43,35 +43,33 @@
           </div>
         </template>
       </b-table>
+      {{ dataBase }}
     </div>
-    <schedule-form
-      idModal="modalEdit"
-      title="Editar Turno"
-      :scheduleId="scheduleId"
-    />
+    <schedule-form idModal="modalEdit" title="Editar Turno" />
   </div>
 </template>
 
 <script>
 import ScheduleForm from '../components/ScheduleForm'
+import handleData from '../mixins/handleData.js'
+
 export default {
   components: {
     ScheduleForm
   },
   name: 'ScheduleList',
+  mixins: [handleData],
   data () {
     return {
-      scheduleId: '',
-      schedules: [],
       fields: [
         {
-          key: 'turno',
+          key: 'name',
           label: 'Turno',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {
-          key: 'horario',
+          key: `schedule`,
           label: 'Horário',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true,
@@ -86,7 +84,7 @@ export default {
     }
   },
   created () {
-    this.getSchedule()
+    this.get('/shifts')
   },
   methods: {}
 }
