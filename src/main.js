@@ -4,16 +4,16 @@ import App from './App.vue'
 import firebase from './firebase'
 // import store from './store/'
 import router from './routes/router'
-import moment from 'moment'
+// import moment from 'moment'
 
 // Vue.prototype.moment = moment
 
-Vue.filter('formatTime', function (value) {
-  if (value) {
-    console.log(String(value))
-    return moment(String(value)).format('hh:mm')
-  }
-})
+// Vue.filter('formatTime', function (value) {
+//   if (value) {
+//     console.log(String(value))
+//     return moment(String(value)).format('hh:mm')
+//   }
+// })
 
 // router setup
 // plugin setup

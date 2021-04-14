@@ -1,6 +1,6 @@
 <template>
   <skeleton>
-    <schedule-form idModal="addSchedule" title="Novo Turno" />
+    <schedule-form idModal="modalAdd" title="Novo Turno" />
     <b-card>
       <b-card-header class="pt-0 pl-0 pr-0">
         <b-row align-h="between">
@@ -8,7 +8,7 @@
             <h3>Turnos</h3>
           </b-col>
           <b-col class="text-right">
-            <b-button variant="success" v-b-modal.addSchedule>
+            <b-button variant="success" v-b-modal.modalAdd>
               <i class="ni ni-fat-add"></i>
               Adcionar</b-button
             >

@@ -21,14 +21,15 @@
       >
         <template #cell(schedule)="row">
           <div class="d-flex justify-content-center ">
-            {{ row.item.start.slice(0, -3) }} - {{ row.item.end.slice(0, -3) }}
+            {{ row.item.start.replace(/:\d\d$/gm, '') }} -
+            {{ row.item.end.replace(/:\d\d$/gm, '') }}
           </div>
         </template>
 
         <template v-slot:cell(actions)="data">
           <div class="d-flex justify-content-center ">
             <b-button
-              @click="editSchedule(data.item.id)"
+              @click="editSchedule(data.item)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
@@ -43,7 +44,6 @@
           </div>
         </template>
       </b-table>
-      {{ dataBase }}
     </div>
     <schedule-form idModal="modalEdit" title="Editar Turno" />
   </div>
@@ -84,8 +84,15 @@ export default {
     }
   },
   created () {
-    this.get('/shifts')
+    this.get('shifts')
   },
-  methods: {}
+  methods: {
+    editSchedule (item) {
+      this.$root.$emit('bv::show::modal', 'modalEdit', item)
+    },
+    delSchedule (id) {
+      this.delete('shifts', id)
+    }
+  }
 }
 </script>

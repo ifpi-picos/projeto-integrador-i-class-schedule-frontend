@@ -11,7 +11,7 @@
               name="Sala"
               label="Sala"
               placeholder="Sala"
-              v-model="room.name"
+              v-model="registry.name"
               required
             >
             </base-input>
@@ -35,25 +35,13 @@
 </template>
 
 <script>
-import { api } from '../services/index'
-import { eventBus } from '../main'
+import modalForm from '../mixins/modalForm'
 
 export default {
   name: 'RoomForm',
+  mixins: [modalForm],
   data () {
-    return {
-      room: {}
-    }
-  },
-
-  mounted () {
-    this.$root.$on('bv::show::modal', (modalId, room) => {
-      if (modalId === 'modalEdit') {
-        this.room = Object.assign({}, room)
-      } else if (modalId === 'addRoom') {
-        this.room = {}
-      }
-    })
+    return {}
   },
 
   props: {
@@ -69,36 +57,8 @@ export default {
   },
 
   methods: {
-    checkFormValidity () {
-      const valid = this.$refs.form && this.$refs.form.checkValidity()
-      return valid
-    },
-
     handleSubmit () {
-      if (!this.checkFormValidity()) {
-        return
-      }
-      const room = this.room
-      if (room.id) {
-        api.put(`/rooms/${room.id}`, room).then(response => {
-          console.log('modified')
-          eventBus.$emit('update', response.data.data, 'modified')
-        })
-      } else {
-        api
-          .post('/rooms', room)
-          .then(response => {
-            eventBus.$emit('update', response.data.data, 'added')
-          })
-          .catch()
-      }
-      this.$refs[this.idModal].hide()
-    }
-  },
-
-  watch: {
-    room () {
-      this.checkFormValidity()
+      this.handleOk('rooms')
     }
   }
 }

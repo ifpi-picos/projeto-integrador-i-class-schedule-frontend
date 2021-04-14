@@ -43,7 +43,6 @@
           <h4>Sem dados</h4>
         </template>
       </b-table>
-      {{ dataBase }}
     </div>
 
     <room-form idModal="modalEdit" title="Atualizar Sala" />
@@ -65,7 +64,6 @@ export default {
 
   data () {
     return {
-      // room: {},
       fields: [
         {
           key: 'name',
