@@ -11,12 +11,13 @@ export default {
   methods: {
     async get (url) {
       this.loading = true
-      const Response = await api.get(url)
-      const { data } = Response
-      this.dataBase = data.data
-      setTimeout(() => {
+      try {
+        const { data } = await api.get(url)
+        this.dataBase = data.data
         this.loading = false
-      }, 1000)
+      } catch (err) {
+        console.log(err)
+      }
     },
     delete (url, id) {
       this.$bvModal
@@ -35,10 +36,11 @@ export default {
         .then(value => {
           if (value) {
             api.delete(`${url}/${id}`).then(() => {
-              const roomIndex = this.dataBase.rows.findIndex(
-                data => data.id === id
-              )
-              this.dataBase.rows.splice(roomIndex, 1)
+              const roomIndex = this.dataBase.findIndex(data => {
+                console.log(data)
+                return data.id === id
+              })
+              this.dataBase.splice(roomIndex, 1)
             })
           }
         })
@@ -47,14 +49,18 @@ export default {
   created () {
     eventBus.$on('update', (payload, changeType) => {
       if (changeType === 'added') {
-        const arrayLength = this.dataBase.rows.length
-        this.$set(this.dataBase.rows, arrayLength, payload)
+        console.log('entrou')
+
+        const arrayLength = this.dataBase.length
+        console.log(payload)
+
+        this.$set(this.dataBase, arrayLength, payload)
       }
 
       if (changeType === 'modified') {
-        this.dataBase.rows.forEach((item, index) => {
+        this.dataBase.forEach((item, index) => {
           if (payload.id === item.id) {
-            this.$set(this.dataBase.rows, index, payload)
+            this.$set(this.dataBase, index, payload)
           }
         })
       }

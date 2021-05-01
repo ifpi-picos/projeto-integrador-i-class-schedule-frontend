@@ -15,7 +15,7 @@
         table-class="border-bottom"
         thead-tr-class="text-center"
         tbody-tr-class="text-center"
-        :items="dataBase.rows"
+        :items="dataBase"
         :fields="fields"
         sort-by="nome"
         sort-icon-left
@@ -38,7 +38,6 @@
             ></b-button>
           </div>
         </template>
-
         <template #empty>
           <h4>Sem dados</h4>
         </template>

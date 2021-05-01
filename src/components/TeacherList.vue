@@ -17,7 +17,7 @@
         head-variant="light"
         hover
         responsive
-        :items="dataBase.rows"
+        :items="dataBase"
         :fields="fields"
         sort-by="nome"
         sort-icon-left

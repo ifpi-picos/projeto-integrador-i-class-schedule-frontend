@@ -74,11 +74,6 @@ export default {
       default: '',
       description: 'referencia do modal'
     },
-    scheduleId: {
-      type: String,
-      default: '',
-      description: 'id do turno que vai ser atualizada'
-    },
     title: {
       type: String,
       description: 'titulo do modal'
