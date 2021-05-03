@@ -23,25 +23,41 @@ export default {
       return valid
     },
 
-    handleOk (url) {
+    async handleOk (url) {
       if (!this.checkFormValidity()) {
         return
       }
       const registry = this.registry
       if (registry.id) {
-        api.put(`/${url}/${registry.id}`, registry).then(response => {
-          console.log('modified')
-          eventBus.$emit('update', response.data.data, 'modified')
-        })
-      } else {
         api
-          .post(`/${url}`, registry)
+          .put(`/${url}/${registry.id}`, registry)
           .then(response => {
-            eventBus.$emit('update', response.data.data, 'added')
+            console.log('modified')
+            eventBus.$emit('update', response.data.data, 'modified')
+            this.$refs[this.idModal].hide()
           })
-          .catch()
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        try {
+          const { data } = await api.post(`/${url}`, registry)
+
+          eventBus.$emit('update', data.data, 'added')
+          this.$refs[this.idModal].hide()
+        } catch (err) {
+          console.log(err)
+        }
+        // api.post(`/${url}`, registry).then(
+        //   response => {
+        //     eventBus.$emit('update', response.data.data, 'added')
+        //     this.$refs[this.idModal].hide()
+        //   },
+        //   err => {
+        //     console.log(err)
+        //   }
+        // )
       }
-      this.$refs[this.idModal].hide()
     }
   },
   created () {},
