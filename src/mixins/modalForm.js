@@ -34,32 +34,30 @@ export default {
           .then(response => {
             console.log('modified')
             eventBus.$emit('update', response.data.data, 'modified')
+            this.$swal('Sucesso', response.data.message, 'success')
+
             this.$refs[this.idModal].hide()
           })
           .catch(error => {
             const data = error.response
-            console.log(data.data.error)
+            this.$swal('Erro', data.data.error.message, 'error')
+
+            // console.log(data.data.error)
           })
       } else {
         try {
           const { data } = await api.post(`/${url}`, registry)
 
           eventBus.$emit('update', data.data, 'added')
+
+          this.$swal('Sucesso', data.message, 'success')
+
           this.$refs[this.idModal].hide()
         } catch (error) {
-          // console.log(err)
           const data = error.response
-          console.log(data.data.error)
+          // console.log(data.data.error)
+          this.$swal('Erro', data.data.error.message, 'error')
         }
-        // api.post(`/${url}`, registry).then(
-        //   response => {
-        //     eventBus.$emit('update', response.data.data, 'added')
-        //     this.$refs[this.idModal].hide()
-        //   },
-        //   err => {
-        //     console.log(err)
-        //   }
-        // )
       }
     }
   },
