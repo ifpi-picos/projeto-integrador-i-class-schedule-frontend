@@ -36,8 +36,9 @@ export default {
             eventBus.$emit('update', response.data.data, 'modified')
             this.$refs[this.idModal].hide()
           })
-          .catch(err => {
-            console.log(err)
+          .catch(error => {
+            const data = error.response
+            console.log(data.data.error)
           })
       } else {
         try {
@@ -45,8 +46,10 @@ export default {
 
           eventBus.$emit('update', data.data, 'added')
           this.$refs[this.idModal].hide()
-        } catch (err) {
-          console.log(err)
+        } catch (error) {
+          // console.log(err)
+          const data = error.response
+          console.log(data.data.error)
         }
         // api.post(`/${url}`, registry).then(
         //   response => {
