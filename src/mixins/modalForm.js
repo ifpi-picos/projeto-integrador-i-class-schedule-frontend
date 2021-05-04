@@ -28,19 +28,29 @@ export default {
         return
       }
       const registry = this.registry
+
       if (registry.id) {
         api
           .put(`/${url}/${registry.id}`, registry)
           .then(response => {
             console.log('modified')
             eventBus.$emit('update', response.data.data, 'modified')
-            this.$swal('Sucesso', response.data.message, 'success')
+            // this.$swal('Sucesso', response.data.message, 'success')
+
+            window.toast.fire({
+              icon: 'success',
+              title: response.data.message
+            })
 
             this.$refs[this.idModal].hide()
           })
           .catch(error => {
             const data = error.response
-            this.$swal('Erro', data.data.error.message, 'error')
+            // this.$swal('Erro', data.data.error.message, 'error')
+            window.toast.fire({
+              icon: 'error',
+              title: data.data.error.message
+            })
 
             // console.log(data.data.error)
           })
@@ -50,13 +60,21 @@ export default {
 
           eventBus.$emit('update', data.data, 'added')
 
-          this.$swal('Sucesso', data.message, 'success')
+          // this.$swal('Sucesso', data.message, 'success')
+          window.toast.fire({
+            icon: 'success',
+            title: data.message
+          })
 
           this.$refs[this.idModal].hide()
         } catch (error) {
           const data = error.response
           // console.log(data.data.error)
-          this.$swal('Erro', data.data.error.message, 'error')
+          // this.$swal('Erro', data.data.error.message, 'error')
+          window.toast.fire({
+            icon: 'error',
+            title: data.data.error.message
+          })
         }
       }
     }
