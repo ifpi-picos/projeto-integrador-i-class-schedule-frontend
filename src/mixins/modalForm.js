@@ -37,12 +37,12 @@ export default {
             eventBus.$emit('update', response.data.data, 'modified')
             // this.$swal('Sucesso', response.data.message, 'success')
 
+            this.$refs[this.idModal].hide()
+
             window.toast.fire({
               icon: 'success',
               title: response.data.message
             })
-
-            this.$refs[this.idModal].hide()
           })
           .catch(error => {
             const data = error.response
@@ -51,8 +51,6 @@ export default {
               icon: 'error',
               title: data.data.error.message
             })
-
-            // console.log(data.data.error)
           })
       } else {
         try {
@@ -60,16 +58,15 @@ export default {
 
           eventBus.$emit('update', data.data, 'added')
 
+          this.$refs[this.idModal].hide()
+
           // this.$swal('Sucesso', data.message, 'success')
           window.toast.fire({
             icon: 'success',
             title: data.message
           })
-
-          this.$refs[this.idModal].hide()
         } catch (error) {
           const data = error.response
-          // console.log(data.data.error)
           // this.$swal('Erro', data.data.error.message, 'error')
           window.toast.fire({
             icon: 'error',
