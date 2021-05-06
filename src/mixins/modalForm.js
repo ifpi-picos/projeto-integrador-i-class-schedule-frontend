@@ -4,7 +4,8 @@ import { eventBus } from '../main'
 export default {
   data () {
     return {
-      registry: {}
+      registry: {},
+      buttonDisable: false
     }
   },
   mounted () {
@@ -56,7 +57,10 @@ export default {
       } else {
         try {
           // adicionar um novo registro
+          this.buttonDisable = true
+
           const { data } = await api.post(`/${url}`, registry)
+          this.buttonDisable = false
 
           eventBus.$emit('update', data.data, 'added')
 
@@ -82,6 +86,9 @@ export default {
   watch: {
     registry () {
       this.checkFormValidity()
+    },
+    buttonDisable () {
+      // console.log('button disable')
     }
   }
 }
