@@ -11,7 +11,7 @@
               name="Sala"
               label="Sala"
               placeholder="Sala"
-              v-model="registry.name"
+              v-model.trim="registry.name"
               required
             >
             </base-input>

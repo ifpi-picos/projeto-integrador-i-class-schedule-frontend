@@ -18,6 +18,7 @@ export default {
   },
   props: {},
   methods: {
+    // Validar formulário
     checkFormValidity () {
       const valid = this.$refs.form && this.$refs.form.checkValidity()
       return valid
@@ -29,31 +30,32 @@ export default {
       }
       const registry = this.registry
 
+      // Verificar si foi pego um registro para editar
       if (registry.id) {
-        api
-          .put(`/${url}/${registry.id}`, registry)
-          .then(response => {
-            console.log('modified')
-            eventBus.$emit('update', response.data.data, 'modified')
-            // this.$swal('Sucesso', response.data.message, 'success')
+        try {
+          const { data } = await api.put(`/${url}/${registry.id}`, registry)
 
-            this.$refs[this.idModal].hide()
+          console.log('modified')
 
-            window.toast.fire({
-              icon: 'success',
-              title: response.data.message
-            })
+          eventBus.$emit('update', data.data, 'modified')
+
+          this.$refs[this.idModal].hide()
+
+          window.toast.fire({
+            icon: 'success',
+            title: data.message
           })
-          .catch(error => {
-            const data = error.response
-            // this.$swal('Erro', data.data.error.message, 'error')
-            window.toast.fire({
-              icon: 'error',
-              title: data.data.error.message
-            })
+        } catch (error) {
+          const data = error.response
+
+          window.toast.fire({
+            icon: 'error',
+            title: data.data.error.message
           })
+        }
       } else {
         try {
+          // adicionar um novo registro
           const { data } = await api.post(`/${url}`, registry)
 
           eventBus.$emit('update', data.data, 'added')

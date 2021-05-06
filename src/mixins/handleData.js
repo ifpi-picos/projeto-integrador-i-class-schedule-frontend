@@ -9,6 +9,7 @@ export default {
     }
   },
   methods: {
+    // Listagem de registros
     async get (url) {
       this.loading = true
       try {
@@ -19,6 +20,8 @@ export default {
         console.log(err)
       }
     },
+
+    // Apagar um registro do BD
     delete (url, id) {
       this.$bvModal
         .msgBoxConfirm('Tem certeza que deseja deletar?', {
@@ -49,8 +52,6 @@ export default {
   created () {
     eventBus.$on('update', (payload, changeType) => {
       if (changeType === 'added') {
-        console.log('entrou')
-
         const arrayLength = this.dataBase.length
         console.log(payload)
 
