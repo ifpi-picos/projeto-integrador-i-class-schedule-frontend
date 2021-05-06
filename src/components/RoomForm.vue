@@ -24,11 +24,19 @@
         Cancelar
       </b-button>
       <b-button
-        :disabled="!checkFormValidity()"
+        :disabled="!checkFormValidity() || buttonDisable"
         variant="success"
         @click="handleSubmit()"
       >
-        Salvar
+        <span
+          v-if="buttonDisable"
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        <span v-else>
+          Salvar
+        </span>
       </b-button>
     </template>
   </b-modal>
