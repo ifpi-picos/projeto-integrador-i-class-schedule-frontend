@@ -26,18 +26,29 @@
       <b-button
         :disabled="!checkFormValidity() || buttonDisable"
         variant="success"
-        @click="handleSubmit()"
+        @click.once="handleSubmit()"
       >
-        <!-- <b-spinner small type="grow"></b-spinner>
+        <b-spinner small type="grow"></b-spinner>
         <b-spinner small type="grow" style="animation-delay: 0.2s"></b-spinner>
-        <b-spinner small type="grow" style="animation-delay: 0.4s"></b-spinner> -->
+        <b-spinner small type="grow" style="animation-delay: 0.4s"></b-spinner>
 
-        <span
+        <!--<span
           v-if="buttonDisable"
           class="spinner-border spinner-border-sm"
           role="status"
           aria-hidden="true"
-        ></span>
+        ></span> -->
+        <span v-if="buttonDisable">
+          <div class="spinner-grow spinner-grow-sm" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow spinner-grow-sm" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow spinner-grow-sm" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </span>
         <span v-else>
           Salvar
         </span>
@@ -76,4 +87,4 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped></style>

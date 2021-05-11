@@ -72,6 +72,7 @@ export default {
             title: data.message
           })
         } catch (error) {
+          this.buttonDisable = false
           const data = error.response
           // this.$swal('Erro', data.data.error.message, 'error')
           window.toast.fire({
