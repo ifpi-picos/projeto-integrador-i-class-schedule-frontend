@@ -26,25 +26,20 @@
       <b-button
         :disabled="!checkFormValidity() || buttonDisable"
         variant="success"
-        @click.once="handleSubmit()"
+        @click="handleSubmit()"
       >
-        <!-- <span
-          v-if="buttonDisable"
-          class="spinner-border spinner-border-sm"
-          role="status"
-          aria-hidden="true"
-        ></span> -->
         <span v-if="buttonDisable">
           <div class="spinner-grow spinner-grow-sm" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only"></span>
           </div>
           <div class="spinner-grow spinner-grow-sm" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only"></span>
           </div>
           <div class="spinner-grow spinner-grow-sm" role="status">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only"></span>
           </div>
         </span>
+
         <span v-else>
           Salvar
         </span>

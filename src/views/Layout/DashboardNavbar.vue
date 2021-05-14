@@ -9,7 +9,7 @@
       aria-current="page"
       class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active"
     >
-      {{ $route.meta.name }}
+      {{ $route.meta.name }} >
     </a>
     <!-- Navbar links -->
     <b-navbar-nav class="align-items-center ml-md-auto">
@@ -26,7 +26,7 @@
       </li>
     </b-navbar-nav>
     <b-navbar-nav class="align-items-center ml-auto ml-md-0">
-      <b-form
+      <!-- <b-form
         class="navbar-search form-inline mr-sm-3"
         :class="{
           'navbar-search-dark': type === 'default',
@@ -45,7 +45,7 @@
             </div>
           </b-input-group>
         </b-form-group>
-      </b-form>
+      </b-form> -->
       <base-dropdown
         menu-on-right
         class="nav-item"

@@ -1,19 +1,34 @@
 import { api } from '../services/index'
 import { eventBus } from '../main'
+import { serialize } from '@/helpers.js'
 
 export default {
   data () {
     return {
       dataBase: null,
-      loading: true
+      produtosPorPagina: 50,
+      produtosTotal: 0,
+      loading: true,
+      urlapontada: ''
+    }
+  },
+  computed: {
+    urlFormated () {
+      const query = serialize(this.$route.query)
+      return `search?${query}`
     }
   },
   methods: {
     // Listagem de registros
     async get (url) {
+      this.urlapontada = url
       this.loading = true
       try {
-        const { data } = await api.get(url)
+        if (this.urlFormated !== 'search?') {
+          url = `${url}/${this.urlFormated}`
+        }
+        console.log(url)
+        const { data } = await api.get(`${url}`)
         this.dataBase = data.data
         this.loading = false
       } catch (err) {
@@ -43,12 +58,22 @@ export default {
                 console.log(data)
                 return data.id === id
               })
+              window.toast.fire({
+                icon: 'success',
+                title: 'Deletado com sucesso'
+              })
               this.dataBase.splice(roomIndex, 1)
             })
           }
         })
     }
   },
+  watch: {
+    urlFormated () {
+      this.get(this.urlapontada)
+    }
+  },
+
   created () {
     eventBus.$on('update', (payload, changeType) => {
       if (changeType === 'added') {
