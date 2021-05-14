@@ -28,29 +28,24 @@
         variant="success"
         @click="handleSubmit()"
       >
-<<<<<<< HEAD
-=======
-        <b-spinner small type="grow"></b-spinner>
-        <b-spinner small type="grow" style="animation-delay: 0.2s"></b-spinner>
-        <b-spinner small type="grow" style="animation-delay: 0.4s"></b-spinner>
-
         <!--<span
           v-if="buttonDisable"
           class="spinner-border spinner-border-sm"
           role="status"
           aria-hidden="true"
         ></span> -->
->>>>>>> 7b0505735b87bb58aba660b11dcefe442baff9f9
         <span v-if="buttonDisable">
-          <div class="spinner-grow spinner-grow-sm" role="status">
-            <span class="sr-only"></span>
-          </div>
-          <div class="spinner-grow spinner-grow-sm" role="status">
-            <span class="sr-only"></span>
-          </div>
-          <div class="spinner-grow spinner-grow-sm" role="status">
-            <span class="sr-only"></span>
-          </div>
+          <b-spinner small type="grow"></b-spinner>
+          <b-spinner
+            small
+            type="grow"
+            style="animation-delay: 0.2s"
+          ></b-spinner>
+          <b-spinner
+            small
+            type="grow"
+            style="animation-delay: 0.4s"
+          ></b-spinner>
         </span>
 
         <span v-else>
