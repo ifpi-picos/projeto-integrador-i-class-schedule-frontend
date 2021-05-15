@@ -12,6 +12,7 @@ import BasePagination from '@/components/BasePagination'
 import BaseAlert from '@/components/BaseAlert'
 import BaseNav from '@/components/Navbar/BaseNav'
 import BaseHeader from '@/components/BaseHeader'
+import ButtonSpinner from '@/components/ButtonSpinner.vue'
 import Skeleton from '@/components/Skeleton'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { Input, Tooltip, Popover } from 'element-ui'
@@ -33,6 +34,7 @@ const GlobalComponents = {
     Vue.component(BasePagination.name, BasePagination)
     Vue.component(BaseProgress.name, BaseProgress)
     Vue.component(BaseRadio.name, BaseRadio)
+    Vue.component(ButtonSpinner.name, ButtonSpinner)
     Vue.component(Card.name, Card)
     Vue.component(Modal.name, Modal)
     Vue.component(StatsCard.name, StatsCard)

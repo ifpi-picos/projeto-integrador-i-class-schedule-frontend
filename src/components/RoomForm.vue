@@ -28,24 +28,8 @@
         variant="success"
         @click="handleSubmit()"
       >
-        <!--<span
-          v-if="buttonDisable"
-          class="spinner-border spinner-border-sm"
-          role="status"
-          aria-hidden="true"
-        ></span> -->
         <span v-if="buttonDisable">
-          <b-spinner small type="grow"></b-spinner>
-          <b-spinner
-            small
-            type="grow"
-            style="animation-delay: 0.2s"
-          ></b-spinner>
-          <b-spinner
-            small
-            type="grow"
-            style="animation-delay: 0.4s"
-          ></b-spinner>
+          <ButtonSpinner />
         </span>
 
         <span v-else>
@@ -86,4 +70,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+button > span {
+  display: block;
+  min-width: 50px;
+}
+</style>
