@@ -4,11 +4,12 @@
     <b-card>
       <b-card-header class="pt-0 pl-0 pr-0">
         <b-row align-h="between">
-          <b-col>
+          <b-col xs="12">
             <!-- <h3>Salas de aula</h3> -->
             <b-form
-              class="navbar-search form-inline mr-sm-3"
+              class="navbar-search-main form-inline mr-sm-3"
               id="navbar-search-main"
+              width="100%"
             >
               <b-form-group class="mb-0">
                 <b-input-group
@@ -37,9 +38,9 @@
               </b-form-group>
             </b-form>
           </b-col>
-          <b-col class="text-right">
+          <b-col xs="12" class="text-right">
             <b-button variant="success" v-b-modal.modalAdd>
-              <i class="ni ni-fat-add"></i>
+              <i class="ni ni-fat-add" w-100-sm></i>
               Adcionar</b-button
             >
           </b-col>
