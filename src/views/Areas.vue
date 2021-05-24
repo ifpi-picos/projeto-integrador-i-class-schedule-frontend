@@ -1,6 +1,6 @@
 <template>
   <skeleton>
-    <area-form idModal="addarea" title="Novo Área" />
+    <area-form idModal="modalAdd" title="Novo Área" />
     <b-card>
       <b-card-header class="pt-0 pl-0 pr-0">
         <b-row align-h="between">
@@ -8,7 +8,7 @@
             <h3>Áreas</h3>
           </b-col>
           <b-col class="text-right">
-            <b-button variant="success" v-b-modal.addarea>
+            <b-button variant="success" v-b-modal.modalAdd>
               <i class="ni ni-fat-add"></i>
               Adcionar</b-button
             >
@@ -16,7 +16,7 @@
         </b-row>
       </b-card-header>
       <b-card-body class="p-0">
-        <!-- <areas-list /> -->
+        <area-list />
       </b-card-body>
     </b-card>
   </skeleton>
@@ -24,10 +24,12 @@
 
 <script>
 import AreaForm from '@/components/AreaForm'
+import AreaList from '@/components/AreaList'
 export default {
   name: 'Areas',
   components: {
-    AreaForm
+    AreaForm,
+    AreaList
   }
 }
 </script>

@@ -8,7 +8,6 @@
       ></b-spinner>
     </div>
     <div v-else>
-      {{ dataBase }}
       <b-table
         head-variant="light"
         hover
@@ -25,14 +24,14 @@
         <template v-slot:cell(actions)="data">
           <div class="d-flex justify-content-center">
             <b-button
-              @click="editRoom(data.item)"
+              @click="editArea(data.item)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
             ></b-button>
 
             <b-button
-              @click="delRoom(data.item.id, $event.target)"
+              @click="delArea(data.item.id, $event.target)"
               variant="outline-danger"
               size="sm"
               ><i class="fas fa-trash"></i
@@ -45,19 +44,19 @@
       </b-table>
     </div>
 
-    <room-form idModal="modalEdit" title="Atualizar Sala" />
+    <area-form idModal="modalEdit" title="Atualizar Area" />
   </div>
 </template>
 
 <script>
-import RoomForm from './RoomForm.vue'
+import AreaForm from './AreaForm.vue'
 import handleData from '../mixins/handleData.js'
 
 export default {
-  name: 'roomList',
+  name: 'areaList',
 
   components: {
-    RoomForm
+    AreaForm
   },
 
   mixins: [handleData],
@@ -67,7 +66,7 @@ export default {
       fields: [
         {
           key: 'name',
-          label: 'Sala',
+          label: 'Area',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
@@ -80,15 +79,15 @@ export default {
   },
 
   created () {
-    this.get('rooms')
+    this.get('areas')
   },
 
   methods: {
-    editRoom (item) {
+    editArea (item) {
       this.$root.$emit('bv::show::modal', 'modalEdit', item)
     },
-    delRoom (id) {
-      this.delete('rooms', id)
+    delArea (id) {
+      this.delete('areas', id)
     }
   }
 }
