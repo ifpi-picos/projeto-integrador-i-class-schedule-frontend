@@ -1,10 +1,14 @@
 # Visão geral do sistema
 
-O produto inicialmente tem como objetivo, facilitar o processo de Manter professores, disciplinas e carga horária do instituto federal campus picos(IFPI). Além disso, o mesmo possibilitara a gestão e distribuição de aulas e horários de cada professor. Tudo isso agregado em um sistema bonito, descomplicado e rápido.
+Frontend do sistema de gerenciamento de turmas, horários e distribuição de professores do Instituto Federal do Piauí (IFPI - Campus Picos Tudo isso agregado em um sistema responsivo, descomplicado e rápido.
+
+Projeto desenvolvido pelos alunos do curso de Tecnologia em Análise e Desenvolvimento de Sistemas do IFPI Campus Picos.
 
 Em um futuro próximo receberá mais funcionalidades a fim de acelerar todo o processo descrito acima, que, segundo o diretor de ensino do IFPI-Picos “leva cerca de uma semana para preencher tudo”.
 
 O Sistema atuamente ja esta on-line [click aqui](https://class-schudele.web.app/) e acesse
+
+Repoistório do backend: [https://github.com/ifpi-picos/api-projeto-empty-coffee-cups](https://github.com/ifpi-picos/api-projeto-empty-coffee-cups)
 
 ## Project setup
 
