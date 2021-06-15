@@ -8,6 +8,7 @@ export default {
       buttonDisable: false
     }
   },
+
   mounted () {
     this.$root.$on('bv::show::modal', (modalId, registry) => {
       if (modalId === 'modalEdit') {
@@ -17,7 +18,7 @@ export default {
       }
     })
   },
-  props: {},
+
   methods: {
     // Validar formulário
     checkFormValidity () {
@@ -46,12 +47,10 @@ export default {
             icon: 'success',
             title: data.message
           })
-        } catch (error) {
-          const data = error.response
-
+        } catch ({ response: { data } }) {
           window.toast.fire({
             icon: 'error',
-            title: data.data.error.message
+            title: data.error.message
           })
         }
       } else {
@@ -71,19 +70,19 @@ export default {
             icon: 'success',
             title: data.message
           })
-        } catch (error) {
+        } catch ({ response: { data } }) {
           this.buttonDisable = false
-          const data = error.response
+
           // this.$swal('Erro', data.data.error.message, 'error')
           window.toast.fire({
             icon: 'error',
-            title: data.data.error.message
+            title: data.error.message
           })
         }
       }
     }
   },
-  created () {},
+
   watch: {
     registry () {
       this.checkFormValidity()
