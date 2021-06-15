@@ -28,7 +28,7 @@ export default {
           url = `${url}/${this.urlFormated}`
         }
         console.log(url)
-        const { data } = await api.get(`${url}`)
+        const { data } = await this.$axios.get(`${url}`)
         this.dataBase = data.data
         this.loading = false
       } catch (err) {

@@ -1,17 +1,16 @@
 <template>
   <div>
-    {{ dataBase }}
-    <div
-      class="d-flex justify-content-center mt-3 mb-3"
-      v-if="loading === null"
-    >
+    <div v-if="loading" class="d-flex justify-content-center mt-3 mb-3">
       <b-spinner
         style="width: 3rem; height: 3rem"
         variant="success"
         label="Spinning"
       ></b-spinner>
     </div>
+
     <div v-else>
+      {{ dataBase }}
+
       <b-table
         table-class="border-bottom"
         head-variant="light"
@@ -67,7 +66,7 @@ export default {
           sortable: true
         },
         {
-          key: 'area_de_ocupacao',
+          key: 'idArea',
           label: 'Area de atuação',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
@@ -93,7 +92,7 @@ export default {
     }
   },
   created () {
-    this.get('/teachers')
+    this.get('teachers')
   },
   methods: {
     editTeacher (item) {
