@@ -49,11 +49,16 @@
         Cancelar
       </b-button>
       <b-button
-        :disabled="!checkFormValidity()"
+        :disabled="!checkFormValidity() || buttonDisable"
         variant="success"
         @click="handleSubmit()"
       >
-        Salvar
+        <span v-if="buttonDisable">
+          <ButtonSpinner />
+        </span>
+        <span v-else>
+          Salvar
+        </span>
       </b-button>
     </template>
   </b-modal>

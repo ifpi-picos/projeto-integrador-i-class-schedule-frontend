@@ -8,6 +8,7 @@
       ></b-spinner>
     </div>
     <div v-else>
+      {{ dataBase }}
       <b-table
         head-variant="light"
         hover

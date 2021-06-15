@@ -7,79 +7,66 @@
         label="Spinning"
       ></b-spinner>
     </div>
-
     <div v-else>
-      {{ dataBase }}
-
       <b-table
-        table-class="border-bottom"
         head-variant="light"
         hover
         responsive
+        table-class="border-bottom"
+        thead-tr-class="text-center"
+        tbody-tr-class="text-center"
         :items="dataBase"
         :fields="fields"
         sort-by="nome"
         sort-icon-left
+        show-empty
       >
         <template v-slot:cell(actions)="data">
-          <div class="d-flex align-items-center">
+          <div class="d-flex justify-content-center">
             <b-button
-              @click="editTeacher(data.item)"
+              @click="editArea(data.item)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
             ></b-button>
 
             <b-button
-              @click="delTeacher(data.item.id, $event.target)"
+              @click="delArea(data.item.id, $event.target)"
               variant="outline-danger"
               size="sm"
               ><i class="fas fa-trash"></i
             ></b-button>
           </div>
         </template>
+        <template #empty>
+          <h4>Sem dados</h4>
+        </template>
       </b-table>
     </div>
-    <teacher-form idModal="modalEdit" title="Atulaizar Professor" />
+
+    <area-form idModal="modalEdit" title="Atualizar Area" />
   </div>
 </template>
 
 <script>
-import TeacherForm from './TeacherForm.vue'
+import AreaForm from './AreaForm.vue'
 import handleData from '../mixins/handleData.js'
 
 export default {
-  name: 'TeacherList',
+  name: 'areaList',
+
   components: {
-    TeacherForm
+    AreaForm
   },
+
   mixins: [handleData],
+
   data () {
     return {
-      // teacherId: '',
-      // teachers: [],
       fields: [
         {
           key: 'name',
-          label: 'Professor',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'idArea',
-          label: 'Area de atuação',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'turmas',
-          label: 'Turmas',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'disciplinas',
-          label: 'Disciplinas',
+          label: 'Area',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
@@ -87,19 +74,20 @@ export default {
           key: 'actions',
           label: 'Ações'
         }
-      ],
-      loading: true
+      ]
     }
   },
+
   created () {
-    this.get('teachers')
+    this.get('areas')
   },
+
   methods: {
-    editTeacher (item) {
+    editArea (item) {
       this.$root.$emit('bv::show::modal', 'modalEdit', item)
     },
-    delTeacher (id) {
-      this.delete('teachers', id)
+    delArea (id) {
+      this.delete('areas', id)
     }
   }
 }

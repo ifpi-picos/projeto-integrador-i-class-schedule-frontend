@@ -14,7 +14,7 @@
         head-variant="light"
         hover
         :responsive="true"
-        :items="dataBase.rows"
+        :items="dataBase"
         :fields="fields"
         sort-by="turno"
         sort-icon-left

@@ -6,6 +6,8 @@ import firebase from './firebase'
 import router from './routes/router'
 import VueSweetalert2 from 'vue-sweetalert2'
 
+import './services/index.js'
+
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 // If you don't need the styles, do not connect

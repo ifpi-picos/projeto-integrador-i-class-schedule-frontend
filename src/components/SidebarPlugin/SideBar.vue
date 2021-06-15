@@ -98,7 +98,7 @@
           <li class="nav-item">
             <a
               class="nav-link"
-              href="https://www.creative-tim.com/learning-lab/bootstrap-vue/alerts/argon-dashboard"
+              href="https://www.creative-tim.com/learning-lab/bootstrap-vue/alerts/argon-"
             >
               <i class="ni ni-spaceship"></i> Getting started
             </a>
@@ -106,7 +106,7 @@
           <li class="nav-item">
             <a
               class="nav-link"
-              href="https://www.creative-tim.com/learning-lab/bootstrap-vue/colors/argon-dashboard"
+              href="https://www.creative-tim.com/learning-lab/bootstrap-vue/colors/argon-"
             >
               <i class="ni ni-palette"></i> Foundation
             </a>
@@ -114,7 +114,7 @@
           <li class="nav-item">
             <a
               class="nav-link"
-              href="https://www.creative-tim.com/learning-lab/bootstrap-vue/alerts/argon-dashboard"
+              href="https://www.creative-tim.com/learning-lab/bootstrap-vue/alerts/argon-"
             >
               <i class="ni ni-ui-04"></i> Components
             </a>
