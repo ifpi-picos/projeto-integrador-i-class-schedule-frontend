@@ -1,16 +1,24 @@
 import Axios from 'axios'
-import Vue from 'vue'
 
 const axiosInstance = Axios.create({
   // baseURL: 'http://localhost:3000/api/'
   baseURL: 'https://empty-coffee-cups.herokuapp.com/api/'
 })
 
-Vue.use({
-  install (Vue) {
-    Vue.prototype.$axios = axiosInstance
+axiosInstance.interceptors.request.use(
+  config => {
+    const { token } = window.localStorage
+
+    if (token && config.url !== 'auth/login') {
+      config.headers.Authorization = token
+    }
+
+    return config
+  },
+  err => {
+    return Promise.reject(err)
   }
-})
+)
 
 const api = {
   get (url) {
@@ -24,6 +32,9 @@ const api = {
   },
   delete (url) {
     return axiosInstance.delete(url)
+  },
+  login (body) {
+    return axiosInstance.post('auth/login', body)
   }
 }
 

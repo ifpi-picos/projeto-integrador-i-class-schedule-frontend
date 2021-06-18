@@ -1,24 +1,33 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { api } from '@/services'
-
+import { api } from '../services/api'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict: true,
   state: {
-    data_base: ''
+    auth: false,
+    user: {
+      name: '',
+      email: ''
+    }
+  },
+  getters: {
+    getAuth (state) {
+      return state.auth
+    }
   },
   mutations: {
-    UPDATE_DATABASE (state, payload) {
-      state.data_base = payload
+    UPDATE_LOGIN (state, { auth, user }) {
+      state.auth = auth
+      state.user = user
     }
   },
   actions: {
-    getDatabase (context) {
-      api.get('/rooms').then(response => {
-        console.log(response)
-        context.commit('UPDATE_DATABASE', response.data.data)
+    login (context, { email, password }) {
+      return api.login({
+        email,
+        password
       })
     }
   },

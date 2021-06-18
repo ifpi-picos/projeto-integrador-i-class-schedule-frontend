@@ -63,7 +63,7 @@
                 v-slot="{ handleSubmit }"
                 ref="formValidator"
               >
-                <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
+                <b-form role="form" @submit.prevent="login()">
                   <base-input
                     alternative
                     class="mb-3"
@@ -71,7 +71,7 @@
                     :rules="{ required: true, email: true }"
                     prepend-icon="ni ni-email-83"
                     placeholder="Email"
-                    v-model="model.email"
+                    v-model="user.email"
                   >
                   </base-input>
 
@@ -83,11 +83,11 @@
                     prepend-icon="ni ni-lock-circle-open"
                     type="password"
                     placeholder="Password"
-                    v-model="model.password"
+                    v-model="user.password"
                   >
                   </base-input>
 
-                  <b-form-checkbox v-model="model.rememberMe"
+                  <b-form-checkbox v-model="user.rememberMe"
                     >Remember me</b-form-checkbox
                   >
                   <div class="text-center">
@@ -116,38 +116,32 @@
           </b-row>
         </b-col>
       </b-row>
-      
     </b-container>
   </div>
 </template>
 <script>
 export default {
-  name: "login",
+  name: 'login',
   data () {
     return {
-      model: {
+      user: {
         email: '',
-        password: '',
-        rememberMe: false
+        password: ''
+        //rememberMe: false
       }
     }
   },
   methods: {
-    onSubmit () {
-      const email = this.model.email
-      const password = this.model.password
-      this.$firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(user => {
-          console.log(user);
-        })
-        .catch(error => {
-          const errorCode = error.code
-          const errorMessage = error.message
-          console.error(errorCode);
-          console.error(errorMessage);
-        })
+    async login () {
+      try {
+        const { data } = await this.$store.dispatch('login', this.user)
+
+        window.localStorage.token = data.token
+        this.$store.commit('UPDATE_LOGIN', data)
+        this.$router.replace({ name: 'dashboard' })
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }

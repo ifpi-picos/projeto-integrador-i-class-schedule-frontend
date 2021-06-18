@@ -1,4 +1,3 @@
-import { api } from '../services/index'
 import { eventBus } from '../main'
 
 export default {
@@ -35,7 +34,10 @@ export default {
       // Verificar si foi pego um registro para editar
       if (registry.id) {
         try {
-          const { data } = await api.put(`/${url}/${registry.id}`, registry)
+          const { data } = await this.$axios.put(
+            `/${url}/${registry.id}`,
+            registry
+          )
 
           console.log('modified')
 
@@ -58,7 +60,7 @@ export default {
           // adicionar um novo registro
           this.buttonDisable = true
 
-          const { data } = await api.post(`/${url}`, registry)
+          const { data } = await this.$axios.post(`/${url}`, registry)
           this.buttonDisable = false
 
           eventBus.$emit('update', data.data, 'added')
@@ -87,8 +89,5 @@ export default {
     registry () {
       this.checkFormValidity()
     },
-    buttonDisable () {
-      // console.log('button disable')
-    }
   }
 }
