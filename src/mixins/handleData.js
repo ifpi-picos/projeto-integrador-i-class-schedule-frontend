@@ -1,4 +1,3 @@
-import { api } from '../services/index'
 import { eventBus } from '../main'
 import { serialize } from '@/helpers.js'
 
@@ -53,7 +52,7 @@ export default {
         })
         .then(value => {
           if (value) {
-            api.delete(`${url}/${id}`).then(() => {
+            this.$axios.delete(`${url}/${id}`).then(() => {
               const roomIndex = this.dataBase.findIndex(data => {
                 console.log(data)
                 return data.id === id

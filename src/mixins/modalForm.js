@@ -1,4 +1,3 @@
-import { api } from '../services/index'
 import { eventBus } from '../main'
 
 export default {
@@ -8,6 +7,7 @@ export default {
       buttonDisable: false
     }
   },
+
   mounted () {
     this.$root.$on('bv::show::modal', (modalId, registry) => {
       if (modalId === 'modalEdit') {
@@ -17,7 +17,7 @@ export default {
       }
     })
   },
-  props: {},
+
   methods: {
     // Validar formulário
     checkFormValidity () {
@@ -34,7 +34,10 @@ export default {
       // Verificar si foi pego um registro para editar
       if (registry.id) {
         try {
-          const { data } = await api.put(`/${url}/${registry.id}`, registry)
+          const { data } = await this.$axios.put(
+            `/${url}/${registry.id}`,
+            registry
+          )
 
           console.log('modified')
 
@@ -46,12 +49,10 @@ export default {
             icon: 'success',
             title: data.message
           })
-        } catch (error) {
-          const data = error.response
-
+        } catch ({ response: { data } }) {
           window.toast.fire({
             icon: 'error',
-            title: data.data.error.message
+            title: data.error.message
           })
         }
       } else {
@@ -59,7 +60,7 @@ export default {
           // adicionar um novo registro
           this.buttonDisable = true
 
-          const { data } = await api.post(`/${url}`, registry)
+          const { data } = await this.$axios.post(`/${url}`, registry)
           this.buttonDisable = false
 
           eventBus.$emit('update', data.data, 'added')
@@ -71,25 +72,22 @@ export default {
             icon: 'success',
             title: data.message
           })
-        } catch (error) {
+        } catch ({ response: { data } }) {
           this.buttonDisable = false
-          const data = error.response
+
           // this.$swal('Erro', data.data.error.message, 'error')
           window.toast.fire({
             icon: 'error',
-            title: data.data.error.message
+            title: data.error.message
           })
         }
       }
     }
   },
-  created () {},
+
   watch: {
     registry () {
       this.checkFormValidity()
     },
-    buttonDisable () {
-      // console.log('button disable')
-    }
   }
 }

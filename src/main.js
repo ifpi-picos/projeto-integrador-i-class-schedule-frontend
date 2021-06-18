@@ -2,11 +2,11 @@ import Vue from 'vue'
 import DashboardPlugin from './plugins/dashboard-plugin'
 import App from './App.vue'
 import firebase from './firebase'
-// import store from './store/'
+import store from './store/'
 import router from './routes/router'
 import VueSweetalert2 from 'vue-sweetalert2'
 
-import './services/index.js'
+import './services/axios.js'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
@@ -37,6 +37,6 @@ export const eventBus = new Vue()
 new Vue({
   el: '#app',
   render: h => h(App),
-  router
-  // store
+  router,
+  store
 })

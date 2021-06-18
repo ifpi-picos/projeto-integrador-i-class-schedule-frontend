@@ -138,15 +138,16 @@ export default {
       this.activeNotifications = false
     },
     Logout () {
-      this.$firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.push({ name: 'login' })
-        })
-        .catch(function (error) {
-          console.error(error)
-        })
+      console.log('ookokoko')
+      window.localStorage.removeItem('token')
+      this.$store.commit('UPDATE_LOGIN', {
+        auth: false,
+        user: {
+          name: '',
+          email: ''
+        }
+      })
+      this.$router.replace({ name: 'login' })
     }
   }
 }
