@@ -1,8 +1,8 @@
 import Axios from 'axios'
 
 const axiosInstance = Axios.create({
-  baseURL: 'http://localhost:3000/api'
-  // baseURL: 'https://empty-coffee-cups.herokuapp.com/api/'
+  // baseURL: 'http://localhost:3000/api'
+  baseURL: 'https://empty-coffee-cups.herokuapp.com/api/'
 })
 
 axiosInstance.interceptors.request.use(
@@ -21,8 +21,8 @@ axiosInstance.interceptors.request.use(
 )
 
 const api = {
-  get (url) {
-    return axiosInstance.get(url)
+  get (url, params) {
+    return axiosInstance.get(url, params)
   },
   post (url, body) {
     return axiosInstance.post(url, body)

@@ -125,46 +125,6 @@ export default {
       type: String,
       description: 'titulo do modal'
     }
-  },
-  methods: {
-    checkFormValidity () {
-      const valid = this.$refs.form && this.$refs.form.checkValidity()
-      return valid
-    },
-    handleOk () {
-      // Trigger submit handler
-      this.handleSubmit()
-    },
-    handleSubmit () {
-      if (!this.checkFormValidity()) {
-        return
-      }
-    }
-    // fillForm () {
-    //   if (this.idTeacher) {
-    //     this.$firebase
-    //       .firestore()
-    //       .collection('professores')
-    //       .doc(this.idTeacher)
-    //       .get()
-    //       .then(querySnapshot => {
-    //         const data = querySnapshot.data()
-    //         this.teacher.username = data.nome
-    //         this.teacher.registration = data.matricula
-    //         this.teacher.email = data.email
-    //         this.teacher.occupationArea = data.area_de_ocupacao
-    //         this.teacher.coordination = data.coordenacao
-    //       })
-    //       .catch(error => {
-    //         console.log('Error getting documents: ', error)
-    //       })
-    //   }
-    // }
-  },
-  watch: {
-    idTeacher () {
-      this.fillForm()
-    }
   }
 }
 </script>

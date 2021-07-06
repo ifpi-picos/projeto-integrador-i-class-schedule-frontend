@@ -11,7 +11,7 @@
               label="Nome da coordenação"
               placeholder="Nome da coordenação"
               name="Nome da coordenação"
-              v-model="coordination.username"
+              v-model="registry.username"
               required
             >
             </base-input>
@@ -92,75 +92,13 @@ export default {
     }
   },
   methods: {
-    checkFormValidity () {
-      const valid = this.$refs.form && this.$refs.form.checkValidity()
-      console.log('ta validando')
-      return valid
-    },
-    handleOk () {
-      this.handleSubmit()
-    },
-    handleSubmit () {
-      const payload = {
-        nome: this.coordination.username,
-        responsavel: this.coordination.responsible,
-        email: this.coordination.email,
-        createdAt: new Date().getTime()
-      }
-      if (!this.checkFormValidity()) {
-        return
-      }
-      const bd = this.$firebase.firestore().collection('coordenacoes')
 
-      if (this.IdCoordination) {
-        bd.doc(this.IdCoordination)
-          .set(payload)
-          .then(() => {
-            this.$refs[this.idModal].hide()
-            if (!this.IdCoordination) {
-              this.coordination = {}
-            }
-          })
-          .catch(error => console.error(error))
-      } else {
-        bd.add(payload)
-          .then(() => {
-            this.$refs[this.idModal].hide()
-            if (!this.IdCoordination) {
-              this.coordination = {}
-            }
-          })
-          .catch(error => console.error(error))
-      }
+    handleSubmit () {
+      this.handleSubmit('coordinations')
     },
-    fillForm () {
-      console.log('Aqui é o fill form')
-      if (this.IdCoordination) {
-        this.$firebase
-          .firestore()
-          .collection('coordenacoes')
-          .doc(this.IdCoordination)
-          .get()
-          .then(querySnapshot => {
-            const data = querySnapshot.data()
-            this.coordination.username = data.nome
-            this.coordination.responsible = data.responsavel
-            this.coordination.email = data.email
-          })
-          .catch(error => {
-            console.log('Error getting documents: ', error)
-          })
-      }
-    }
+  
   },
-  watch: {
-    IdCoordination () {
-      this.fillForm()
-    },
-    coordination () {
-      this.checkFormValidity()
-    }
-  }
+
 }
 </script>
 
