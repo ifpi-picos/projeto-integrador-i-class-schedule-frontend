@@ -19,17 +19,28 @@ export default {
   },
   methods: {
     // Listagem de registros
-    async get (url) {
-      this.urlapontada = url
+    // async get (url) {
+    //   this.urlapontada = url
+    //   this.loading = true
+    //   try {
+    //     if (this.urlFormated !== 'search?') {
+    //       url = `${url}/${this.urlFormated}`
+    //     }
+    //     console.log(url)
+    //     const { data } = await this.$axios.get(`${url}`)
+    //     this.dataBase = data.data
+    //     this.loading = false
+    //   } catch (err) {
+    //     console.log(err)
+    //   }
+    // },
+    async get (url, params = null) {
       this.loading = true
       try {
-        if (this.urlFormated !== 'search?') {
-          url = `${url}/${this.urlFormated}`
-        }
-        console.log(url)
-        const { data } = await this.$axios.get(`${url}`)
+        const { data } = await this.$axios.get(url, params)
         this.dataBase = data.data
         this.loading = false
+        console.log('GET com params')
       } catch (err) {
         console.log(err)
       }
