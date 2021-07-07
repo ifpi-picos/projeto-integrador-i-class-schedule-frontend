@@ -11,7 +11,7 @@
               label="Nome"
               placeholder="Nome"
               name="Nome"
-              v-model="teacher.username"
+              v-model="registry.name"
               required
             >
             </base-input>
@@ -22,7 +22,7 @@
               type="text"
               label="Matrícula"
               placeholder="Ex.: SIAPE "
-              v-model="teacher.registration"
+              v-model="registry.siape"
               name="Matricula"
               required
               rules="required|min:7|max:7"
@@ -38,7 +38,7 @@
               type="email"
               label="E-mail"
               placeholder="professor@email.com"
-              v-model="teacher.email"
+              v-model="registry.email"
               required
               name="email"
             >
@@ -49,7 +49,7 @@
               <b-form-select
                 class="form-control"
                 required
-                v-model="teacher.occupationArea"
+                v-model="registry.idArea"
                 :options="occupationAreas"
               ></b-form-select>
             </base-input>
@@ -76,7 +76,7 @@
       <b-button
         :disabled="!checkFormValidity()"
         variant="success"
-        @click="handleOk()"
+        @click="handleSubmit()"
       >
         Salvar
       </b-button>
@@ -85,17 +85,13 @@
 </template>
 
 <script>
+import modalForm from '../mixins/modalForm'
+
 export default {
   name: 'TeacherForm',
+  mixins: [modalForm],
   data () {
     return {
-      teacher: {
-        username: '',
-        registration: '',
-        email: '',
-        occupationArea: null,
-        coordination: null
-      },
       coordinations: [
         { value: null, text: 'Por favor selecione uma opção' },
         { value: 'id-cordenação', text: 'ADS' },
@@ -104,9 +100,9 @@ export default {
       ],
       occupationAreas: [
         { value: null, text: 'Por favor selecione uma opção' },
-        { value: 'informática', text: 'Infórmatica' },
-        { value: 'fisica', text: 'Fisica' },
-        { value: 'quimica', text: 'Quimica' }
+        { value: 1, text: 'Infórmatica' },
+        { value: 2, text: 'Fisica' },
+        { value: 3, text: 'Quimica' }
       ]
     }
   },
@@ -124,6 +120,11 @@ export default {
     title: {
       type: String,
       description: 'titulo do modal'
+    }
+  },
+  methods: {
+    handleSubmit () {
+      this.handleOk('teachers')
     }
   }
 }
