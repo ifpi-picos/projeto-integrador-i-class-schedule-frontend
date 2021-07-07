@@ -9,8 +9,7 @@
     </div>
 
     <div v-else>
-      {{ dataBase }}
-
+      {{dataBase}}
       <b-table
         table-class="border-bottom"
         head-variant="light"
@@ -66,7 +65,7 @@ export default {
           sortable: true
         },
         {
-          key: 'idArea',
+          key: 'areaTeacher.name',
           label: 'Area de atuação',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
@@ -88,7 +87,6 @@ export default {
           label: 'Ações'
         }
       ],
-      loading: true
     }
   },
   created () {
