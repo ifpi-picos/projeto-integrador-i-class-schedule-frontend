@@ -138,16 +138,14 @@ export default {
       this.activeNotifications = false
     },
     Logout () {
-      console.log('ookokoko')
-      window.localStorage.removeItem('token')
-      this.$store.commit('UPDATE_LOGIN', {
-        auth: false,
-        user: {
-          name: '',
-          email: ''
-        }
-      })
-      this.$router.replace({ name: 'login' })
+      
+      // this.$store.commit('UPDATE_LOGIN', {
+      //   auth: false,
+      //   user: null,
+      //   token: null
+      // })
+      location.reload()
+      this.$router.push({ name: 'login' })
     }
   }
 }

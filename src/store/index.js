@@ -18,7 +18,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    UPDATE_LOGIN (state, { auth, user }) {
+    UPDATE_LOGIN (state, { auth, token, user }) {
+      window.localStorage.setItem('token', token)
+      window.localStorage.setItem('user', JSON.stringify(user))
       state.auth = auth
       state.user = user
     }

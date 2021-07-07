@@ -1,8 +1,10 @@
 import Axios from 'axios'
 
+// const API_URL = process.env.API_URL || 'http://localhost:3000/api/'
+const API_URL = 'https://empty-coffee-cups.herokuapp.com/api/'
+
 const axiosInstance = Axios.create({
-  // baseURL: 'http://localhost:3000/api'
-  baseURL: 'https://empty-coffee-cups.herokuapp.com/api/'
+  baseURL: API_URL
 })
 
 axiosInstance.interceptors.request.use(
@@ -17,6 +19,31 @@ axiosInstance.interceptors.request.use(
   },
   err => {
     return Promise.reject(err)
+  }
+)
+
+import store from '../store'
+import router from '../routes/router'
+
+axiosInstance.interceptors.response.use(
+  response => {
+    return response
+  },
+  err => {
+    const {
+      config,
+      response: { status, data }
+    } = err
+    console.log(err)
+    if (status === 401) {
+      store.commit('UPDATE_LOGIN', {
+        auth: false,
+        token: null,
+        user: { name: null, email: null }
+      })
+      router.push({ name: 'login' })
+      return Promise.reject(err)
+    }
   }
 )
 
@@ -35,6 +62,9 @@ const api = {
   },
   login (body) {
     return axiosInstance.post('auth/login', body)
+  },
+  verifyToken (credentials) {
+    return axiosInstance.post('auth/refresh-token', credentials)
   }
 }
 

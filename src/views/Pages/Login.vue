@@ -135,10 +135,9 @@ export default {
     async login () {
       try {
         const { data } = await this.$store.dispatch('login', this.user)
-
-        window.localStorage.token = data.token
+        
         this.$store.commit('UPDATE_LOGIN', data)
-        this.$router.replace({ name: 'dashboard' })
+        this.$router.push({ name: 'dashboard' })
       } catch (err) {
         console.log(err)
       }
