@@ -39,7 +39,7 @@ const routes = [
         meta: { name: 'novo curso' },
         component: () =>
           import(
-            /* webpackChunkName: "Formulário de cursos" */ '../views/Course.vue'
+            /* webpackChunkName: "novo-curso" */ '../views/Course.vue'
           ),
         children: [
           {
@@ -48,7 +48,7 @@ const routes = [
             meta: { name: 'editar curso' },
             component: () =>
               import(
-                /* webpackChunkName: "Formulário de cursos" */ '../views/Course.vue'
+                /* webpackChunkName: "editar-curso" */ '../views/Course.vue'
               )
           }
         ]
