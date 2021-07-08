@@ -7,13 +7,14 @@
         label="Spinning"
       ></b-spinner>
     </div>
+
     <div v-if="!loading">
       <b-table
-        table-class="border-bottom"
         head-variant="light"
         hover
         responsive
-        :items="classes"
+        table-class="border-bottom"
+        :items="subjects"
         :fields="fields"
         sort-by="nome"
         sort-icon-left
@@ -21,14 +22,14 @@
         <template v-slot:cell(actions)="data">
           <div class="d-flex align-items-center">
             <b-button
-              @click="editClass(data.item.id)"
+              @click="editsubject(data.item.id)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
             ></b-button>
 
             <b-button
-              @click="delClass(data.item.id, $event.target)"
+              @click="delsubject(data.item.id, $event.target)"
               variant="outline-danger"
               size="sm"
               ><i class="fas fa-trash"></i
@@ -37,52 +38,35 @@
         </template>
       </b-table>
     </div>
-    <class-form idModal="modalEdit" :idClass="idClass" />
+    <subject-form
+      idModal="modalEdit"
+      title="Editar Disciplina"
+      :subjectId="subjectId"
+    />
   </div>
 </template>
 
 <script>
-// import { Loading } from "element-ui";
-import ClassForm from './ClassForm.vue'
-
+import SubjectForm from '../components/SubjectForm'
 export default {
-  name: 'ClassList',
   components: {
-    ClassForm
+    SubjectForm
   },
-
+  name: 'SubjectsList',
   data () {
     return {
-      idClass: '',
-      classes: [],
+      subjectId: '',
+      subjects: [],
       fields: [
         {
           key: 'nome',
-          label: 'Turma',
+          label: 'Nome da discipina',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {
-          key: 'curso',
-          label: 'curso',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'modulo',
-          label: 'Módulo',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'local',
-          label: 'sala',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'horario',
-          label: 'Horário',
+          key: 'carga_horaria',
+          label: 'Carga Horária',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
@@ -95,10 +79,10 @@ export default {
     }
   },
   created () {
-    this.getClassesOnChange(), this.getClasses()
+    this.getSubjects()
   },
   
 }
 </script>
 
-<style scoped></style>
+<style></style>

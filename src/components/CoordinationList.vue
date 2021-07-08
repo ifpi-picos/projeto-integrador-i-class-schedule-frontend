@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <spinner :showLoad="true" v-if="loader" /> -->
     <div class="d-flex justify-content-center mt-3 mb-3" v-if="loading">
       <b-spinner
         style="width: 3rem; height: 3rem"
@@ -7,28 +8,32 @@
         label="Spinning"
       ></b-spinner>
     </div>
-    <div v-if="!loading">
+
+    <div v-if="coordinations">
       <b-table
-        table-class="border-bottom"
+        v-if="coordinations[0]"
         head-variant="light"
         hover
         responsive
-        :items="classes"
+        thClass="text-red"
+        thead-tr-class="pb-4 pt-4"
+        tbody-tr-class=""
+        :items="coordinations"
         :fields="fields"
         sort-by="nome"
         sort-icon-left
       >
         <template v-slot:cell(actions)="data">
-          <div class="d-flex align-items-center">
+          <div class="d-flex justify-content-center">
             <b-button
-              @click="editClass(data.item.id)"
+              @click="editCoordination(data.item.id)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
             ></b-button>
 
             <b-button
-              @click="delClass(data.item.id, $event.target)"
+              @click="delCoordination(data.item.id, $event.target)"
               variant="outline-danger"
               size="sm"
               ><i class="fas fa-trash"></i
@@ -37,68 +42,63 @@
         </template>
       </b-table>
     </div>
-    <class-form idModal="modalEdit" :idClass="idClass" />
+    <coordination-form
+      idModal="modalEdit"
+      :IdCoordination="coordinationId"
+      title="Atulaizar Coordenação"
+    />
   </div>
 </template>
 
 <script>
-// import { Loading } from "element-ui";
-import ClassForm from './ClassForm.vue'
-
+import CoordinationForm from './CoordinationForm.vue'
 export default {
-  name: 'ClassList',
+  name: 'CoordinationList',
   components: {
-    ClassForm
+    CoordinationForm
   },
-
   data () {
     return {
-      idClass: '',
-      classes: [],
+      coordinationId: '',
+      coordinations: [],
       fields: [
         {
           key: 'nome',
-          label: 'Turma',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'curso',
           label: 'curso',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {
-          key: 'modulo',
-          label: 'Módulo',
-          tdClass: 'font-weight-600 name text-sm ',
+          key: 'responsavel',
+          label: 'Responsável',
+          tdClass: 'font-weight-600 name  text-sm ',
           sortable: true
         },
         {
-          key: 'local',
-          label: 'sala',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'horario',
-          label: 'Horário',
+          key: 'email',
+          label: 'E-mail',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {
           key: 'actions',
-          label: 'Ações'
+          label: 'Ações',
+          thClass: 'text-center'
         }
       ],
       loading: true
     }
   },
   created () {
-    this.getClassesOnChange(), this.getClasses()
+    this.getCoordinations()
   },
   
 }
 </script>
 
-<style scoped></style>
+<style lang="scss">
+.centralizar {
+  display: flex !important;
+  justify-content: center !important;
+}
+</style>

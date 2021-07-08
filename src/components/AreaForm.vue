@@ -1,16 +1,16 @@
 <template>
   <b-modal size="sm" centered :id="idModal" :ref="idModal" :title="title">
     <b-form ref="form" @submit.stop.prevent="handleSubmit">
-      <h6 class="heading-small text-muted mb-4">Cadastro de Sala de aulas</h6>
+      <h6 class="heading-small text-muted mb-4">Cadastro de Area de atuação</h6>
 
       <div>
         <b-row>
           <b-col lg="12">
             <base-input
               type="text"
-              name="Sala"
-              label="Sala"
-              placeholder="Sala"
+              name="Area"
+              label="Area"
+              placeholder="Area"
               v-model.trim="registry.name"
               required
             >
@@ -44,7 +44,7 @@
 import modalForm from '../mixins/modalForm'
 
 export default {
-  name: 'RoomForm',
+  name: 'AreaForm',
   mixins: [modalForm],
   data () {
     return {}
@@ -64,7 +64,7 @@ export default {
 
   methods: {
     handleSubmit () {
-      this.handleOk('rooms')
+      this.handleOk('areas')
     }
   }
 }

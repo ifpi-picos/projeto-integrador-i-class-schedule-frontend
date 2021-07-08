@@ -9,7 +9,7 @@
       aria-current="page"
       class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active"
     >
-      {{ $route.name }}
+      {{ $route.meta.name }} >
     </a>
     <!-- Navbar links -->
     <b-navbar-nav class="align-items-center ml-md-auto">
@@ -26,7 +26,7 @@
       </li>
     </b-navbar-nav>
     <b-navbar-nav class="align-items-center ml-auto ml-md-0">
-      <b-form
+      <!-- <b-form
         class="navbar-search form-inline mr-sm-3"
         :class="{
           'navbar-search-dark': type === 'default',
@@ -45,7 +45,7 @@
             </div>
           </b-input-group>
         </b-form-group>
-      </b-form>
+      </b-form> -->
       <base-dropdown
         menu-on-right
         class="nav-item"
@@ -53,8 +53,7 @@
         title-tag="a"
         title-classes="nav-link pr-0"
       >
-        <a href="#" class="nav-link pr-0" 
-@click.prevent slot="title-container">
+        <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <b-media no-body class="align-items-center">
             <span class="avatar avatar-sm rounded-circle">
               <img alt="Image placeholder" src="img/theme/team-4.jpg" />
@@ -86,7 +85,7 @@
             <span>Support</span>
           </b-dropdown-item>
           <div class="dropdown-divider"></div>
-          <b-dropdown-item href="#!">
+          <b-dropdown-item @click="Logout()">
             <i class="ni ni-user-run"></i>
             <span>Logout</span>
           </b-dropdown-item>
@@ -96,8 +95,8 @@
   </base-nav>
 </template>
 <script>
-import { CollapseTransition } from "vue2-transitions";
-import { BaseNav, Modal } from "@/components";
+import { CollapseTransition } from 'vue2-transitions'
+import { BaseNav, Modal } from '@/components'
 
 export default {
   components: {
@@ -108,35 +107,48 @@ export default {
   props: {
     type: {
       type: String,
-      default: "default", // default|light
+      default: 'default', // default|light
       description:
-        "Look of the dashboard navbar. Default (Green) or light (gray)"
+        'Look of the dashboard navbar. Default (Green) or light (gray)'
     }
   },
   computed: {
-    routeName() {
-      const { name } = this.$route;
-      return this.capitalizeFirstLetter(name);
+    routeName () {
+      const { name } = this.$route
+      return this.capitalizeFirstLetter(name)
     }
   },
-  data() {
+  data () {
     return {
       activeNotifications: false,
       showMenu: false,
       searchModalVisible: false,
-      searchQuery: ""
-    };
+      searchQuery: '',
+      displayName: ''
+    }
   },
   methods: {
-    capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+    capitalizeFirstLetter (string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
     },
-    toggleNotificationDropDown() {
-      this.activeNotifications = !this.activeNotifications;
+    toggleNotificationDropDown () {
+      this.activeNotifications = !this.activeNotifications
     },
-    closeDropDown() {
-      this.activeNotifications = false;
+    closeDropDown () {
+      this.activeNotifications = false
+    },
+    Logout () {
+      console.log('ookokoko')
+      window.localStorage.removeItem('token')
+      this.$store.commit('UPDATE_LOGIN', {
+        auth: false,
+        user: {
+          name: '',
+          email: ''
+        }
+      })
+      this.$router.replace({ name: 'login' })
     }
   }
-};
+}
 </script>

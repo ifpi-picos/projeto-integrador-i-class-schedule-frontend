@@ -7,28 +7,36 @@
         label="Spinning"
       ></b-spinner>
     </div>
-    <div v-if="!loading">
+
+    <div v-else>
       <b-table
         table-class="border-bottom"
         head-variant="light"
         hover
-        responsive
-        :items="classes"
+        :responsive="true"
+        :items="dataBase"
         :fields="fields"
-        sort-by="nome"
+        sort-by="turno"
         sort-icon-left
       >
+        <template #cell(schedule)="row">
+          <div class="d-flex justify-content-center ">
+            {{ row.item.start.replace(/:\d\d$/gm, '') }} -
+            {{ row.item.end.replace(/:\d\d$/gm, '') }}
+          </div>
+        </template>
+
         <template v-slot:cell(actions)="data">
-          <div class="d-flex align-items-center">
+          <div class="d-flex justify-content-center ">
             <b-button
-              @click="editClass(data.item.id)"
+              @click="editSchedule(data.item)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
             ></b-button>
 
             <b-button
-              @click="delClass(data.item.id, $event.target)"
+              @click="delSchedule(data.item.id, $event.target)"
               variant="outline-danger"
               size="sm"
               ><i class="fas fa-trash"></i
@@ -37,68 +45,54 @@
         </template>
       </b-table>
     </div>
-    <class-form idModal="modalEdit" :idClass="idClass" />
+    <schedule-form idModal="modalEdit" title="Editar Turno" />
   </div>
 </template>
 
 <script>
-// import { Loading } from "element-ui";
-import ClassForm from './ClassForm.vue'
+import ScheduleForm from '../components/ScheduleForm'
+import handleData from '../mixins/handleData.js'
 
 export default {
-  name: 'ClassList',
   components: {
-    ClassForm
+    ScheduleForm
   },
-
+  name: 'ScheduleList',
+  mixins: [handleData],
   data () {
     return {
-      idClass: '',
-      classes: [],
       fields: [
         {
-          key: 'nome',
-          label: 'Turma',
+          key: 'name',
+          label: 'Turno',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {
-          key: 'curso',
-          label: 'curso',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'modulo',
-          label: 'Módulo',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'local',
-          label: 'sala',
-          tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
-        },
-        {
-          key: 'horario',
+          key: `schedule`,
           label: 'Horário',
           tdClass: 'font-weight-600 name text-sm ',
-          sortable: true
+          sortable: true,
+          thClass: 'text-center'
         },
         {
           key: 'actions',
-          label: 'Ações'
+          label: 'Ações',
+          thClass: 'text-center'
         }
-      ],
-      loading: true
+      ]
     }
   },
   created () {
-    this.getClassesOnChange(), this.getClasses()
+    this.get('shifts')
   },
-  
+  methods: {
+    editSchedule (item) {
+      this.$root.$emit('bv::show::modal', 'modalEdit', item)
+    },
+    delSchedule (id) {
+      this.delete('shifts', id)
+    }
+  }
 }
 </script>
-
-<style scoped></style>
