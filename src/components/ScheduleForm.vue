@@ -1,17 +1,42 @@
 <template>
   <b-modal size="sm" centered :id="idModal" :ref="idModal" :title="title">
     <b-form ref="form" @submit.stop.prevent="handleSubmit">
-      <h6 class="heading-small text-muted mb-4">Cadastro de Sala de aulas</h6>
-
-      <div>
+      <h6 class="heading-small text-muted mb-4">Cadastro de Turnos</h6>
+      <div class="lg-4">
         <b-row>
           <b-col lg="12">
             <base-input
               type="text"
-              name="Sala"
-              label="Sala"
-              placeholder="Sala"
-              v-model.trim="registry.name"
+              label="Turno"
+              placeholder="Ex: Noturno"
+              name="Turno"
+              v-model="registry.name"
+              required
+            >
+            </base-input>
+          </b-col>
+
+          <b-col lg="12">
+            <base-input
+              name="Inicio"
+              type="time"
+              min="06:00"
+              max="22:00"
+              label="Inicio"
+              placeholder="Select time"
+              v-model="registry.start"
+              required
+            >
+            </base-input>
+
+            <base-input
+              name="Fim"
+              type="time"
+              min="06:00"
+              max="22:00"
+              label="Fim"
+              placeholder="Select time"
+              v-model="registry.end"
               required
             >
             </base-input>
@@ -31,7 +56,6 @@
         <span v-if="buttonDisable">
           <ButtonSpinner />
         </span>
-
         <span v-else>
           Salvar
         </span>
@@ -44,12 +68,11 @@
 import modalForm from '../mixins/modalForm'
 
 export default {
-  name: 'RoomForm',
+  name: 'ScheduleForm',
   mixins: [modalForm],
   data () {
     return {}
   },
-
   props: {
     idModal: {
       type: String,
@@ -61,18 +84,10 @@ export default {
       description: 'titulo do modal'
     }
   },
-
   methods: {
     handleSubmit () {
-      this.handleOk('rooms')
+      this.handleOk('shifts')
     }
   }
 }
 </script>
-
-<style scoped>
-button > span {
-  display: block;
-  min-width: 50px;
-}
-</style>

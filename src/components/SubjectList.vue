@@ -1,72 +1,72 @@
 <template>
   <div>
-    <div v-if="loading" class="d-flex justify-content-center mt-3 mb-3">
+    <div class="d-flex justify-content-center mt-3 mb-3" v-if="loading">
       <b-spinner
         style="width: 3rem; height: 3rem"
         variant="success"
         label="Spinning"
       ></b-spinner>
     </div>
-    <div v-else>
+
+    <div v-if="!loading">
       <b-table
         head-variant="light"
         hover
         responsive
         table-class="border-bottom"
-        thead-tr-class="text-center"
-        tbody-tr-class="text-center"
-        :items="dataBase"
+        :items="subjects"
         :fields="fields"
         sort-by="nome"
         sort-icon-left
-        show-empty
       >
         <template v-slot:cell(actions)="data">
-          <div class="d-flex justify-content-center">
+          <div class="d-flex align-items-center">
             <b-button
-              @click="editRoom(data.item)"
+              @click="editsubject(data.item.id)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
             ></b-button>
 
             <b-button
-              @click="delRoom(data.item.id, $event.target)"
+              @click="delsubject(data.item.id, $event.target)"
               variant="outline-danger"
               size="sm"
               ><i class="fas fa-trash"></i
             ></b-button>
           </div>
         </template>
-        <template #empty>
-          <h4>Sem dados</h4>
-        </template>
       </b-table>
     </div>
-
-    <room-form idModal="modalEdit" title="Atualizar Sala" />
+    <subject-form
+      idModal="modalEdit"
+      title="Editar Disciplina"
+      :subjectId="subjectId"
+    />
   </div>
 </template>
 
 <script>
-import RoomForm from './RoomForm.vue'
-import handleData from '../mixins/handleData.js'
-
+import SubjectForm from '../components/SubjectForm'
 export default {
-  name: 'roomList',
-
   components: {
-    RoomForm
+    SubjectForm
   },
-
-  mixins: [handleData],
-
+  name: 'SubjectsList',
   data () {
     return {
+      subjectId: '',
+      subjects: [],
       fields: [
         {
-          key: 'name',
-          label: 'Sala',
+          key: 'nome',
+          label: 'Nome da discipina',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
+        },
+        {
+          key: 'carga_horaria',
+          label: 'Carga Horária',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
@@ -74,23 +74,14 @@ export default {
           key: 'actions',
           label: 'Ações'
         }
-      ]
+      ],
+      loading: true
     }
   },
-
   created () {
-    this.get('rooms')
   },
-
-  methods: {
-    editRoom (item) {
-      this.$root.$emit('bv::show::modal', 'modalEdit', item)
-    },
-    delRoom (id) {
-      this.delete('rooms', id)
-    }
-  }
+  
 }
 </script>
 
-<style scoped></style>
+<style></style>

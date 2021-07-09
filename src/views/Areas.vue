@@ -1,14 +1,14 @@
 <template>
   <skeleton>
-    <teacher-form idModal="addteacher" title="Novo Professor" />
+    <area-form idModal="modalAdd" title="Novo Área" />
     <b-card>
       <b-card-header class="pt-0 pl-0 pr-0">
         <b-row align-h="between">
           <b-col>
-            <h3>Professores</h3>
+            <h3>Áreas</h3>
           </b-col>
           <b-col class="text-right">
-            <b-button variant="success" v-b-modal.addteacher>
+            <b-button variant="success" v-b-modal.modalAdd>
               <i class="ni ni-fat-add"></i>
               Adcionar</b-button
             >
@@ -16,21 +16,20 @@
         </b-row>
       </b-card-header>
       <b-card-body class="p-0">
-        <teacher-list />
+        <area-list />
       </b-card-body>
     </b-card>
   </skeleton>
 </template>
 
 <script>
-import TeacherList from '@/components/TeacherList.vue'
-import TeacherForm from '@/components/TeacherForm.vue'
-
+import AreaForm from '@/components/AreaForm'
+import AreaList from '@/components/AreaList'
 export default {
-  name: 'Teachers',
+  name: 'Areas',
   components: {
-    TeacherForm,
-    TeacherList
+    AreaForm,
+    AreaList
   }
 }
 </script>

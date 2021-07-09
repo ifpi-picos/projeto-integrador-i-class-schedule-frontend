@@ -5,8 +5,7 @@
       <b-container>
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
-            <b-col xl="5" lg="6" 
-md="8" class="px-5">
+            <b-col xl="5" lg="6" md="8" class="px-5">
               <h1 class="text-white">Welcome!</h1>
               <p class="text-lead text-white">
                 Use these awesome forms to login or create new account in your
@@ -64,7 +63,7 @@ md="8" class="px-5">
                 v-slot="{ handleSubmit }"
                 ref="formValidator"
               >
-                <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
+                <b-form role="form" @submit.prevent="login()">
                   <base-input
                     alternative
                     class="mb-3"
@@ -72,7 +71,7 @@ md="8" class="px-5">
                     :rules="{ required: true, email: true }"
                     prepend-icon="ni ni-email-83"
                     placeholder="Email"
-                    v-model="model.email"
+                    v-model="user.email"
                   >
                   </base-input>
 
@@ -84,11 +83,11 @@ md="8" class="px-5">
                     prepend-icon="ni ni-lock-circle-open"
                     type="password"
                     placeholder="Password"
-                    v-model="model.password"
+                    v-model="user.password"
                   >
                   </base-input>
 
-                  <b-form-checkbox v-model="model.rememberMe"
+                  <b-form-checkbox v-model="user.rememberMe"
                     >Remember me</b-form-checkbox
                   >
                   <div class="text-center">
@@ -105,14 +104,12 @@ md="8" class="px-5">
           </b-card>
           <b-row class="mt-3">
             <b-col cols="6">
-              <router-link to="/dashboard" 
-class="text-light"
+              <router-link to="/dashboard" class="text-light"
                 ><small>Forgot password?</small></router-link
               >
             </b-col>
             <b-col cols="6" class="text-right">
-              <router-link to="/register" 
-class="text-light"
+              <router-link to="/register" class="text-light"
                 ><small>Create new account</small></router-link
               >
             </b-col>
@@ -124,19 +121,28 @@ class="text-light"
 </template>
 <script>
 export default {
-  data() {
+  name: 'login',
+  data () {
     return {
-      model: {
-        email: "",
-        password: "",
-        rememberMe: false
+      user: {
+        email: '',
+        password: ''
+        //rememberMe: false
       }
-    };
+    }
   },
   methods: {
-    onSubmit() {
-      // this will be called only after form is valid. You can do api call here to login
+    async login () {
+      try {
+        const { data } = await this.$store.dispatch('login', this.user)
+
+        window.localStorage.token = data.token
+        this.$store.commit('UPDATE_LOGIN', data)
+        this.$router.replace({ name: 'dashboard' })
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
-};
+}
 </script>

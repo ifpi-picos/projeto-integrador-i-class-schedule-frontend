@@ -12,18 +12,20 @@ import GlobalDirectives from './globalDirectives'
 import SideBar from '@/components/SidebarPlugin'
 
 // element ui language configuration
-import lang from 'element-ui/lib/locale/lang/en'
+import lang from 'element-ui/lib/locale/lang/pt-br'
 import locale from 'element-ui/lib/locale'
 
 // vue-bootstrap
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // asset imports
 import '@/assets/scss/argon.scss'
 import '@/assets/vendor/nucleo/css/nucleo.css'
 import { extend } from 'vee-validate'
 import * as rules from 'vee-validate/dist/rules'
-import { messages } from 'vee-validate/dist/locale/en.json'
+import { messages } from 'vee-validate/dist/locale/pt_BR.json'
 locale.use(lang)
 
 Object.keys(rules).forEach(rule => {

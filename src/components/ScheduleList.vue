@@ -1,96 +1,98 @@
 <template>
   <div>
-    <div v-if="loading" class="d-flex justify-content-center mt-3 mb-3">
+    <div class="d-flex justify-content-center mt-3 mb-3" v-if="loading">
       <b-spinner
         style="width: 3rem; height: 3rem"
         variant="success"
         label="Spinning"
       ></b-spinner>
     </div>
+
     <div v-else>
       <b-table
+        table-class="border-bottom"
         head-variant="light"
         hover
-        responsive
-        table-class="border-bottom"
-        thead-tr-class="text-center"
-        tbody-tr-class="text-center"
+        :responsive="true"
         :items="dataBase"
         :fields="fields"
-        sort-by="nome"
+        sort-by="turno"
         sort-icon-left
-        show-empty
       >
+        <template #cell(schedule)="row">
+          <div class="d-flex justify-content-center ">
+            {{ row.item.start.replace(/:\d\d$/gm, '') }} -
+            {{ row.item.end.replace(/:\d\d$/gm, '') }}
+          </div>
+        </template>
+
         <template v-slot:cell(actions)="data">
-          <div class="d-flex justify-content-center">
+          <div class="d-flex justify-content-center ">
             <b-button
-              @click="editRoom(data.item)"
+              @click="editSchedule(data.item)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
             ></b-button>
 
             <b-button
-              @click="delRoom(data.item.id, $event.target)"
+              @click="delSchedule(data.item.id, $event.target)"
               variant="outline-danger"
               size="sm"
               ><i class="fas fa-trash"></i
             ></b-button>
           </div>
         </template>
-        <template #empty>
-          <h4>Sem dados</h4>
-        </template>
       </b-table>
     </div>
-
-    <room-form idModal="modalEdit" title="Atualizar Sala" />
+    <schedule-form idModal="modalEdit" title="Editar Turno" />
   </div>
 </template>
 
 <script>
-import RoomForm from './RoomForm.vue'
+import ScheduleForm from '../components/ScheduleForm'
 import handleData from '../mixins/handleData.js'
 
 export default {
-  name: 'roomList',
-
   components: {
-    RoomForm
+    ScheduleForm
   },
-
+  name: 'ScheduleList',
   mixins: [handleData],
-
   data () {
     return {
       fields: [
         {
           key: 'name',
-          label: 'Sala',
+          label: 'Turno',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {
+          key: `schedule`,
+          label: 'Horário',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true,
+          thClass: 'text-center'
+        },
+        {
           key: 'actions',
-          label: 'Ações'
+          label: 'Ações',
+          thClass: 'text-center'
         }
       ]
     }
   },
-
   created () {
-    this.get('rooms')
+    this.get('shifts')
   },
-
   methods: {
-    editRoom (item) {
+    editSchedule (item) {
       this.$root.$emit('bv::show::modal', 'modalEdit', item)
     },
-    delRoom (id) {
-      this.delete('rooms', id)
+    delSchedule (id) {
+      this.delete('shifts', id)
     }
   }
 }
 </script>
-
-<style scoped></style>
