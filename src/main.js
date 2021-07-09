@@ -5,6 +5,7 @@ import firebase from './firebase'
 import store from './store/'
 import router from './routes/router'
 import VueSweetalert2 from 'vue-sweetalert2'
+import { api } from './services/api'
 
 import './services/axios.js'
 
@@ -38,5 +39,23 @@ new Vue({
   el: '#app',
   render: h => h(App),
   router,
-  store
+  store,
+  beforeCreate: async () => {
+    const token = window.localStorage.getItem('token')
+    const user = JSON.parse(window.localStorage.getItem('user'))
+    let Response = ''
+    if (user) {
+      const { data } = await api.verifyToken({
+        email: user.email,
+        name: user.name,
+        token
+      })
+      Response = data
+    }
+    // if (token && Response.auth) {
+    //   store.commit('UPDATE_LOGIN', Response)
+    //   router.push({ name: 'dashboard' })
+    // }
+    store.commit('UPDATE_LOGIN', Response)
+  }
 })

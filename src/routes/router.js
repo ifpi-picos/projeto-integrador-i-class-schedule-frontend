@@ -25,9 +25,11 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
   const LOGIN = 'login'
   const INITIAL_PAGE = 'dashboard'
-  const authenticate = store.getters.getAuth
+  const user = JSON.parse(window.localStorage.getItem('user'))
 
-  if (authenticate) {
+  const auth = user ? user.auth : false
+
+  if (auth) {
     //para /login
     if (to.name === 'login') {
       next({ name: INITIAL_PAGE })
