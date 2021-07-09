@@ -72,7 +72,6 @@
                     placeholder="Name"
                     name="Name"
                     :rules="{ required: true }"
-                    v-model="model.name"
                   >
                   </base-input>
 
@@ -83,7 +82,6 @@
                     placeholder="Email"
                     name="Email"
                     :rules="{ required: true, email: true }"
-                    v-model="model.email"
                   >
                   </base-input>
 
@@ -95,7 +93,6 @@
                     type="password"
                     name="Password"
                     :rules="{ required: true, min: 6 }"
-                    v-model="model.password"
                   >
                   </base-input>
                   <div class="text-muted font-italic">
@@ -113,7 +110,7 @@
                         name="Privacy"
                         Policy
                       >
-                        <b-form-checkbox v-model="model.agree">
+                        <b-form-checkbox>
                           <span class="text-muted"
                             >I agree with the
                             <a href="#!">Privacy Policy</a></span
@@ -139,34 +136,6 @@
 <script>
 export default {
   name: 'register',
-  data () {
-    return {
-      model: {
-        name: '',
-        email: '',
-        password: '',
-        agree: false
-      }
-    }
-  },
-  methods: {
-    onSubmit () {
-      const email = this.model.email
-      const password = this.model.password
-      this.$firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(user => {
-          console.log(user);
-        })
-        .catch(error => {
-          const errorCode = error.code
-          const errorMessage = error.message
-          console.error(errorCode);
-          console.error(errorMessage);
-        })
-    }
-  }
 }
 </script>
 <style></style>
