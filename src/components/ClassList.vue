@@ -95,7 +95,7 @@ export default {
     }
   },
   created () {
-    this.getClassesOnChange(), this.getClasses()
+    
   },
   
 }

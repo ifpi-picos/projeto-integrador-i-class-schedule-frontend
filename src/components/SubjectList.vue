@@ -79,7 +79,6 @@ export default {
     }
   },
   created () {
-    this.getSubjects()
   },
   
 }
