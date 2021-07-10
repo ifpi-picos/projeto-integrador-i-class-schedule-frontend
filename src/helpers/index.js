@@ -1,13 +1,9 @@
-import { api } from "../services/api"
+import { api } from '../services/api'
 
-const  updateCredentials = ({ auth, token, user }) => {
-
+const credentials = ({ auth, token, user }) => {
   window.localStorage.setItem('token', token)
   window.localStorage.setItem('user', JSON.stringify({ ...user, auth }))
-  
 }
-
-
 
 const autenticate = async () => {
   const token = window.localStorage.getItem('token')
@@ -16,7 +12,6 @@ const autenticate = async () => {
   let Response = ''
 
   if (user) {
-
     try {
       const { data } = await api.verifyToken({
         email: user.email,
@@ -28,16 +23,13 @@ const autenticate = async () => {
       console.log(e)
       Response = e
     }
-
   }
 
   // if (token && Response.auth) {
   //   store.commit('updateCredentials', Response)
   //   router.push({ name: 'dashboard' })
   // }
-  updateCredentials(Response)
-
+  credentials(Response)
 }
 
-
-export default { autenticate, updateCredentials }
+export { autenticate, credentials }

@@ -120,6 +120,8 @@
   </div>
 </template>
 <script>
+import { credentials } from '../../helpers/index'
+
 export default {
   name: 'login',
   data () {
@@ -134,10 +136,9 @@ export default {
   methods: {
     async login () {
       try {
-        //const { data } = await this.$store.dispatch('login', this.user)
         const { data } = await this.$axios.login(this.user)
         
-        this.$store.commit('UPDATE_LOGIN', data)
+        credentials(data)
         this.$router.push({ name: 'dashboard' })
       } catch (err) {
         console.log(err)

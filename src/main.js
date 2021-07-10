@@ -6,6 +6,8 @@ import router from './routes/router'
 import VueSweetalert2 from 'vue-sweetalert2'
 import { api } from './services/api'
 
+import { autenticate, credentials } from './helpers/index'
+
 import './services/axios.js'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
@@ -38,22 +40,29 @@ new Vue({
   render: h => h(App),
   router,
   store,
+  // beforeCreate: () => autenticate()
   beforeCreate: async () => {
     const token = window.localStorage.getItem('token')
     const user = JSON.parse(window.localStorage.getItem('user'))
+
     let Response = ''
+
     if (user) {
-      const { data } = await api.verifyToken({
-        email: user.email,
-        name: user.name,
-        token
-      })
-      Response = data
+      try {
+        const { data } = await api.verifyToken({
+          email: user.email,
+          name: user.name,
+          token
+        })
+
+        credentials(data)
+      } catch ({ response }) {
+        localStorage.clear()
+      }
     }
     // if (token && Response.auth) {
-    //   store.commit('UPDATE_LOGIN', Response)
+    //   credentials(Response)
     //   router.push({ name: 'dashboard' })
     // }
-    store.commit('UPDATE_LOGIN', Response)
   }
 })

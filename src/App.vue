@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { api } from "./services/api";
 
 export default {
     name: "APP",
@@ -26,10 +25,10 @@ export default {
     //         }
     //     }
     //     // if (token && Response.auth) {
-    //     //   store.commit('UPDATE_LOGIN', Response)
+    //     //   credentials(Response)
     //     //   router.push({ name: 'dashboard' })
     //     // }
-    //     this.$store.commit("UPDATE_LOGIN", Response);
+    //     credentials(Response)
     // },
 };
 </script>

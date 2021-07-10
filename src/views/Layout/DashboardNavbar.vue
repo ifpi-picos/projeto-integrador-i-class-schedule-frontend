@@ -97,6 +97,7 @@
 <script>
 import { CollapseTransition } from 'vue2-transitions'
 import { BaseNav, Modal } from '@/components'
+import { credentials } from '../../helpers/index'
 
 export default {
   components: {
@@ -138,14 +139,9 @@ export default {
       this.activeNotifications = false
     },
     Logout () {
+        localStorage.clear()    
+        this.$router.push({ name: "login" });
       
-      // this.$store.commit('UPDATE_LOGIN', {
-      //   auth: false,
-      //   user: null,
-      //   token: null
-      // })
-      location.reload()
-      this.$router.push({ name: 'login' })
     }
   }
 }

@@ -1,4 +1,6 @@
 import Axios from 'axios'
+import { credentials } from '../helpers/index'
+import router from '../routes/router'
 
 // const API_URL = process.env.API_URL || 'http://localhost:3000/api/'
 const API_URL = 'https://empty-coffee-cups.herokuapp.com/api/'
@@ -22,9 +24,6 @@ axiosInstance.interceptors.request.use(
   }
 )
 
-import store from '../store'
-import router from '../routes/router'
-
 axiosInstance.interceptors.response.use(
   response => {
     return response
@@ -34,9 +33,10 @@ axiosInstance.interceptors.response.use(
       config,
       response: { status, data }
     } = err
-    console.log(err)
+   
+    
     if (status === 401) {
-      store.commit('UPDATE_LOGIN', {
+      credentials({
         auth: false,
         token: null,
         user: { name: null, email: null }
