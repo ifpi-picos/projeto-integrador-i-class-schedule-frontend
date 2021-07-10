@@ -85,9 +85,9 @@
             <span>Support</span>
           </b-dropdown-item>
           <div class="dropdown-divider"></div>
-          <b-dropdown-item @click="Logout()">
+          <b-dropdown-item @click="logout()">
             <i class="ni ni-user-run"></i>
-            <span>Logout</span>
+            <span>Sair</span>
           </b-dropdown-item>
         </template>
       </base-dropdown>
@@ -138,7 +138,7 @@ export default {
     closeDropDown () {
       this.activeNotifications = false
     },
-    Logout () {
+    logout () {
         localStorage.clear()    
         this.$router.push({ name: "login" });
       
