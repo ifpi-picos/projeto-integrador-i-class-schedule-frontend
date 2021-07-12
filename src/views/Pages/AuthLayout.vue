@@ -34,10 +34,6 @@
           </b-row>
         </div>
         <b-navbar-nav class="align-items-lg-center ml-lg-auto">
-          <b-nav-item to="/dashboard">
-            <i class="ni ni-planet"></i>
-            <span class="nav-link-inner--text">Dashboard</span>
-          </b-nav-item>
           <b-nav-item to="/register">
             <i class="ni ni-circle-08"></i>
             <span class="nav-link-inner--text">Register</span>
@@ -45,10 +41,6 @@
           <b-nav-item to="/login">
             <i class="ni ni-key-25"></i>
             <span class="nav-link-inner--text">Login</span>
-          </b-nav-item>
-          <b-nav-item to="/profile">
-            <i class="ni ni-single-02"></i>
-            <span class="nav-link-inner--text">Profile</span>
           </b-nav-item>
         </b-navbar-nav>
       </template>
@@ -104,8 +96,8 @@
   </div>
 </template>
 <script>
-import { BaseNav } from "@/components";
-import { ZoomCenterTransition } from "vue2-transitions";
+import { BaseNav } from '@/components'
+import { ZoomCenterTransition } from 'vue2-transitions'
 
 export default {
   components: {
@@ -115,69 +107,69 @@ export default {
   props: {
     backgroundColor: {
       type: String,
-      default: "black"
+      default: 'black'
     }
   },
-  data() {
+  data () {
     return {
       showMenu: false,
       menuTransitionDuration: 250,
       pageTransitionDuration: 200,
       year: new Date().getFullYear(),
-      pageClass: "login-page"
-    };
+      pageClass: 'login-page'
+    }
   },
   computed: {
-    title() {
-      return `${this.$route.name} Page`;
+    title () {
+      return `${this.$route.name} Page`
     }
   },
   methods: {
-    toggleNavbar() {
-      document.body.classList.toggle("nav-open");
-      this.showMenu = !this.showMenu;
+    toggleNavbar () {
+      document.body.classList.toggle('nav-open')
+      this.showMenu = !this.showMenu
     },
-    closeMenu() {
-      document.body.classList.remove("nav-open");
-      this.showMenu = false;
+    closeMenu () {
+      document.body.classList.remove('nav-open')
+      this.showMenu = false
     },
-    setBackgroundColor() {
-      document.body.classList.add("bg-default");
+    setBackgroundColor () {
+      document.body.classList.add('bg-default')
     },
-    removeBackgroundColor() {
-      document.body.classList.remove("bg-default");
+    removeBackgroundColor () {
+      document.body.classList.remove('bg-default')
     },
-    updateBackground() {
+    updateBackground () {
       if (!this.$route.meta.noBodyBackground) {
-        this.setBackgroundColor();
+        this.setBackgroundColor()
       } else {
-        this.removeBackgroundColor();
+        this.removeBackgroundColor()
       }
     }
   },
-  beforeDestroy() {
-    this.removeBackgroundColor();
+  beforeDestroy () {
+    this.removeBackgroundColor()
   },
-  beforeRouteUpdate(to, from, next) {
+  beforeRouteUpdate (to, from, next) {
     // Close the mobile menu first then transition to next page
     if (this.showMenu) {
-      this.closeMenu();
+      this.closeMenu()
       setTimeout(() => {
-        next();
-      }, this.menuTransitionDuration);
+        next()
+      }, this.menuTransitionDuration)
     } else {
-      next();
+      next()
     }
   },
   watch: {
     $route: {
       immediate: true,
-      handler: function() {
-        this.updateBackground();
+      handler: function () {
+        this.updateBackground()
       }
     }
   }
-};
+}
 </script>
 <style lang="scss">
 $scaleSize: 0.8;

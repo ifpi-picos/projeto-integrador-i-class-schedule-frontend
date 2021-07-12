@@ -102,9 +102,9 @@
             <span>Support</span>
           </b-dropdown-item>
           <div class="dropdown-divider"></div>
-          <b-dropdown-item href="#!">
+          <b-dropdown-item @click="logout()">
             <i class="ni ni-user-run"></i>
-            <span>Logout</span>
+            <span>Sample</span>
           </b-dropdown-item>
         </b-dropdown>
       </b-nav-item-dropdown>
@@ -153,6 +153,11 @@ export default {
     },
     hideSidebar() {
       this.$sidebar.displaySidebar(false);
+    },
+    logout () {
+        localStorage.clear()    
+        this.$router.push({ name: "login" });
+      
     }
   }
 };
