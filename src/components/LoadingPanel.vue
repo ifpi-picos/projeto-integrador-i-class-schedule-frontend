@@ -1,14 +1,16 @@
 <template>
   <b-row v-loading="true" id="loading"></b-row>
 </template>
-<script>
-import Vue from "vue";
-import { Loading } from "element-ui";
 
-Vue.use(Loading.directive);
-export default {};
+<script>
+import Vue from 'vue'
+import { Loading } from 'element-ui'
+Vue.use(Loading.directive)
+
+export default {}
 </script>
-<style>
+
+<style scoped>
 #loading {
   min-height: 200px;
   display: flex;
