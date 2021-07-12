@@ -85,9 +85,9 @@
             <span>Support</span>
           </b-dropdown-item>
           <div class="dropdown-divider"></div>
-          <b-dropdown-item @click="Logout()">
+          <b-dropdown-item @click="logout()">
             <i class="ni ni-user-run"></i>
-            <span>Logout</span>
+            <span>Sair</span>
           </b-dropdown-item>
         </template>
       </base-dropdown>
@@ -97,6 +97,7 @@
 <script>
 import { CollapseTransition } from 'vue2-transitions'
 import { BaseNav, Modal } from '@/components'
+import { credentials } from '../../helpers/index'
 
 export default {
   components: {
@@ -137,17 +138,10 @@ export default {
     closeDropDown () {
       this.activeNotifications = false
     },
-    Logout () {
-      console.log('ookokoko')
-      window.localStorage.removeItem('token')
-      this.$store.commit('UPDATE_LOGIN', {
-        auth: false,
-        user: {
-          name: '',
-          email: ''
-        }
-      })
-      this.$router.replace({ name: 'login' })
+    logout () {
+        localStorage.clear()    
+        this.$router.push({ name: "login" });
+      
     }
   }
 }
