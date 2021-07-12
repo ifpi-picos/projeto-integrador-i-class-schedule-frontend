@@ -5,8 +5,7 @@
       <b-container class="container">
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
-            <b-col xl="5" lg="6" 
-md="8" class="px-5">
+            <b-col xl="5" lg="6" md="8" class="px-5">
               <h1 class="text-white">Create an account</h1>
               <p class="text-lead text-white">
                 Use these awesome forms to login or create new account in your
@@ -73,7 +72,6 @@ md="8" class="px-5">
                     placeholder="Name"
                     name="Name"
                     :rules="{ required: true }"
-                    v-model="model.name"
                   >
                   </base-input>
 
@@ -84,7 +82,6 @@ md="8" class="px-5">
                     placeholder="Email"
                     name="Email"
                     :rules="{ required: true, email: true }"
-                    v-model="model.email"
                   >
                   </base-input>
 
@@ -96,7 +93,6 @@ md="8" class="px-5">
                     type="password"
                     name="Password"
                     :rules="{ required: true, min: 6 }"
-                    v-model="model.password"
                   >
                   </base-input>
                   <div class="text-muted font-italic">
@@ -114,7 +110,7 @@ md="8" class="px-5">
                         name="Privacy"
                         Policy
                       >
-                        <b-form-checkbox v-model="model.agree">
+                        <b-form-checkbox>
                           <span class="text-muted"
                             >I agree with the
                             <a href="#!">Privacy Policy</a></span
@@ -124,8 +120,7 @@ md="8" class="px-5">
                     </b-col>
                   </b-row>
                   <div class="text-center">
-                    <b-button type="submit" 
-variant="primary" class="mt-4"
+                    <b-button type="submit" variant="primary" class="mt-4"
                       >Create account</b-button
                     >
                   </div>
@@ -140,22 +135,7 @@ variant="primary" class="mt-4"
 </template>
 <script>
 export default {
-  name: "register",
-  data() {
-    return {
-      model: {
-        name: "",
-        email: "",
-        password: "",
-        agree: false
-      }
-    };
-  },
-  methods: {
-    onSubmit() {
-      // this will be called only after form is valid. You can do an api call here to register users
-    }
-  }
-};
+  name: 'register',
+}
 </script>
 <style></style>
