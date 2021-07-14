@@ -20,7 +20,7 @@
     "dropzone": "^5.5.1",
     "element-ui": "2.4.11",
     "es6-promise": "^4.1.1",
-    "firebase": "^8.1.1",
+    "firebase": "^8.6.8",
     "flatpickr": "^4.5.7",
     "fuse.js": "^3.2.0",
     "google-maps": "^3.2.1",
