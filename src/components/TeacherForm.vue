@@ -100,9 +100,10 @@ export default {
       ],
       occupationAreas: [
         { value: null, text: 'Por favor selecione uma opção' },
-        { value: 1, text: 'Infórmatica' },
+        { value: 1, text: 'Informatica' },
         { value: 2, text: 'Fisica' },
-        { value: 3, text: 'Quimica' }
+        { value: 4, text: 'ADM' },
+        { value: 5, text: 'Quimica' }
       ]
     }
   },
