@@ -48,6 +48,20 @@
           </b-col>
         </b-row>
         -->
+        <b-row>
+          <b-col lg="11">
+            {{ teacher }} <br />
+            <AutoComplete
+              v-model="teacher"
+              :options="teachers"
+              label-key="name"
+              value-key="id"
+              placeholder="Search"
+              @shouldSearch="searchTeachers"
+              @select="onSelect"
+            />
+          </b-col>
+        </b-row>
 
         <b-row>
           <b-col lg="11">
@@ -81,13 +95,18 @@
 
 <script>
 import modalForm from '../mixins/modalForm'
+import AutoComplete from './AutoComplete.vue'
 
 export default {
   name: 'CoordinationForm',
   mixins: [modalForm],
+  components: {
+    AutoComplete
+  },
   data () {
     return {
-      teachers: []
+      teachers: [],
+      teacher: ''
     }
   },
   props: {
@@ -107,7 +126,7 @@ export default {
     }
   },
   created () {
-    this.get('teachers')
+    //this.get('teachers')
   },
   methods: {
     handleSubmit () {
@@ -121,6 +140,22 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    async searchTeachers (query) {
+      try {
+        const { data } = await this.$axios.get(
+          `https://empty-coffee-cups.herokuapp.com/api/teachers/search?q=${query}`
+        )
+        this.teachers = data.data
+        // if (query == '') {
+        //   this.teachers = []
+        // }
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    onSelect (teacher) {
+      console.log(teacher)
     }
   }
 }
