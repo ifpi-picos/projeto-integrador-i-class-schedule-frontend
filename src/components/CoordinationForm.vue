@@ -20,6 +20,21 @@
 
         <b-row>
           <b-col lg="11">
+            {{ teacher }} <br />
+            <AutoComplete
+              v-model="teacher"
+              :options="teachers"
+              label-key="name"
+              value-key="id"
+              placeholder="Search"
+              @shouldSearch="searchTeachers"
+              @select="onSelect"
+            />
+          </b-col>
+        </b-row>
+
+        <!-- <b-row>
+          <b-col lg="11">
             <b-form-select v-model="registry.idResponsible" class="mb-3">
               <b-form-select-option
                 v-for="teacher in teachers"
@@ -32,7 +47,7 @@
               Selected: <strong>{{ registry.idResponsible }}</strong>
             </div>
           </b-col>
-        </b-row>
+        </b-row> -->
 
         <!--<b-row>
           <b-col lg="11">
@@ -48,20 +63,6 @@
           </b-col>
         </b-row>
         -->
-        <b-row>
-          <b-col lg="11">
-            {{ teacher }} <br />
-            <AutoComplete
-              v-model="teacher"
-              :options="teachers"
-              label-key="name"
-              value-key="id"
-              placeholder="Search"
-              @shouldSearch="searchTeachers"
-              @select="onSelect"
-            />
-          </b-col>
-        </b-row>
 
         <b-row>
           <b-col lg="11">
