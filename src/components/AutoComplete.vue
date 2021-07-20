@@ -21,7 +21,8 @@
           v-for="(opt, index) in mutableOptions"
           :key="opt[valueKey]"
           :class="{ 'bg-success': arrowCounter === index }"
-          @click="onSelect(opt)"
+          @click="onSelect()"
+          @mouseover="setArrowCounter(index)"
         >
           <span
             class="font-normal"
@@ -108,10 +109,8 @@ export default {
 
     searchInternally () {
       const search = this.keyword
-      console.log('search')
-      console.log(search)
       this.mutableOptions = this.originalOptions.filter(o => {
-        console.log(o[this.labelKey].toLowerCase())
+        // console.log(o[this.labelKey].toLowerCase())
         return o[this.labelKey].toLowerCase().search(search.toLowerCase()) >= 0
       })
       this.highlightOptions()
@@ -153,6 +152,10 @@ export default {
           evt.preventDefault()
           this.onArrowUp()
           break
+        case 'Enter':
+          evt.preventDefault()
+          this.onSelect()
+          break
       }
     },
     onArrowDown () {
@@ -165,11 +168,26 @@ export default {
         this.arrowCounter -= 1
       }
     },
-    onSelect (opt) {
-      this.$emit('select', opt)
-      this.keyword = opt[this.labelKey]
-      this.emitInput()
-      this.resetOptions()
+    setArrowCounter (number) {
+      this.arrowCounter = number
+    },
+    resetArrowCounter () {
+      this.arrowCounter = 0
+    },
+    onSelect () {
+      const selected = this.mutableOptions[this.arrowCounter]
+      console.log(selected)
+      const selectedOption = this.options.find(
+        o => o[this.valueKey] == selected[this.valueKey]
+      )
+
+      if (selectedOption) {
+        this.$emit('select', selectedOption)
+        this.keyword = selectedOption[this.labelKey]
+        this.emitInput()
+        this.resetOptions()
+        this.resetArrowCounter()
+      }
     },
     emitInput () {
       this.$emit('input', this.keyword)
