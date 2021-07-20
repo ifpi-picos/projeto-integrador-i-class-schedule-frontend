@@ -20,7 +20,11 @@
           :key="opt[valueKey]"
           @click="onSelect(opt)"
         >
-          {{ opt[labelKey] }}
+          <span
+            class="font-normal"
+            v-html="opt[`${labelKey}_highlighted`] || opt[labelKey]"
+          >
+          </span>
         </li>
       </ul>
     </div>
@@ -106,10 +110,27 @@ export default {
         console.log(o[this.labelKey].toLowerCase())
         return o[this.labelKey].toLowerCase().search(search.toLowerCase()) >= 0
       })
+      this.highlightOptions()
+    },
+    highlightOptions () {
+      const search = this.keyword
+      const query = new RegExp(search, 'i')
+
+      this.mutableOptions.forEach(o => {
+        this.$set(
+          o,
+          `${this.labelKey}_highlighted`,
+          o[this.labelKey].replace(
+            query,
+            '<span class="font-weight-bold">$&</span>'
+          )
+        )
+      })
     },
     cloneOptions () {
       this.originalOptions = JSON.parse(JSON.stringify(this.options)) //perder relação original do vuejs
       this.mutableOptions = JSON.parse(JSON.stringify(this.options))
+      this.searchInternally()
     },
     resetOptions () {
       this.originalOptions = []
