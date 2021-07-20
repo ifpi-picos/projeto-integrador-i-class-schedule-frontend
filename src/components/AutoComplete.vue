@@ -2,12 +2,14 @@
   <div>
     <h2>AutoComplete</h2>
     <!-- {{ keyword }} -->
+    {{ arrowCounter }}
     <b-row>
       <b-col lg="11">
         <input
           type="text"
           :value="keyword"
           @input="onInput($event.target.value)"
+          @keydown="onKeydown"
         />
 
         <button @click="onClear()">X</button>
@@ -16,8 +18,9 @@
     <div class="options" v-show="mutableOptions.length">
       <ul>
         <li
-          v-for="opt in mutableOptions"
+          v-for="(opt, index) in mutableOptions"
           :key="opt[valueKey]"
+          :class="{ 'bg-success': arrowCounter === index }"
           @click="onSelect(opt)"
         >
           <span
@@ -68,6 +71,7 @@ export default {
   data () {
     return {
       keyword: '',
+      arrowCounter: 0,
       originalOptions: [],
       mutableOptions: []
     }
@@ -135,6 +139,31 @@ export default {
     resetOptions () {
       this.originalOptions = []
       this.mutableOptions = []
+    },
+    onKeydown (evt) {
+      if (!this.mutableOptions.length) {
+        return
+      }
+      switch (evt.code) {
+        case 'ArrowDown':
+          evt.preventDefault()
+          this.onArrowDown()
+          break
+        case 'ArrowUp':
+          evt.preventDefault()
+          this.onArrowUp()
+          break
+      }
+    },
+    onArrowDown () {
+      if (this.arrowCounter < this.mutableOptions.length - 1) {
+        this.arrowCounter += 1
+      }
+    },
+    onArrowUp () {
+      if (this.arrowCounter > 0) {
+        this.arrowCounter -= 1
+      }
     },
     onSelect (opt) {
       this.$emit('select', opt)
