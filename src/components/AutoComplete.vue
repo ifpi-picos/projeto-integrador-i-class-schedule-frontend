@@ -1,14 +1,29 @@
 <template>
   <div id="autocomplete">
     <!-- {{ keyword }} -->
-    {{ arrowCounter }}
+    <!-- {{ arrowCounter }} -->
 
+    <!-- <base-input
+      type="text"
+      label="Nome do responsável"
+      placeholder="Nome do responsável"
+      name="Nome do responsável"
+      required
+    >
+    </base-input> -->
+
+    <label class="form-control-label">
+      Responsável
+      <span class="text-red">*</span>
+    </label>
     <div class="input-group">
       <input
         :class="{
           'form-control': true,
-          'border-radius-none': mutableOptions.length
+          'border-radius-none': mutableOptions.length,
+          'is-invalid': !keyword && digitou
         }"
+        required
         type="text"
         ref="input"
         :value="keyword"
@@ -37,7 +52,7 @@
           :key="opt[valueKey]"
           :ref="`option_${index}`"
           :class="{
-            'bg-success': arrowCounter === index,
+            'bg-li': arrowCounter === index,
             'autocomplete-item': true
           }"
           tabindex="0"
@@ -94,7 +109,8 @@ export default {
       keyword: '',
       arrowCounter: 0,
       originalOptions: [],
-      mutableOptions: []
+      mutableOptions: [],
+      digitou: false
     }
   },
   created () {
@@ -107,6 +123,7 @@ export default {
   watch: {
     value (value) {
       this.keyword = value
+      this.digitou = true
     },
     options () {
       this.cloneOptions()
@@ -285,11 +302,25 @@ export default {
   background: #f4f4f4;
 }
 .options::-webkit-scrollbar-thumb {
-  background: #dad7d7;
+  background: #2dce89;
+}
+
+.options ul {
+  margin: 0;
+  padding: 0;
 }
 
 .options ul li {
   list-style: none;
-  list-style-position: outside;
+  display: inline-block;
+  width: 100%;
+  /* list-style-position: outside; */
+  margin: 0;
+  padding: 0;
+  padding: 5px 10px;
+}
+
+.bg-li {
+  background: #41f1a5;
 }
 </style>
