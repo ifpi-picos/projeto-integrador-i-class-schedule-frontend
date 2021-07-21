@@ -1,26 +1,46 @@
 <template>
-  <div>
-    <h2>AutoComplete</h2>
+  <div id="autocomplete">
     <!-- {{ keyword }} -->
-    {{ arrowCounter }}
-    <b-row>
-      <b-col lg="11">
-        <input
-          type="text"
-          :value="keyword"
-          @input="onInput($event.target.value)"
-          @keydown="onKeydown"
-        />
+    <!-- {{ arrowCounter }} -->
 
-        <button @click="onClear()">X</button>
-      </b-col>
-    </b-row>
-    <div class="options" v-show="mutableOptions.length">
+    <div class="input-group">
+      <input
+        :class="{
+          'form-control': true,
+          'border-radius-none': mutableOptions.length
+        }"
+        type="text"
+        ref="input"
+        :value="keyword"
+        :placeholder="placeholder"
+        @input="onInput($event.target.value)"
+        @blur="onBlur"
+        @keydown="onKeydown"
+      />
+      <span v-if="keyword" class="input-group-append">
+        <div
+          :class="{
+            'input-group-text bg-transparent': true,
+            'border-radius-none': mutableOptions.length
+          }"
+        >
+          <i @click="onClear()" class="fa fa-times"></i>
+        </div>
+      </span>
+      <!-- <button v-if="keyword" type="button" @click="onClear()">X</button> -->
+    </div>
+
+    <div class="options " v-show="mutableOptions.length">
       <ul>
         <li
           v-for="(opt, index) in mutableOptions"
           :key="opt[valueKey]"
-          :class="{ 'bg-success': arrowCounter === index }"
+          :ref="`option_${index}`"
+          :class="{
+            'bg-success': arrowCounter === index,
+            'autocomplete-item': true
+          }"
+          tabindex="0"
           @click="onSelect()"
           @mouseover="setArrowCounter(index)"
         >
@@ -156,20 +176,48 @@ export default {
           evt.preventDefault()
           this.onSelect()
           break
+        case 'Escape':
+          // evt.preventDefault()
+          this.onEsc()
+          break
       }
+    },
+    onEsc () {
+      console.log('ESC')
+      this.$refs.input.blur()
+      this.resetArrowCounter()
+
+      this.resetOptions()
     },
     onArrowDown () {
       if (this.arrowCounter < this.mutableOptions.length - 1) {
         this.arrowCounter += 1
       }
+      this.fixScrolling()
     },
     onArrowUp () {
       if (this.arrowCounter > 0) {
         this.arrowCounter -= 1
       }
+      this.fixScrolling()
+    },
+    onBlur (evt) {
+      const tgt = evt.relatedTarget
+      if (tgt && tgt.classList.contains('autocomplete-item')) {
+        return
+      }
+      this.resetOptions()
+      this.resetArrowCounter()
     },
     setArrowCounter (number) {
       this.arrowCounter = number
+    },
+    fixScrolling () {
+      this.$refs[`option_${this.arrowCounter}`][0].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'start'
+      })
     },
     resetArrowCounter () {
       this.arrowCounter = 0
@@ -200,19 +248,41 @@ export default {
       this.$emit('select', null)
       this.resetKeyword()
       this.resetOptions()
+      this.resetArrowCounter()
     }
   }
 }
 </script>
 
 <style scoped>
+.border-radius-none {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
 .options {
-  border: 1px solid rgba(0, 0, 0, 0.555);
-  background: rgb(231, 227, 227);
-  width: 206px;
+  border: 1px solid #cad1d7;
+  border-top: none;
+  /* border-radius: 0.375rem; */
+  width: 100%;
+  height: 170px;
+  overflow: auto;
   display: flex;
   padding: 10px 0 0 0;
+  margin-bottom: 20px;
 }
+
+.options::-webkit-scrollbar-track {
+  background-color: #f4f4f4;
+}
+
+.options::-webkit-scrollbar {
+  width: 6px;
+  background: #f4f4f4;
+}
+.options::-webkit-scrollbar-thumb {
+  background: #dad7d7;
+}
+
 .options ul li {
   list-style: none;
   list-style-position: outside;
