@@ -20,17 +20,19 @@
 
         <b-row>
           <b-col lg="11">
-            <!-- {{ teacher }} <br />
+            <div class="form-group">
+              <!-- {{ teacher }} <br />
             {{ registry.idResponsible }} <br /> -->
-            <AutoComplete
-              v-model="teacher"
-              :options="teachers"
-              label-key="name"
-              value-key="id"
-              placeholder="Search"
-              @shouldSearch="searchTeachers"
-              @select="onSelect"
-            />
+              <AutoComplete
+                v-model="teacher"
+                :options="teachers"
+                label-key="name"
+                value-key="id"
+                placeholder="Nome do responsável"
+                @shouldSearch="searchTeachers"
+                @select="onSelect"
+              />
+            </div>
           </b-col>
         </b-row>
 
