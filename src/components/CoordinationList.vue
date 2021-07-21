@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <spinner :showLoad="true" v-if="loader" /> -->
     <div class="d-flex justify-content-center mt-3 mb-3" v-if="loading">
       <b-spinner
         style="width: 3rem; height: 3rem"
@@ -9,16 +8,15 @@
       ></b-spinner>
     </div>
 
-    <div v-if="coordinations">
+    <div v-else>
       <b-table
-        v-if="coordinations[0]"
         head-variant="light"
         hover
         responsive
         thClass="text-red"
         thead-tr-class="pb-4 pt-4"
         tbody-tr-class=""
-        :items="coordinations"
+        :items="dataBase"
         :fields="fields"
         sort-by="nome"
         sort-icon-left
@@ -26,7 +24,7 @@
         <template v-slot:cell(actions)="data">
           <div class="d-flex justify-content-center">
             <b-button
-              @click="editCoordination(data.item.id)"
+              @click="editCoordination(data.item)"
               variant="outline-dark"
               size="sm"
               ><i class="fas fa-pen"></i
@@ -42,40 +40,36 @@
         </template>
       </b-table>
     </div>
-    <coordination-form
-      idModal="modalEdit"
-      :IdCoordination="coordinationId"
-      title="Atulaizar Coordenação"
-    />
+    <coordination-form idModal="modalEdit" title="Atulaizar Coordenação" />
   </div>
 </template>
 
 <script>
 import CoordinationForm from './CoordinationForm.vue'
+import handleData from '../mixins/handleData.js'
 export default {
   name: 'CoordinationList',
   components: {
     CoordinationForm
   },
+  mixins: [handleData],
   data () {
     return {
-      coordinationId: '',
-      coordinations: [],
       fields: [
         {
-          key: 'nome',
+          key: 'name',
           label: 'curso',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
         },
         {
-          key: 'responsavel',
+          key: 'coordinationTeacher.name',
           label: 'Responsável',
           tdClass: 'font-weight-600 name  text-sm ',
           sortable: true
         },
         {
-          key: 'email',
+          key: 'coordinationTeacher.email',
           label: 'E-mail',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
@@ -85,14 +79,20 @@ export default {
           label: 'Ações',
           thClass: 'text-center'
         }
-      ],
-      loading: true
+      ]
     }
   },
   created () {
-    this.getCoordinations()
+    this.get('coordinations')
   },
-  
+  methods: {
+    editCoordination (item) {
+      this.$root.$emit('bv::show::modal', 'modalEdit', item)
+    },
+    delCoordination (id) {
+      this.delete('coordinations', id)
+    }
+  }
 }
 </script>
 

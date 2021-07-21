@@ -11,7 +11,7 @@
               label="Nome da coordenação"
               placeholder="Nome da coordenação"
               name="Nome da coordenação"
-              v-model="registry.username"
+              v-model="registry.name"
               required
             >
             </base-input>
@@ -20,17 +20,50 @@
 
         <b-row>
           <b-col lg="11">
+            <!-- {{ teacher }} <br />
+            {{ registry.idResponsible }} <br /> -->
+            <AutoComplete
+              v-model="teacher"
+              :options="teachers"
+              label-key="name"
+              value-key="id"
+              placeholder="Search"
+              @shouldSearch="searchTeachers"
+              @select="onSelect"
+            />
+          </b-col>
+        </b-row>
+
+        <!-- <b-row>
+          <b-col lg="11">
+            <b-form-select v-model="registry.idResponsible" class="mb-3">
+              <b-form-select-option
+                v-for="teacher in teachers"
+                :key="teacher.id"
+                :value="teacher.id"
+                >{{ teacher.name }}</b-form-select-option
+              >
+            </b-form-select>
+            <div class="mt-3">
+              Selected: <strong>{{ registry.idResponsible }}</strong>
+            </div>
+          </b-col>
+        </b-row> -->
+
+        <!--<b-row>
+          <b-col lg="11">
             <base-input
               type="text"
               label="Nome do responsável"
               placeholder="Nome do responsável"
               name="Nome do responsável"
-              v-model="coordination.responsible"
+              v-model="registry.idResponsible"
               required
             >
             </base-input>
           </b-col>
         </b-row>
+        -->
 
         <b-row>
           <b-col lg="11">
@@ -39,8 +72,7 @@
               label="email do responsável"
               placeholder="coordenacao.edu@gmail.com"
               name="email"
-              v-model="coordination.email"
-              required
+              v-model="registry.email"
             >
             </base-input>
           </b-col>
@@ -55,7 +87,7 @@
       <b-button
         :disabled="!checkFormValidity()"
         variant="success"
-        @click="handleOk()"
+        @click="handleSubmit()"
       >
         Salvar
       </b-button>
@@ -64,15 +96,19 @@
 </template>
 
 <script>
+import modalForm from '../mixins/modalForm'
+import AutoComplete from './AutoComplete.vue'
+
 export default {
   name: 'CoordinationForm',
+  mixins: [modalForm],
+  components: {
+    AutoComplete
+  },
   data () {
     return {
-      coordination: {
-        username: '',
-        responsible: '',
-        email: ''
-      }
+      teachers: [],
+      teacher: ''
     }
   },
   props: {
@@ -91,14 +127,31 @@ export default {
       description: 'titulo do modal'
     }
   },
+
   methods: {
-
     handleSubmit () {
-      this.handleSubmit('coordinations')
+      console.log(this.registry)
+      this.handleOk('coordinations')
     },
-  
-  },
-
+    async searchTeachers (query) {
+      try {
+        const { data } = await this.$axios.get(
+          `https://empty-coffee-cups.herokuapp.com/api/teachers/search?q=${query}`
+        )
+        this.teachers = data.data
+        // if (query == '') {
+        //   this.teachers = []
+        // }
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    onSelect (teacher) {
+      this.registry.idResponsible = teacher.id
+      // this.registry.id = teacher.id
+      // console.log(teacher.id)
+    }
+  }
 }
 </script>
 

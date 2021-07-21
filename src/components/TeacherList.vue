@@ -9,7 +9,6 @@
     </div>
 
     <div v-else>
-      {{dataBase}}
       <b-table
         table-class="border-bottom"
         head-variant="light"
@@ -86,7 +85,7 @@ export default {
           key: 'actions',
           label: 'Ações'
         }
-      ],
+      ]
     }
   },
   created () {
