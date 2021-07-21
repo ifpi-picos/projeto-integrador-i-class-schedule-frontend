@@ -1,7 +1,7 @@
 <template>
   <div id="autocomplete">
     <!-- {{ keyword }} -->
-    <!-- {{ arrowCounter }} -->
+    {{ arrowCounter }}
 
     <div class="input-group">
       <input
@@ -183,7 +183,6 @@ export default {
       }
     },
     onEsc () {
-      console.log('ESC')
       this.$refs.input.blur()
       this.resetArrowCounter()
 
@@ -224,7 +223,7 @@ export default {
     },
     onSelect () {
       const selected = this.mutableOptions[this.arrowCounter]
-      console.log(selected)
+      // console.log(selected)
       const selectedOption = this.options.find(
         o => o[this.valueKey] == selected[this.valueKey]
       )
@@ -245,7 +244,8 @@ export default {
       this.emitInput()
     },
     onClear () {
-      this.$emit('select', null)
+      // this.$emit('select', null)
+      this.$emit('select', '')
       this.resetKeyword()
       this.resetOptions()
       this.resetArrowCounter()
@@ -255,16 +255,21 @@ export default {
 </script>
 
 <style scoped>
+.input-group span {
+  cursor: pointer;
+}
+
 .border-radius-none {
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
 }
+
 .options {
   border: 1px solid #cad1d7;
   border-top: none;
   /* border-radius: 0.375rem; */
   width: 100%;
-  height: 170px;
+  max-height: 170px;
   overflow: auto;
   display: flex;
   padding: 10px 0 0 0;

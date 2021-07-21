@@ -20,7 +20,8 @@
 
         <b-row>
           <b-col lg="11">
-            {{ teacher }} <br />
+            <!-- {{ teacher }} <br />
+            {{ registry.idResponsible }} <br /> -->
             <AutoComplete
               v-model="teacher"
               :options="teachers"
@@ -126,21 +127,11 @@ export default {
       description: 'titulo do modal'
     }
   },
-  created () {
-    //this.get('teachers')
-  },
+
   methods: {
     handleSubmit () {
       console.log(this.registry)
       this.handleOk('coordinations')
-    },
-    async get (url, params = null) {
-      try {
-        const { data } = await this.$axios.get(url, params)
-        this.teachers = data.data
-      } catch (err) {
-        console.log(err)
-      }
     },
     async searchTeachers (query) {
       try {
@@ -156,7 +147,9 @@ export default {
       }
     },
     onSelect (teacher) {
-      console.log(teacher)
+      this.registry.idResponsible = teacher.id
+      // this.registry.id = teacher.id
+      // console.log(teacher.id)
     }
   }
 }
