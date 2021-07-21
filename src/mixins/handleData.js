@@ -89,7 +89,7 @@ export default {
       if (changeType === 'added') {
         const arrayLength = this.dataBase.length
         console.log(payload)
-        console.log("add")
+        console.log('add')
 
         this.$set(this.dataBase, arrayLength, payload)
       }
@@ -98,7 +98,7 @@ export default {
         this.dataBase.forEach((item, index) => {
           if (payload.id === item.id) {
             this.$set(this.dataBase, index, payload)
-        console.log("modificado")
+            console.log('modificado')
           }
         })
       }
