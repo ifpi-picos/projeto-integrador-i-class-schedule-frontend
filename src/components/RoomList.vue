@@ -80,6 +80,10 @@ export default {
 
   created () {
     this.get('rooms')
+
+    this.searchName = this.$debounce(query => {
+      this.get('rooms/search', query)
+    }, 1000)
   },
 
   methods: {
@@ -88,6 +92,13 @@ export default {
     },
     delRoom (id) {
       this.delete('rooms', id)
+    }
+  },
+
+  watch: {
+    $route (to, from) {
+      const query = to.query ? to.query : null
+      this.searchName(query)
     }
   }
 }

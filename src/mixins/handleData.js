@@ -1,5 +1,4 @@
 import { eventBus } from '../main'
-import { serialize } from '@/helpers.js'
 
 export default {
   data () {
@@ -7,16 +6,10 @@ export default {
       dataBase: null,
       produtosPorPagina: 50,
       produtosTotal: 0,
-      loading: true,
-      urlapontada: ''
+      loading: true
     }
   },
-  computed: {
-    urlFormated () {
-      const query = serialize(this.$route.query)
-      return `search?${query}`
-    }
-  },
+
   methods: {
     // Listagem de registros
     // async get (url) {
@@ -40,7 +33,6 @@ export default {
         const { data } = await this.$axios.get(url, params)
         this.dataBase = data.data
         this.loading = false
-        console.log('GET com params')
       } catch (err) {
         console.log(err)
       }
@@ -78,19 +70,11 @@ export default {
         })
     }
   },
-  watch: {
-    urlFormated () {
-      this.get(this.urlapontada)
-    }
-  },
 
   created () {
     eventBus.$on('update', (payload, changeType) => {
       if (changeType === 'added') {
         const arrayLength = this.dataBase.length
-        console.log(payload)
-        console.log('add')
-
         this.$set(this.dataBase, arrayLength, payload)
       }
 
@@ -98,7 +82,6 @@ export default {
         this.dataBase.forEach((item, index) => {
           if (payload.id === item.id) {
             this.$set(this.dataBase, index, payload)
-            console.log('modificado')
           }
         })
       }

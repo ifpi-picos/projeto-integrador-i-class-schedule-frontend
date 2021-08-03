@@ -10,12 +10,14 @@
               class="navbar-search-main form-inline mr-sm-3"
               id="navbar-search-main"
               width="100%"
+              @submit.prevent="search"
             >
               <b-form-group class="mb-0">
                 <b-input-group
                   class="input-group-alternative input-group-merge"
                 >
                   <b-form-input
+                    autocomplete="off"
                     type="text"
                     id="search"
                     name="search"
@@ -26,12 +28,7 @@
 
                   <div class="input-group-append">
                     <span class="input-group-text">
-                      <button
-                        @click.prevent="search"
-                        :disabled="disabled"
-                        class="fas fa-search"
-                        style="background:transparent;border:none"
-                      ></button>
+                      <i class="fas fa-search"></i>
                     </span>
                   </div>
                 </b-input-group>
@@ -58,27 +55,25 @@ import RoomForm from '../components/RoomForm.vue'
 import RoomList from '../components/RoomList.vue'
 
 export default {
+  name: 'Rooms',
+
   components: {
     RoomList,
     RoomForm
   },
-  name: 'Rooms',
+
   data () {
     return {
       busca: '',
       disabled: false
     }
   },
-  methods: {
-    search () {
-      this.disabled = true
-      this.$router.push({ query: { q: this.busca } })
-    }
-  },
+
   watch: {
     busca () {
-      this.disabled = false
-    }
+      // this.disabled = true
+      this.$router.replace({ query: { name: this.busca } })
+    },
   },
 
   props: {
