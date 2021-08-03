@@ -3,6 +3,10 @@
 //
 .navbar-search-main {
   .input-group {
+    :-webkit-autofill {
+      border-radius: 32px 0px 0px 32px;
+    }
+
     border-radius: $navbar-search-border-radius;
     border: $navbar-search-border-width $primary solid;
     background-color: transparent;

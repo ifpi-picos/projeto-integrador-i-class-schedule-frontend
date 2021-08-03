@@ -2,8 +2,8 @@ import Axios from 'axios'
 import { credentials } from '../helpers/index'
 import router from '../routes/router'
 
-// const API_URL = process.env.API_URL || 'http://localhost:3000/api/'
-const API_URL = 'https://empty-coffee-cups.herokuapp.com/api/'
+const API_URL = 'http://localhost:3000/api/'
+//const API_URL = 'https://empty-coffee-cups.herokuapp.com/api/'
 
 const axiosInstance = Axios.create({
   baseURL: API_URL
@@ -49,7 +49,7 @@ axiosInstance.interceptors.response.use(
 
 const api = {
   get (url, params) {
-    return axiosInstance.get(url, params)
+    return axiosInstance.get(url, { params })
   },
   post (url, body) {
     return axiosInstance.post(url, body)
