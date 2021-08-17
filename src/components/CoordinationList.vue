@@ -69,7 +69,7 @@ export default {
           sortable: true
         },
         {
-          key: 'coordinationTeacher.email',
+          key: 'email',
           label: 'E-mail',
           tdClass: 'font-weight-600 name text-sm ',
           sortable: true
