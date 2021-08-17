@@ -17,7 +17,7 @@
             </base-input>
           </b-col>
         </b-row>
-
+        {{ teachers }}
         <b-row>
           <b-col lg="11">
             <div class="form-group">
@@ -98,63 +98,63 @@
 </template>
 
 <script>
-import modalForm from '../mixins/modalForm'
-import AutoComplete from './AutoComplete.vue'
+import modalForm from "../mixins/modalForm";
+import AutoComplete from "./AutoComplete.vue";
 
 export default {
-  name: 'CoordinationForm',
+  name: "CoordinationForm",
   mixins: [modalForm],
   components: {
-    AutoComplete
+    AutoComplete,
   },
-  data () {
+  data() {
     return {
       teachers: [],
-      teacher: ''
-    }
+      teacher: "",
+    };
   },
   props: {
     idModal: {
       type: String,
-      default: '',
-      description: 'referencia do modal'
+      default: "",
+      description: "referencia do modal",
     },
     IdCoordination: {
       type: String,
-      default: '',
-      description: 'id da coordenação que vai ser atualizada'
+      default: "",
+      description: "id da coordenação que vai ser atualizada",
     },
     title: {
       type: String,
-      description: 'titulo do modal'
-    }
+      description: "titulo do modal",
+    },
   },
 
   methods: {
-    handleSubmit () {
-      console.log(this.registry)
-      this.handleOk('coordinations')
+    handleSubmit() {
+      console.log(this.registry);
+      this.handleOk("coordinations");
     },
-    async searchTeachers (query) {
+    async searchTeachers(query) {
       try {
         const { data } = await this.$axios.get(
-          `https://empty-coffee-cups.herokuapp.com/api/teachers/search?q=${query}`
-        )
-        this.teachers = data.data
+          `https://empty-coffee-cups.herokuapp.com/api/teachers/search?name=${query}`
+        );
+        this.teachers = data.data;
         // if (query == '') {
         //   this.teachers = []
         // }
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
-    onSelect (teacher) {
-      this.registry.idResponsible = teacher.id
+    onSelect(teacher) {
+      this.registry.idResponsible = teacher.id;
       // this.registry.id = teacher.id
       // console.log(teacher.id)
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang=""></style>
