@@ -11,22 +11,6 @@ export default {
   },
 
   methods: {
-    // Listagem de registros
-    // async get (url) {
-    //   this.urlapontada = url
-    //   this.loading = true
-    //   try {
-    //     if (this.urlFormated !== 'search?') {
-    //       url = `${url}/${this.urlFormated}`
-    //     }
-    //     console.log(url)
-    //     const { data } = await this.$axios.get(`${url}`)
-    //     this.dataBase = data.data
-    //     this.loading = false
-    //   } catch (err) {
-    //     console.log(err)
-    //   }
-    // },
     async get (url, params = null) {
       this.loading = true
       try {
@@ -37,8 +21,6 @@ export default {
         console.log(err)
       }
     },
-
-    // Apagar um registro do BD
     delete (url, id) {
       this.$bvModal
         .msgBoxConfirm('Tem certeza que deseja deletar?', {
