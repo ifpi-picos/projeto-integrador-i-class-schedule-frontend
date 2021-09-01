@@ -1,6 +1,6 @@
 <template>
   <skeleton>
-    <teacher-form idModal="modalAdd" title="Novo Professor" />
+    <teacher-form idModal="addteacher" title="Novo Professor" />
     <b-card>
       <b-card-header class="pt-0 pl-0 pr-0">
         <b-row align-h="between">
@@ -8,7 +8,7 @@
             <h3>Professores</h3>
           </b-col>
           <b-col class="text-right">
-            <b-button variant="success" v-b-modal.modalAdd>
+            <b-button variant="success" v-b-modal.addteacher>
               <i class="ni ni-fat-add"></i>
               Adcionar</b-button
             >

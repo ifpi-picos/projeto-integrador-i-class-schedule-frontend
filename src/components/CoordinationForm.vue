@@ -40,13 +40,8 @@
               Responsável
               <span class="text-red">*</span>
             </label>
+
             <b-form-select v-model="registry.idResponsible" class="mb-3">
-              <b-form-select-option
-                v-if="registry.coordinationTeacher"
-                selected
-                :value="registry.coordinationTeacher.id"
-                >{{ registry.coordinationTeacher.name }}</b-form-select-option
-              >
               <b-form-select-option
                 v-for="teacher in teachers"
                 :key="teacher.id"
@@ -83,7 +78,6 @@
         @click="handleOk('coordinations')"
       >
         Salvar
-        <!-- @click="handleOk()" -->
       </b-button>
     </template>
   </b-modal>
@@ -126,13 +120,6 @@ export default {
       this.teachers = data.data
     } catch (err) {
       console.log(err)
-    }
-  },
-  watch: {
-    registry () {
-      if (this.registry.coordinationTeacher) {
-        this.registry.idResponsible = this.registry.coordinationTeacher.id
-      }
     }
   }
 }
