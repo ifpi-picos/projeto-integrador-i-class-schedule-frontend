@@ -1,10 +1,6 @@
 <template>
   <skeleton>
-    <coordination-form
-      idModal="modalAdd"
-      title="Nova coordenação"
-      @save="saveCoordination"
-    />
+    <coordination-form idModal="addcoordination" title="Nova coordenação" />
     <b-card>
       <b-card-header class="pt-0 pl-0 pr-0">
         <b-row align-h="between">
@@ -12,7 +8,7 @@
             <h3>Coordenações</h3>
           </b-col>
           <b-col class="text-right">
-            <b-button variant="success" v-b-modal.modalAdd>
+            <b-button variant="success" v-b-modal.addcoordination>
               <i class="ni ni-fat-add"></i>
               Adicionar
             </b-button>
@@ -35,13 +31,6 @@ export default {
   components: {
     CoordinationForm,
     CoordinationList
-  },
-  methods: {
-    saveCoordination (payload) {
-      console.log('emit coordination')
-      console.log(payload)
-      this.$bvModal.hide('modalAdd')
-    }
   }
 }
 </script>
