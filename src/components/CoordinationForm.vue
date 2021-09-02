@@ -80,7 +80,7 @@
       <b-button
         :disabled="!checkFormValidity()"
         variant="success"
-        @click="handleOk('coordinations')"
+        @click="createCoordination(registry.idResponsible)"
       >
         Salvar
         <!-- @click="handleOk()" -->
@@ -115,8 +115,8 @@ export default {
 
   data () {
     return {
-      teachers: [],
-      teacher: ''
+      teachers: []
+      // teacher: ''
     }
   },
 
@@ -126,6 +126,15 @@ export default {
       this.teachers = data.data
     } catch (err) {
       console.log(err)
+    }
+  },
+  methods: {
+    createCoordination (id) {
+      this.handleOk('coordinations')
+      const teacherIndex = this.teachers.findIndex(teacher => {
+        return teacher.id === id
+      })
+      this.teachers.splice(teacherIndex, 1)
     }
   },
   watch: {
