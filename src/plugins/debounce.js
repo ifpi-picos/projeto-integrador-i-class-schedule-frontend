@@ -1,14 +1,4 @@
-// export function debounce (fn, delay) {
-//   let timeoutID = null
-//   return function () {
-//     clearTimeout(timeoutID)
-//     let args = arguments
-//     let that = this
-//     timeoutID = setTimeout(function () {
-//       fn.apply(that, args)
-//     }, delay)
-//   }
-// }
+import Vue from 'vue'
 
 const debounce = function (func, threshold, execAsap) {
   let timeout
@@ -29,4 +19,8 @@ const debounce = function (func, threshold, execAsap) {
   }
 }
 
-export { debounce }
+Vue.use({
+  install (Vue) {
+    Vue.prototype.$debounce = debounce
+  }
+})

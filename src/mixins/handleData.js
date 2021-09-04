@@ -60,10 +60,7 @@ export default {
                 console.log(data)
                 return data.id === id
               })
-              window.toast.fire({
-                icon: 'success',
-                title: 'Deletado com sucesso'
-              })
+              this.$prettyAlerts.success('Deletado com sucesso')
               this.dataBase.splice(roomIndex, 1)
             })
           }

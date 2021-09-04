@@ -6,8 +6,7 @@
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "standard --fix",
-    "dev": "npm run serve",
-    "deploy": "sh deploy.sh"
+    "dev": "vue-cli-service serve"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -52,11 +51,7 @@
       "autoprefixer": {}
     }
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 10"
-  ],
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 10"],
   "author": "Creative Tim - https://www.creative-tim.com/",
   "description": "BootstrapVue Argon Dashboard",
   "main": "index.js",

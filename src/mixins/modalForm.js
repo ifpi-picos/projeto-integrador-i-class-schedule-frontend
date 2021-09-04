@@ -44,16 +44,9 @@ export default {
           eventBus.$emit('update', data.data, 'modified')
 
           this.$refs[this.idModal].hide()
-
-          window.toast.fire({
-            icon: 'success',
-            title: data.message
-          })
+          this.$prettyAlerts.success(data.message)
         } catch ({ response: { data } }) {
-          window.toast.fire({
-            icon: 'error',
-            title: data.error.message
-          })
+          this.$prettyAlerts.error(data.error.message)
         }
       } else {
         try {
@@ -67,19 +60,10 @@ export default {
 
           this.$refs[this.idModal].hide()
 
-          // this.$swal('Sucesso', data.message, 'success')
-          window.toast.fire({
-            icon: 'success',
-            title: data.message
-          })
+          this.$prettyAlerts.success(data.message)
         } catch ({ response: { data } }) {
           this.buttonDisable = false
-
-          // this.$swal('Erro', data.data.error.message, 'error')
-          window.toast.fire({
-            icon: 'error',
-            title: data.error.message
-          })
+          this.$prettyAlerts.error(data.error.message)
         }
       }
     }

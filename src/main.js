@@ -5,11 +5,12 @@ import store from './store/'
 import router from './routes/router'
 import VueSweetalert2 from 'vue-sweetalert2'
 import { api } from './services/api'
-import { debounce } from './plugins/debounce'
 
 import { credentials } from './helpers/index'
 
 import './services/axios.js'
+import './plugins/prettyAlerts.js'
+import './plugins/debounce'
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
@@ -20,11 +21,6 @@ import 'sweetalert2/dist/sweetalert2.min.css'
 // plugin setup
 Vue.use(DashboardPlugin)
 Vue.use(VueSweetalert2)
-Vue.use({
-  install (Vue) {
-    Vue.prototype.$debounce = debounce
-  }
-})
 
 window.toast = Swal.mixin({
   toast: true,
@@ -61,7 +57,7 @@ new Vue({
 
         credentials(data)
       } catch ({ response }) {
-        localStorage.clear()
+        window.localStorage.clear()
       }
     }
     // if (token && Response.auth) {
