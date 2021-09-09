@@ -11,24 +11,50 @@
               label="Nome da coordenação"
               placeholder="Nome da coordenação"
               name="Nome da coordenação"
-              v-model="registry.username"
+              v-model="registry.name"
               required
             >
             </base-input>
           </b-col>
         </b-row>
+        <!-- <b-row>
+          <b-col lg="11">
+            <div class="form-group">
+              <AutoComplete
+                v-model="teacher"
+                :options="teachers"
+                label-key="name"
+                value-key="id"
+                placeholder="Nome do responsável"
+                @shouldSearch="searchTeachers"
+                @select="onSelect"
+                required
+              />
+            </div>
+          </b-col>
+        </b-row> -->
 
         <b-row>
           <b-col lg="11">
-            <base-input
-              type="text"
-              label="Nome do responsável"
-              placeholder="Nome do responsável"
-              name="Nome do responsável"
-              v-model="coordination.responsible"
-              required
-            >
-            </base-input>
+            <label class="form-control-label">
+              Responsável
+              <span class="text-red">*</span>
+            </label>
+            <b-form-select v-model="registry.idResponsible" class="mb-3">
+              <b-form-select-option
+                v-if="registry.coordinationTeacher"
+                selected
+                :value="registry.coordinationTeacher.id"
+                >{{ registry.coordinationTeacher.name }}</b-form-select-option
+              >
+              <b-form-select-option
+                v-for="teacher in teachers"
+                :key="teacher.id"
+                :value="teacher.id"
+              >
+                {{ teacher.name }}
+              </b-form-select-option>
+            </b-form-select>
           </b-col>
         </b-row>
 
@@ -36,10 +62,10 @@
           <b-col lg="11">
             <base-input
               type="email"
-              label="email do responsável"
-              placeholder="coordenacao.edu@gmail.com"
+              label="Email da coordenação"
+              placeholder="coordenacao@ifpi.edu.br"
               name="email"
-              v-model="coordination.email"
+              v-model="registry.email"
               required
             >
             </base-input>
@@ -48,33 +74,28 @@
       </div>
     </b-form>
     <template #modal-footer="{ hide }">
-      <!-- Emulate built in modal footer ok and cancel button actions -->
       <b-button variant="outline-danger" @click="hide('forget')">
         Cancelar
       </b-button>
       <b-button
         :disabled="!checkFormValidity()"
         variant="success"
-        @click="handleOk()"
+        @click="createCoordination(registry.idResponsible)"
       >
         Salvar
+        <!-- @click="handleOk()" -->
       </b-button>
     </template>
   </b-modal>
 </template>
 
 <script>
+import modalForm from '../mixins/modalForm'
+
 export default {
   name: 'CoordinationForm',
-  data () {
-    return {
-      coordination: {
-        username: '',
-        responsible: '',
-        email: ''
-      }
-    }
-  },
+  mixins: [modalForm],
+
   props: {
     idModal: {
       type: String,
@@ -91,14 +112,38 @@ export default {
       description: 'titulo do modal'
     }
   },
-  methods: {
 
-    handleSubmit () {
-      this.handleSubmit('coordinations')
-    },
-  
+  data () {
+    return {
+      teachers: []
+      // teacher: ''
+    }
   },
 
+  async created () {
+    try {
+      const { data } = await this.$axios.get('/teachers/available-coordinators')
+      this.teachers = data.data
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  methods: {
+    createCoordination (id) {
+      this.handleOk('coordinations')
+      const teacherIndex = this.teachers.findIndex(teacher => {
+        return teacher.id === id
+      })
+      this.teachers.splice(teacherIndex, 1)
+    }
+  },
+  watch: {
+    registry () {
+      if (this.registry.coordinationTeacher) {
+        this.registry.idResponsible = this.registry.coordinationTeacher.id
+      }
+    }
+  }
 }
 </script>
 

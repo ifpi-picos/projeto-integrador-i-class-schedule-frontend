@@ -88,6 +88,6 @@ export default {
   watch: {
     registry () {
       this.checkFormValidity()
-    },
+    }
   }
 }
