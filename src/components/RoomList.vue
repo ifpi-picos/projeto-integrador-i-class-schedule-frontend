@@ -82,7 +82,7 @@ export default {
     this.get('rooms')
 
     this.searchName = this.$debounce(query => {
-      this.get('rooms/search', query)
+      this.get('rooms', query)
     }, 1000)
   },
 
