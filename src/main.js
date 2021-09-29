@@ -38,6 +38,8 @@ window.toast = Swal.mixin({
   }
 })
 
+
+
 export const eventBus = new Vue()
 
 /* eslint-disable no-new */

@@ -1,4 +1,8 @@
 import { eventBus } from '../main'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+// If you don't need the styles, do not connect
+// import 'sweetalert2/dist/sweetalert2.min.css'
 
 export default {
   data () {
@@ -82,6 +86,22 @@ export default {
           })
         }
       }
+    },
+    cancel () {
+      Swal.fire({
+        title: 'Você têm certeza?',
+        text: 'As alterações feitas podem não ser salvas.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#2dce89',
+        cancelButtonColor: '#f5365c',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.$refs[this.idModal].hide()
+        }
+      })
     }
   },
 
