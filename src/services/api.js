@@ -41,8 +41,8 @@ axiosInstance.interceptors.response.use(
         user: { name: null, email: null }
       })
       router.push({ name: 'login' })
-      return Promise.reject(err)
     }
+    return Promise.reject(data)
   }
 )
 
