@@ -53,10 +53,10 @@ export default {
             icon: 'success',
             title: data.message
           })
-        } catch ({ response: { data } }) {
+        } catch ({message}) {
           window.toast.fire({
             icon: 'error',
-            title: data.error.message
+            title: message
           })
         }
       } else {
@@ -76,13 +76,13 @@ export default {
             icon: 'success',
             title: data.message
           })
-        } catch ({ response: { data } }) {
+        } catch ({message}) {
           this.buttonDisable = false
 
           // this.$swal('Erro', data.data.error.message, 'error')
           window.toast.fire({
             icon: 'error',
-            title: data.error.message
+            title: message
           })
         }
       }

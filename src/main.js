@@ -62,7 +62,7 @@ new Vue({
         })
 
         credentials(data)
-      } catch ({ response }) {
+      } catch {
         localStorage.clear()
       }
     }

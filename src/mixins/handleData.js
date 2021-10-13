@@ -17,8 +17,8 @@ export default {
         const { data } = await this.$axios.get(url, params)
         this.dataBase = data.data
         this.loading = false
-      } catch (err) {
-        console.log(err)
+      } catch ({message}) {
+        console.log(message)
       }
     },
     delete (url, id) {
