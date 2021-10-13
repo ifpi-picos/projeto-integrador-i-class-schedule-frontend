@@ -143,7 +143,6 @@ export default {
         this.$router.push({ name: 'dashboard' })
       } catch ({message}) {
         this.loginError = message
-        console.log(message)
       }
     }
   }
