@@ -10,7 +10,7 @@
             <b-col class="text-right">
               <router-link class="btn btn-success" :to="{ name: 'novo-curso' }">
                 <i class="ni ni-fat-add"></i>
-                Adcionar</router-link
+                Adicionar</router-link
               >
             </b-col>
           </b-row>

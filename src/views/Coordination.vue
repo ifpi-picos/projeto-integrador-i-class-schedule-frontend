@@ -38,8 +38,6 @@ export default {
   },
   methods: {
     saveCoordination (payload) {
-      console.log('emit coordination')
-      console.log(payload)
       this.$bvModal.hide('modalAdd')
     }
   }

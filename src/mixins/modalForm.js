@@ -38,20 +38,19 @@ export default {
       // Verificar si foi pego um registro para editar
       if (registry.id) {
         try {
-          const { data } = await this.$axios.put(
+          const { data, message } = await this.$axios.put(
             `/${url}/${registry.id}`,
             registry
           )
 
-          console.log('modified')
 
-          eventBus.$emit('update', data.data, 'modified')
+          eventBus.$emit('update', data, 'modified')
 
           this.$refs[this.idModal].hide()
 
           window.toast.fire({
             icon: 'success',
-            title: data.message
+            title: message
           })
         } catch ({ response: { data } }) {
           window.toast.fire({
@@ -64,22 +63,20 @@ export default {
           // adicionar um novo registro
           this.buttonDisable = true
 
-          const { data } = await this.$axios.post(`/${url}`, registry)
+          const { data, message } = await this.$axios.post(`/${url}`, registry)
           this.buttonDisable = false
 
-          eventBus.$emit('update', data.data, 'added')
+          eventBus.$emit('update', data, 'added')
 
           this.$refs[this.idModal].hide()
 
-          // this.$swal('Sucesso', data.message, 'success')
           window.toast.fire({
             icon: 'success',
-            title: data.message
+            title: message
           })
         } catch ({ response: { data } }) {
           this.buttonDisable = false
 
-          // this.$swal('Erro', data.data.error.message, 'error')
           window.toast.fire({
             icon: 'error',
             title: data.error.message

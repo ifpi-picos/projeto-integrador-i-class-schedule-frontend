@@ -15,7 +15,7 @@ export default {
       this.loading = true
       try {
         const { data } = await this.$axios.get(url, params)
-        this.dataBase = data.data
+        this.dataBase = data
         this.loading = false
       } catch (err) {
         console.log(err)
@@ -39,7 +39,6 @@ export default {
           if (value) {
             this.$axios.delete(`${url}/${id}`).then(() => {
               const roomIndex = this.dataBase.findIndex(data => {
-                console.log(data)
                 return data.id === id
               })
               window.toast.fire({
