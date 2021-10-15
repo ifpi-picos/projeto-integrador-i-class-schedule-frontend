@@ -30,7 +30,10 @@ axiosInstance.interceptors.response.use(
   err => {
     const {
       config,
-      response: { status, data }
+      response: {
+        status,
+        data: { error }
+      }
     } = err
 
     if (status === 401) {
@@ -41,7 +44,7 @@ axiosInstance.interceptors.response.use(
       })
       router.push({ name: 'login' })
     }
-    return Promise.reject(data)
+    return Promise.reject(error)
   }
 )
 

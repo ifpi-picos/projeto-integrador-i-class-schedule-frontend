@@ -124,8 +124,8 @@ export default {
     try {
       const { data } = await this.$axios.get('/teachers/available-coordinators')
       this.teachers = data
-    } catch (err) {
-      console.log(err)
+    } catch ({message}) {
+      console.log(message)
     }
   },
   methods: {
@@ -148,3 +148,5 @@ export default {
 </script>
 
 <style lang=""></style>
+
+
