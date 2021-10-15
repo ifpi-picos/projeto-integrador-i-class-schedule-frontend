@@ -76,7 +76,6 @@ export default {
         this.deactivateAll();
       }
       this.active = !wasActive;
-      console.log(this.active);
     }
   },
   mounted() {

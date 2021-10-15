@@ -10,7 +10,7 @@
           <b-col class="text-right">
             <b-button variant="success" v-b-modal.modalAdd>
               <i class="ni ni-fat-add"></i>
-              Adcionar</b-button
+              Adicionar</b-button
             >
           </b-col>
         </b-row>

@@ -38,7 +38,7 @@
           <b-col xs="12" class="text-right">
             <b-button variant="success" v-b-modal.modalAdd>
               <i class="ni ni-fat-add" w-100-sm></i>
-              Adcionar</b-button
+              Adicionar</b-button
             >
           </b-col>
         </b-row>

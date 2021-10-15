@@ -63,6 +63,7 @@
                 v-slot="{ handleSubmit }"
                 ref="formValidator"
               >
+                
                 <b-form role="form" @submit.prevent="login()">
                   <base-input
                     alternative
@@ -137,9 +138,9 @@ export default {
   methods: {
     async login () {
       try {
-        const { data } = await this.$axios.login(this.user)
+        const response = await this.$axios.login(this.user)
         
-        credentials(data)
+        credentials(response)
         this.$router.push({ name: 'dashboard' })
       } catch ({message}) {
         this.loginError = message
