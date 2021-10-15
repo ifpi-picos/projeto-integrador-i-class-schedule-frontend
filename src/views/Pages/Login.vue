@@ -86,7 +86,7 @@
                     v-model="user.password"
                   >
                   </base-input>
-
+                  <div class="text-center text-danger pb-2 login-error">{{loginError}}</div>
                   <b-form-checkbox v-model="user.rememberMe"
                     >Remember me</b-form-checkbox
                   >
@@ -130,7 +130,8 @@ export default {
         email: '',
         password: ''
         //rememberMe: false
-      }
+      },
+      loginError: ''
     }
   },
   methods: {
@@ -140,10 +141,16 @@ export default {
         
         credentials(data)
         this.$router.push({ name: 'dashboard' })
-      } catch (err) {
-        console.log(err)
+      } catch ({message}) {
+        this.loginError = message
       }
     }
   }
 }
 </script>
+
+<style scoped>
+  .login-error {
+    font-size: 12px
+  }
+</style>

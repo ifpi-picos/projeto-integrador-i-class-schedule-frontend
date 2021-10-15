@@ -1,8 +1,6 @@
 import { eventBus } from '../main'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
-// If you don't need the styles, do not connect
-// import 'sweetalert2/dist/sweetalert2.min.css'
 
 export default {
   data () {
@@ -35,7 +33,7 @@ export default {
       }
       const registry = this.registry
 
-      // Verificar si foi pego um registro para editar
+      // Verificar se foi pego um registro para editar
       if (registry.id) {
         try {
           const { data } = await this.$axios.put(
@@ -53,10 +51,10 @@ export default {
             icon: 'success',
             title: data.message
           })
-        } catch ({ response: { data } }) {
+        } catch ({message}) {
           window.toast.fire({
             icon: 'error',
-            title: data.error.message
+            title: message
           })
         }
       } else {
@@ -71,18 +69,17 @@ export default {
 
           this.$refs[this.idModal].hide()
 
-          // this.$swal('Sucesso', data.message, 'success')
+          
           window.toast.fire({
             icon: 'success',
             title: data.message
           })
-        } catch ({ response: { data } }) {
+        } catch ({message}) {
           this.buttonDisable = false
 
-          // this.$swal('Erro', data.data.error.message, 'error')
           window.toast.fire({
             icon: 'error',
-            title: data.error.message
+            title: message
           })
         }
       }
