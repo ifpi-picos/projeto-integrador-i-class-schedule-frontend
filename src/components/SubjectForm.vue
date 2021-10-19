@@ -35,7 +35,7 @@
     </b-form>
     <template #modal-footer="{ hide }">
       <!-- Emulate built in modal footer ok and cancel button actions -->
-      <b-button variant="outline-danger" @click="hide('forget')">
+      <b-button variant="outline-danger" @click="cancel">
         Cancelar
       </b-button>
       <b-button
@@ -75,7 +75,7 @@ export default {
       type: String,
       description: 'titulo do modal'
     }
-  },
+  }
 }
 </script>
 

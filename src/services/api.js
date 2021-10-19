@@ -2,7 +2,7 @@ import Axios from 'axios'
 import { credentials } from '../helpers/index'
 import router from '../routes/router'
 
-// const API_URL = process.env.API_URL || 'http://localhost:3000/api/'
+// const API_URL = 'http://localhost:3000/api/'
 const API_URL = 'https://empty-coffee-cups.herokuapp.com/api/'
 
 const axiosInstance = Axios.create({
@@ -25,16 +25,17 @@ axiosInstance.interceptors.request.use(
 )
 
 axiosInstance.interceptors.response.use(
-  response => {
-    return response
-  },
+  ({data}) => data,
+  
   err => {
     const {
       config,
-      response: { status, data }
+      response: {
+        status,
+        data: { error }
+      }
     } = err
-   
-    
+
     if (status === 401) {
       credentials({
         auth: false,
@@ -42,14 +43,14 @@ axiosInstance.interceptors.response.use(
         user: { name: null, email: null }
       })
       router.push({ name: 'login' })
-      return Promise.reject(err)
     }
+    return Promise.reject(error)
   }
 )
 
 const api = {
   get (url, params) {
-    return axiosInstance.get(url, params)
+    return axiosInstance.get(url, { params })
   },
   post (url, body) {
     return axiosInstance.post(url, body)

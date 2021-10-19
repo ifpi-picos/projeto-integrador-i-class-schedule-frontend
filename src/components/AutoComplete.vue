@@ -1,14 +1,30 @@
 <template>
   <div id="autocomplete">
-    <!-- {{ keyword }} -->
-    {{ arrowCounter }}
+    {{ keyword }}
+    {{ originalOptions }}
+    <!-- {{ arrowCounter }} -->
 
+    <!-- <base-input
+      type="text"
+      label="Nome do responsável"
+      placeholder="Nome do responsável"
+      name="Nome do responsável"
+      required
+    >
+    </base-input> -->
+
+    <label class="form-control-label">
+      Responsável
+      <span class="text-red">*</span>
+    </label>
     <div class="input-group">
       <input
         :class="{
           'form-control': true,
-          'border-radius-none': mutableOptions.length
+          'border-radius-none': mutableOptions.length,
+          'is-invalid': !keyword && digitou,
         }"
+        required
         type="text"
         ref="input"
         :value="keyword"
@@ -21,7 +37,7 @@
         <div
           :class="{
             'input-group-text bg-transparent': true,
-            'border-radius-none': mutableOptions.length
+            'border-radius-none': mutableOptions.length,
           }"
         >
           <i @click="onClear()" class="fa fa-times"></i>
@@ -37,8 +53,8 @@
           :key="opt[valueKey]"
           :ref="`option_${index}`"
           :class="{
-            'bg-success': arrowCounter === index,
-            'autocomplete-item': true
+            'bg-li': arrowCounter === index,
+            'autocomplete-item': true,
           }"
           tabindex="0"
           @click="onSelect()"
@@ -57,89 +73,90 @@
 
 <script>
 export default {
-  name: 'AutoComplete',
+  name: "AutoComplete",
   props: {
     value: {
       type: String,
-      default: ''
+      default: "",
     },
 
     placeholder: {
       type: String,
-      default: ''
+      default: "",
     },
 
     options: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
 
     labelKey: {
       type: String,
-      default: 'label'
+      default: "label",
     },
 
     valueKey: {
       type: String,
-      default: 'id'
+      default: "id",
     },
 
     searchMinLength: {
       type: Number,
-      default: 3
-    }
+      default: 3,
+    },
   },
-  data () {
+  data() {
     return {
-      keyword: '',
+      keyword: "",
       arrowCounter: 0,
       originalOptions: [],
-      mutableOptions: []
-    }
+      mutableOptions: [],
+      digitou: false,
+    };
   },
-  created () {
-    this.keyword = this.value
+  created() {
+    this.keyword = this.value;
 
     if (this.options.length) {
-      this.cloneOptions()
+      this.cloneOptions();
     }
   },
   watch: {
-    value (value) {
-      this.keyword = value
+    value(value) {
+      this.keyword = value;
+      this.digitou = true;
     },
-    options () {
-      this.cloneOptions()
-    }
+    options() {
+      this.cloneOptions();
+    },
   },
   methods: {
-    onInput (value) {
-      this.keyword = value
-      this.emitInput()
+    onInput(value) {
+      this.keyword = value;
+      this.emitInput();
       if (value.length >= this.searchMinLength) {
         if (!this.originalOptions.length) {
-          this.$emit(`shouldSearch`, value)
+          this.$emit(`shouldSearch`, value);
         } else {
-          this.searchInternally()
+          this.searchInternally();
         }
       } else {
-        this.resetOptions()
+        this.resetOptions();
       }
     },
 
-    searchInternally () {
-      const search = this.keyword
-      this.mutableOptions = this.originalOptions.filter(o => {
-        // console.log(o[this.labelKey].toLowerCase())
-        return o[this.labelKey].toLowerCase().search(search.toLowerCase()) >= 0
-      })
-      this.highlightOptions()
+    searchInternally() {
+      const search = this.keyword;
+      this.mutableOptions = this.originalOptions.filter((o) => {
+        return o[this.labelKey].toLowerCase().search(search.toLowerCase()) >= 0;
+      });
+      this.highlightOptions();
     },
-    highlightOptions () {
-      const search = this.keyword
-      const query = new RegExp(search, 'i')
+    highlightOptions() {
+      const search = this.keyword;
+      const query = new RegExp(search, "i");
 
-      this.mutableOptions.forEach(o => {
+      this.mutableOptions.forEach((o) => {
         this.$set(
           o,
           `${this.labelKey}_highlighted`,
@@ -147,111 +164,110 @@ export default {
             query,
             '<span class="font-weight-bold">$&</span>'
           )
-        )
-      })
+        );
+      });
     },
-    cloneOptions () {
-      this.originalOptions = JSON.parse(JSON.stringify(this.options)) //perder relação original do vuejs
-      this.mutableOptions = JSON.parse(JSON.stringify(this.options))
-      this.searchInternally()
+    cloneOptions() {
+      this.originalOptions = JSON.parse(JSON.stringify(this.options)); //perder relação original do vuejs
+      this.mutableOptions = JSON.parse(JSON.stringify(this.options));
+      this.searchInternally();
     },
-    resetOptions () {
-      this.originalOptions = []
-      this.mutableOptions = []
+    resetOptions() {
+      this.originalOptions = [];
+      this.mutableOptions = [];
     },
-    onKeydown (evt) {
+    onKeydown(evt) {
       if (!this.mutableOptions.length) {
-        return
+        return;
       }
       switch (evt.code) {
-        case 'ArrowDown':
-          evt.preventDefault()
-          this.onArrowDown()
-          break
-        case 'ArrowUp':
-          evt.preventDefault()
-          this.onArrowUp()
-          break
-        case 'Enter':
-          evt.preventDefault()
-          this.onSelect()
-          break
-        case 'Escape':
+        case "ArrowDown":
+          evt.preventDefault();
+          this.onArrowDown();
+          break;
+        case "ArrowUp":
+          evt.preventDefault();
+          this.onArrowUp();
+          break;
+        case "Enter":
+          evt.preventDefault();
+          this.onSelect();
+          break;
+        case "Escape":
           // evt.preventDefault()
-          this.onEsc()
-          break
+          this.onEsc();
+          break;
       }
     },
-    onEsc () {
-      this.$refs.input.blur()
-      this.resetArrowCounter()
+    onEsc() {
+      this.$refs.input.blur();
+      this.resetArrowCounter();
 
-      this.resetOptions()
+      this.resetOptions();
     },
-    onArrowDown () {
+    onArrowDown() {
       if (this.arrowCounter < this.mutableOptions.length - 1) {
-        this.arrowCounter += 1
+        this.arrowCounter += 1;
       }
-      this.fixScrolling()
+      this.fixScrolling();
     },
-    onArrowUp () {
+    onArrowUp() {
       if (this.arrowCounter > 0) {
-        this.arrowCounter -= 1
+        this.arrowCounter -= 1;
       }
-      this.fixScrolling()
+      this.fixScrolling();
     },
-    onBlur (evt) {
-      const tgt = evt.relatedTarget
-      if (tgt && tgt.classList.contains('autocomplete-item')) {
-        return
+    onBlur(evt) {
+      const tgt = evt.relatedTarget;
+      if (tgt && tgt.classList.contains("autocomplete-item")) {
+        return;
       }
-      this.resetOptions()
-      this.resetArrowCounter()
+      this.resetOptions();
+      this.resetArrowCounter();
     },
-    setArrowCounter (number) {
-      this.arrowCounter = number
+    setArrowCounter(number) {
+      this.arrowCounter = number;
     },
-    fixScrolling () {
+    fixScrolling() {
       this.$refs[`option_${this.arrowCounter}`][0].scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'start'
-      })
+        behavior: "smooth",
+        block: "nearest",
+        inline: "start",
+      });
     },
-    resetArrowCounter () {
-      this.arrowCounter = 0
+    resetArrowCounter() {
+      this.arrowCounter = 0;
     },
-    onSelect () {
-      const selected = this.mutableOptions[this.arrowCounter]
-      // console.log(selected)
+    onSelect() {
+      const selected = this.mutableOptions[this.arrowCounter];
       const selectedOption = this.options.find(
-        o => o[this.valueKey] == selected[this.valueKey]
-      )
+        (o) => o[this.valueKey] == selected[this.valueKey]
+      );
 
       if (selectedOption) {
-        this.$emit('select', selectedOption)
-        this.keyword = selectedOption[this.labelKey]
-        this.emitInput()
-        this.resetOptions()
-        this.resetArrowCounter()
+        this.$emit("select", selectedOption);
+        this.keyword = selectedOption[this.labelKey];
+        this.emitInput();
+        this.resetOptions();
+        this.resetArrowCounter();
       }
     },
-    emitInput () {
-      this.$emit('input', this.keyword)
+    emitInput() {
+      this.$emit("input", this.keyword);
     },
-    resetKeyword () {
-      this.keyword = ''
-      this.emitInput()
+    resetKeyword() {
+      this.keyword = "";
+      this.emitInput();
     },
-    onClear () {
+    onClear() {
       // this.$emit('select', null)
-      this.$emit('select', '')
-      this.resetKeyword()
-      this.resetOptions()
-      this.resetArrowCounter()
-    }
-  }
-}
+      this.$emit("select", "");
+      this.resetKeyword();
+      this.resetOptions();
+      this.resetArrowCounter();
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -285,11 +301,25 @@ export default {
   background: #f4f4f4;
 }
 .options::-webkit-scrollbar-thumb {
-  background: #dad7d7;
+  background: #2dce89;
+}
+
+.options ul {
+  margin: 0;
+  padding: 0;
 }
 
 .options ul li {
   list-style: none;
-  list-style-position: outside;
+  display: inline-block;
+  width: 100%;
+  /* list-style-position: outside; */
+  margin: 0;
+  padding: 0;
+  padding: 5px 10px;
+}
+
+.bg-li {
+  background: #41f1a5;
 }
 </style>

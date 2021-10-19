@@ -63,6 +63,7 @@
                 v-slot="{ handleSubmit }"
                 ref="formValidator"
               >
+                
                 <b-form role="form" @submit.prevent="login()">
                   <base-input
                     alternative
@@ -86,7 +87,7 @@
                     v-model="user.password"
                   >
                   </base-input>
-
+                  <div class="text-center text-danger pb-2 login-error">{{loginError}}</div>
                   <b-form-checkbox v-model="user.rememberMe"
                     >Remember me</b-form-checkbox
                   >
@@ -130,20 +131,27 @@ export default {
         email: '',
         password: ''
         //rememberMe: false
-      }
+      },
+      loginError: ''
     }
   },
   methods: {
     async login () {
       try {
-        const { data } = await this.$axios.login(this.user)
+        const response = await this.$axios.login(this.user)
         
-        credentials(data)
+        credentials(response)
         this.$router.push({ name: 'dashboard' })
-      } catch (err) {
-        console.log(err)
+      } catch ({message}) {
+        this.loginError = message
       }
     }
   }
 }
 </script>
+
+<style scoped>
+  .login-error {
+    font-size: 12px
+  }
+</style>

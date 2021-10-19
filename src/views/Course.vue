@@ -177,12 +177,10 @@ export default {
   methods: {
     checkFormValidity () {
       const valid = this.$refs.form && this.$refs.form.checkValidity()
-      console.log(valid)
       return valid
     },
 
     addDiscipline (index) {
-      console.log(index)
       this.course.modules[index].disciplines.push({
         name: '',
         workload: null
@@ -190,7 +188,6 @@ export default {
     },
 
     removeDiscipline (index) {
-      console.log(index)
       this.course.modules[index].disciplines.pop()
     },
 

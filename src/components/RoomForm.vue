@@ -20,7 +20,7 @@
       </div>
     </b-form>
     <template #modal-footer="{ hide }">
-      <b-button variant="outline-danger" @click="hide('forget')">
+      <b-button variant="outline-danger" @click="cancel">
         Cancelar
       </b-button>
       <b-button

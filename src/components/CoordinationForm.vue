@@ -17,62 +17,56 @@
             </base-input>
           </b-col>
         </b-row>
-
-        <b-row>
-          <b-col lg="11">
-            <!-- {{ teacher }} <br />
-            {{ registry.idResponsible }} <br /> -->
-            <AutoComplete
-              v-model="teacher"
-              :options="teachers"
-              label-key="name"
-              value-key="id"
-              placeholder="Search"
-              @shouldSearch="searchTeachers"
-              @select="onSelect"
-            />
-          </b-col>
-        </b-row>
-
         <!-- <b-row>
           <b-col lg="11">
-            <b-form-select v-model="registry.idResponsible" class="mb-3">
-              <b-form-select-option
-                v-for="teacher in teachers"
-                :key="teacher.id"
-                :value="teacher.id"
-                >{{ teacher.name }}</b-form-select-option
-              >
-            </b-form-select>
-            <div class="mt-3">
-              Selected: <strong>{{ registry.idResponsible }}</strong>
+            <div class="form-group">
+              <AutoComplete
+                v-model="teacher"
+                :options="teachers"
+                label-key="name"
+                value-key="id"
+                placeholder="Nome do responsável"
+                @shouldSearch="searchTeachers"
+                @select="onSelect"
+                required
+              />
             </div>
           </b-col>
         </b-row> -->
 
-        <!--<b-row>
+        <b-row>
           <b-col lg="11">
-            <base-input
-              type="text"
-              label="Nome do responsável"
-              placeholder="Nome do responsável"
-              name="Nome do responsável"
-              v-model="registry.idResponsible"
-              required
-            >
-            </base-input>
+            <label class="form-control-label">
+              Responsável
+              <span class="text-red">*</span>
+            </label>
+            <b-form-select v-model="registry.idResponsible" class="mb-3">
+              <b-form-select-option
+                v-if="registry.coordinationTeacher"
+                selected
+                :value="registry.coordinationTeacher.id"
+                >{{ registry.coordinationTeacher.name }}</b-form-select-option
+              >
+              <b-form-select-option
+                v-for="teacher in teachers"
+                :key="teacher.id"
+                :value="teacher.id"
+              >
+                {{ teacher.name }}
+              </b-form-select-option>
+            </b-form-select>
           </b-col>
         </b-row>
-        -->
 
         <b-row>
           <b-col lg="11">
             <base-input
               type="email"
-              label="email do responsável"
-              placeholder="coordenacao.edu@gmail.com"
+              label="Email da coordenação"
+              placeholder="coordenacao@ifpi.edu.br"
               name="email"
               v-model="registry.email"
+              required
             >
             </base-input>
           </b-col>
@@ -80,16 +74,16 @@
       </div>
     </b-form>
     <template #modal-footer="{ hide }">
-      <!-- Emulate built in modal footer ok and cancel button actions -->
-      <b-button variant="outline-danger" @click="hide('forget')">
+      <b-button variant="outline-danger" @click="cancel">
         Cancelar
       </b-button>
       <b-button
         :disabled="!checkFormValidity()"
         variant="success"
-        @click="handleSubmit()"
+        @click="createCoordination(registry.idResponsible)"
       >
         Salvar
+        <!-- @click="handleOk()" -->
       </b-button>
     </template>
   </b-modal>
@@ -97,20 +91,11 @@
 
 <script>
 import modalForm from '../mixins/modalForm'
-import AutoComplete from './AutoComplete.vue'
 
 export default {
   name: 'CoordinationForm',
   mixins: [modalForm],
-  components: {
-    AutoComplete
-  },
-  data () {
-    return {
-      teachers: [],
-      teacher: ''
-    }
-  },
+
   props: {
     idModal: {
       type: String,
@@ -128,31 +113,40 @@ export default {
     }
   },
 
+  data () {
+    return {
+      teachers: []
+      // teacher: ''
+    }
+  },
+
+  async created () {
+    try {
+      const { data } = await this.$axios.get('/teachers/available-coordinators')
+      this.teachers = data
+    } catch ({message}) {
+      console.log(message)
+    }
+  },
   methods: {
-    handleSubmit () {
-      console.log(this.registry)
+    createCoordination (id) {
       this.handleOk('coordinations')
-    },
-    async searchTeachers (query) {
-      try {
-        const { data } = await this.$axios.get(
-          `https://empty-coffee-cups.herokuapp.com/api/teachers/search?q=${query}`
-        )
-        this.teachers = data.data
-        // if (query == '') {
-        //   this.teachers = []
-        // }
-      } catch (err) {
-        console.log(err)
+      const teacherIndex = this.teachers.findIndex(teacher => {
+        return teacher.id === id
+      })
+      this.teachers.splice(teacherIndex, 1)
+    }
+  },
+  watch: {
+    registry () {
+      if (this.registry.coordinationTeacher) {
+        this.registry.idResponsible = this.registry.coordinationTeacher.id
       }
-    },
-    onSelect (teacher) {
-      this.registry.idResponsible = teacher.id
-      // this.registry.id = teacher.id
-      // console.log(teacher.id)
     }
   }
 }
 </script>
 
 <style lang=""></style>
+
+

@@ -10,8 +10,8 @@
     "deploy": "sh deploy.sh"
   },
   "dependencies": {
-    "bootstrap": "4.6.0",
     "axios": "^0.21.1",
+    "bootstrap": "4.6.0",
     "bootstrap-vue": "^2.21.2",
     "chart.js": "^2.9.4",
     "d3": "^5.16.0",
