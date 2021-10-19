@@ -48,21 +48,21 @@ new Vue({
   render: h => h(App),
   router,
   store,
-  // beforeCreate: () => autenticate()
+  
   beforeCreate: async () => {
     const token = window.localStorage.getItem('token')
     const user = JSON.parse(window.localStorage.getItem('user'))
 
     if (user) {
       try {
-        const { data } = await api.verifyToken({
+        const response = await api.verifyToken({
           email: user.email,
           name: user.name,
           token
         })
 
-        credentials(data)
-      } catch {
+        credentials(response)
+      } catch ({ response }) {
         localStorage.clear()
       }
     }

@@ -13,12 +13,12 @@ const autenticate = async () => {
 
   if (user) {
     try {
-      const { data } = await api.verifyToken({
+      Response = await api.verifyToken({
         email: user.email,
         name: user.name,
         token
       })
-      Response = data
+      
     } catch (e) {
       console.log(e)
       Response = e

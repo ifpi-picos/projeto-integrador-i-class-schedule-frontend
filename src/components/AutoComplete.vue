@@ -148,7 +148,6 @@ export default {
     searchInternally() {
       const search = this.keyword;
       this.mutableOptions = this.originalOptions.filter((o) => {
-        // console.log(o[this.labelKey].toLowerCase())
         return o[this.labelKey].toLowerCase().search(search.toLowerCase()) >= 0;
       });
       this.highlightOptions();
@@ -241,7 +240,6 @@ export default {
     },
     onSelect() {
       const selected = this.mutableOptions[this.arrowCounter];
-      // console.log(selected)
       const selectedOption = this.options.find(
         (o) => o[this.valueKey] == selected[this.valueKey]
       );

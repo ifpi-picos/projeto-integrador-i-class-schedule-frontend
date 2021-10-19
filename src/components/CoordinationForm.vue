@@ -123,7 +123,7 @@ export default {
   async created () {
     try {
       const { data } = await this.$axios.get('/teachers/available-coordinators')
-      this.teachers = data.data
+      this.teachers = data
     } catch ({message}) {
       console.log(message)
     }
