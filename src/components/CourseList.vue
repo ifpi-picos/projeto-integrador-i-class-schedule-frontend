@@ -51,13 +51,13 @@ export default {
           sortable: true,
         },
         {
-          key: "modules",
+          key: "modules.length",
           label: "Módulos",
           tdClass: "font-weight-600 name text-sm ",
           sortable: true,
         },
         {
-          key: "coordinationCourse",
+          key: "coordinationCourse.name",
           label: "Coordenador",
           tdClass: "font-weight-600 name text-sm ",
           sortable: true,
