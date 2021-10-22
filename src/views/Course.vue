@@ -12,7 +12,7 @@
       <b-card-body>
         <b-form ref="form">
           <b-row>
-            <b-col lg="12">
+            <b-col lg="6">
               <base-input
                 type="text"
                 label="Nome do curso"
@@ -21,6 +21,18 @@
                 name="Nome do curso"
                 required
               >
+              </base-input>
+            </b-col>
+            <b-col lg="6">
+              <base-input label="Coordenação">
+                <b-form-select
+                  class="form-control"
+                  v-model="course.idCoordination"
+                  :options="coordinations"
+                  value-field="id"
+                  text-field="name"
+                >
+                </b-form-select>
               </base-input>
             </b-col>
           </b-row>
@@ -133,15 +145,18 @@
             </button>
           </b-row>
         </div>
-        <p>testes {{ checkForm() }}</p>
-        <b-button
-          block
-          @click="saveAll()"
-          :disabled="!checkForm()"
-          variant="primary"
-        >
-          Salvar
-        </b-button>
+        <b-row align-h="center" class="pt-5 pb-3 text-center">
+          <b-col xs="12" sm="4" lg="6">
+            <b-button
+              block
+              @click="saveAll()"
+              :disabled="!checkForm()"
+              variant="primary"
+            >
+              Salvar
+            </b-button>
+          </b-col>
+        </b-row>
       </b-card-body>
     </b-card>
   </skeleton>
@@ -150,7 +165,7 @@
 <script>
 export default {
   name: 'Course',
-  data() {
+  data () {
     return {
       course: {
         name: '',
@@ -161,76 +176,105 @@ export default {
             subjects: [
               {
                 name: '',
-                workload: null,
-              },
-            ],
-          },
+                workload: null
+              }
+            ]
+          }
         ],
-        workload: null,
+        workload: null
       },
       modulesCount: null,
       levels: [
         { value: 1, text: 'Superior' },
-        { value: 2, text: 'Técnico' },
+        { value: 2, text: 'Técnico' }
       ],
+      coordinations: []
     }
   },
+
+  created () {
+    this.getCoordinations()
+  },
+
   computed: {
-    disabledAddModules() {
+    disabledAddModules () {
       const modules = this.course.modules
       if (modules.length < Number(this.modulesCount)) {
         return true
       }
       return false
-    },
+    }
   },
   methods: {
-    checkForm() {
+    checkForm () {
       const valid =
         this.$refs.formSubjects &&
         this.$refs.formSubjects.checkValidity() &&
         this.checkFormValidity()
       return !!valid
     },
-    checkFormValidity() {
+    checkFormValidity () {
       const valid = this.$refs.form && this.$refs.form.checkValidity()
       return valid
     },
 
-    addDiscipline(index) {
+    addDiscipline (index) {
       this.course.modules[index].subjects.push({
         name: '',
-        workload: null,
+        workload: null
       })
     },
 
-    removeDiscipline(index) {
+    removeDiscipline (index) {
       if (this.course.modules[index].subjects.length > 1) {
         this.course.modules[index].subjects.pop()
       }
     },
 
-    addModule() {
+    addModule () {
       const moduleNumber = this.course.modules.length + 1
       this.course.modules.push({
         title: `Módulo ${moduleNumber}`,
         subjects: [
           {
             name: '',
-            workload: null,
-          },
-        ],
+            workload: null
+          }
+        ]
       })
     },
 
-    saveAll() {
+    async getCoordinations () {
       try {
-        this.$axios.post('/areas', this.course)
+        const { data } = await this.$axios.get('/coordinations')
+        console.log(data)
+        this.coordinations = data
       } catch ({ message }) {
         console.log(message)
       }
     },
-  },
+
+    async saveAll () {
+      try {
+        const { data, message } = await this.$axios.post(
+          '/courses',
+          this.course
+        )
+
+        window.toast.fire({
+          icon: 'success',
+          title: message
+        })
+
+        this.$router.push({ name: 'cursos' })
+      } catch ({ message }) {
+        window.toast.fire({
+          icon: 'error',
+          title: message
+        })
+      }
+    }
+  }
 }
 </script>
 
