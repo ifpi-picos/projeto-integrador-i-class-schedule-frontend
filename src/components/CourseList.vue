@@ -13,6 +13,7 @@
       :items="courses"
       :fields="fields"
     >
+      <template #cell(workload)="{ item }"> {{ item.workload }}h </template>
       <template v-slot:cell(actions)="data">
         <div class="d-flex justify-content-center">
           <b-button
@@ -35,78 +36,78 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       fields: [
         {
-          key: "name",
-          label: "Curso",
-          tdClass: "font-weight-600 name text-sm ",
-          sortable: true,
+          key: 'name',
+          label: 'Curso',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
         },
         {
-          key: "workload",
-          label: "carga Horária",
-          tdClass: "font-weight-600 name text-sm ",
-          sortable: true,
+          key: 'workload',
+          label: 'carga Horária',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
         },
         {
-          key: "modules",
-          label: "Módulos",
-          tdClass: "font-weight-600 name text-sm ",
-          sortable: true,
+          key: 'modules.length',
+          label: 'Módulos',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
         },
         {
-          key: "coordinationCourse",
-          label: "Coordenador",
-          tdClass: "font-weight-600 name text-sm ",
-          sortable: true,
+          key: 'coordinationCourse.name',
+          label: 'Coordenador',
+          tdClass: 'font-weight-600 name text-sm ',
+          sortable: true
         },
         {
-          key: "actions",
-          label: "Ações",
-          thClass: "text-center",
-        },
+          key: 'actions',
+          label: 'Ações',
+          thClass: 'text-center'
+        }
       ],
-      courses: [],
-    };
+      courses: []
+    }
   },
 
   methods: {
-    async getCourse() {
-      const { data } = await this.$axios.get("/courses");
-      this.courses = data;
+    async getCourse () {
+      const { data } = await this.$axios.get('/courses')
+      this.courses = data
     },
 
-    editCourse({ id }) {
-      this.$router.push({ path: "/cursos", query: { curso: id } });
+    editCourse ({ id }) {
+      this.$router.push({ path: '/cursos', query: { curso: id } })
     },
 
-    async delCourse(id) {
+    async delCourse (id) {
       try {
-        const { message } = await this.$axios.delete(`/courses/${id}`);
-        const index = this.courses.findIndex((value) => {
-          return value.id === id;
-        });
-        this.courses.splice(index, 1);
+        const { message } = await this.$axios.delete(`/courses/${id}`)
+        const index = this.courses.findIndex(value => {
+          return value.id === id
+        })
+        this.courses.splice(index, 1)
 
         window.toast.fire({
-          icon: "success",
-          title: message,
-        });
+          icon: 'success',
+          title: message
+        })
       } catch ({ message }) {
         window.toast.fire({
-          icon: "error",
-          title: message,
-        });
+          icon: 'error',
+          title: message
+        })
       }
-    },
+    }
   },
 
-  created() {
-    this.getCourse();
-  },
-};
+  created () {
+    this.getCourse()
+  }
+}
 </script>
 
 <style lang=""></style>
