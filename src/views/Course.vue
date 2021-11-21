@@ -152,7 +152,7 @@
             <b-button
               block
               @click="saveAll()"
-              :disabled="!checkForm()"
+              :disabled="!checkForm"
               variant="primary"
             >
               Salvar
@@ -199,13 +199,6 @@ export default {
   },
 
   methods: {
-    checkForm () {
-      const valid =
-        this.$refs.formSubjects &&
-        this.$refs.formSubjects.checkValidity() &&
-        this.checkFormValidity()
-      return !!valid
-    },
     checkFormValidity () {
       const valid = this.$refs.form && this.$refs.form.checkValidity()
       return valid
@@ -240,7 +233,6 @@ export default {
     async getCoordinations () {
       try {
         const { data } = await this.$axios.get('/coordinations')
-        console.log(data)
         this.coordinations = data
       } catch ({ message }) {
         console.log(message)
@@ -276,6 +268,13 @@ export default {
         return true
       }
       return false
+    },
+    checkForm () {
+      const valid =
+        this.$refs.formSubjects &&
+        this.$refs.formSubjects.checkValidity() &&
+        this.checkFormValidity()
+      return !!valid
     }
   }
 }
