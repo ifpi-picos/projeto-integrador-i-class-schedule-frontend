@@ -122,12 +122,14 @@
                   <b-row>
                     <b-col class="text-right" lg="8">
                       <button
+                        type="button"
                         @click="removeDiscipline(i)"
                         class="btn btn-outline-danger btn-sm rounded "
                       >
                         <i class="fa fa-minus "></i>
                       </button>
                       <button
+                        type="button"
                         @click="addDiscipline(i)"
                         class="btn btn-success btn-sm rounded "
                       >
@@ -196,15 +198,6 @@ export default {
     this.getCoordinations()
   },
 
-  computed: {
-    disabledAddModules () {
-      const modules = this.course.modules
-      if (modules.length < Number(this.modulesCount)) {
-        return true
-      }
-      return false
-    }
-  },
   methods: {
     checkForm () {
       const valid =
@@ -273,6 +266,16 @@ export default {
           title: message
         })
       }
+    }
+  },
+
+  computed: {
+    disabledAddModules () {
+      const modules = this.course.modules
+      if (modules.length < Number(this.modulesCount)) {
+        return true
+      }
+      return false
     }
   }
 }
