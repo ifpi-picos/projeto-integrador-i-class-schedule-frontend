@@ -29,25 +29,25 @@ import { messages } from 'vee-validate/dist/locale/pt_BR.json'
 locale.use(lang)
 
 Object.keys(rules).forEach(rule => {
-  extend(rule, {
-    ...rules[rule], // copies rule configuration
-    message: messages[rule] // assign message
-  })
+	extend(rule, {
+		...rules[rule], // copies rule configuration
+		message: messages[rule] // assign message
+	})
 })
 export default {
-  install (Vue) {
-    Vue.use(GlobalComponents)
-    Vue.use(GlobalDirectives)
-    Vue.use(SideBar)
-    Vue.use(Notifications)
-    Vue.use(BootstrapVue)
-    Vue.use(IconsPlugin)
-    configure({
-      classes: {
-        valid: 'is-valid',
-        invalid: 'is-invalid',
-        dirty: ['is-dirty', 'is-dirty'] // multiple classes per flag!
-      }
-    })
-  }
+	install(Vue) {
+		Vue.use(GlobalComponents)
+		Vue.use(GlobalDirectives)
+		Vue.use(SideBar)
+		Vue.use(Notifications)
+		Vue.use(BootstrapVue)
+		Vue.use(IconsPlugin)
+		configure({
+			classes: {
+				valid: 'is-valid',
+				invalid: 'is-invalid',
+				dirty: ['is-dirty', 'is-dirty'] // multiple classes per flag!
+			}
+		})
+	}
 }

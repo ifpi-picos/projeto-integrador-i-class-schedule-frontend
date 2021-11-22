@@ -1,41 +1,41 @@
 <template>
-  <div>
-    <b-table :items="items" :fields="fields" striped responsive="sm">
-      <template #cell(Segunda)>
-        <b-form-checkbox v-model="status" value="1"> </b-form-checkbox>
-      </template>
-
-      <template #cell(Terça)>
-        <b-form-checkbox v-model="status" value="2"> </b-form-checkbox>
-      </template>
-
-      <template #cell(Quarta)>
-        <b-form-checkbox v-model="status" value="3"> </b-form-checkbox>
-      </template>
-
-      <template #cell(Quinta)>
-        <b-form-checkbox v-model="status" value="4"> </b-form-checkbox>
-      </template>
-
-      <template #cell(Sexta)>
-        <b-form-checkbox v-model="status" value="5"> </b-form-checkbox>
-      </template>
-    </b-table>
     <div>
-      <!-- State: <strong>{{ status }}</strong> -->
+        <b-table :items="items" :fields="fields" striped responsive="sm">
+            <template #cell(Segunda)>
+                <b-form-checkbox v-model="status" value="1"> </b-form-checkbox>
+            </template>
+
+            <template #cell(Terça)>
+                <b-form-checkbox v-model="status" value="2"> </b-form-checkbox>
+            </template>
+
+            <template #cell(Quarta)>
+                <b-form-checkbox v-model="status" value="3"> </b-form-checkbox>
+            </template>
+
+            <template #cell(Quinta)>
+                <b-form-checkbox v-model="status" value="4"> </b-form-checkbox>
+            </template>
+
+            <template #cell(Sexta)>
+                <b-form-checkbox v-model="status" value="5"> </b-form-checkbox>
+            </template>
+        </b-table>
+        <div>
+            <!-- State: <strong>{{ status }}</strong> -->
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      status: [],
-      fields: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'],
-      items: [{}]
-    }
-  }
+	data () {
+		return {
+			status: [],
+			fields: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'],
+			items: [{}]
+		}
+	}
 }
 </script>
 <!--template>
