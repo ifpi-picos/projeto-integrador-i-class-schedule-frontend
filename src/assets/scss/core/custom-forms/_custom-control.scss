@@ -6,7 +6,8 @@
 .custom-control-label {
     // Background-color and (when enabled) gradient
     &::before {
-        border: $custom-control-indicator-border-width solid $custom-control-indicator-border-color;
+        border: $custom-control-indicator-border-width solid
+            $custom-control-indicator-border-color;
         @if $enable-transitions {
             transition: $input-transition;
         }
@@ -21,7 +22,6 @@
 .custom-control-label {
     margin-bottom: 0;
 }
-
 
 // Alternative style
 
@@ -43,8 +43,8 @@
             }
         }
 
-        &:active~.custom-control-label::before,
-        &:focus~.custom-control-label::before {
+        &:active ~ .custom-control-label::before,
+        &:focus ~ .custom-control-label::before {
             box-shadow: $input-alternative-box-shadow;
         }
     }

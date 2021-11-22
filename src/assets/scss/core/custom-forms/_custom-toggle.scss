@@ -12,8 +12,9 @@
         display: none;
 
         &:checked {
-             + .custom-toggle-slider {
-                border: $custom-control-indicator-border-width solid $custom-control-indicator-checked-border-color;
+            + .custom-toggle-slider {
+                border: $custom-control-indicator-border-width solid
+                    $custom-control-indicator-checked-border-color;
 
                 &:before {
                     background: $custom-toggle-checked-bg;
@@ -24,15 +25,20 @@
 
         &:disabled {
             + .custom-toggle-slider {
-                border: $custom-control-indicator-border-width solid $custom-control-indicator-disabled-bg;
+                border: $custom-control-indicator-border-width solid
+                    $custom-control-indicator-disabled-bg;
             }
 
             &:checked {
                 + .custom-toggle-slider {
-                    border: $custom-control-indicator-border-width solid $custom-control-indicator-disabled-bg;
+                    border: $custom-control-indicator-border-width solid
+                        $custom-control-indicator-disabled-bg;
 
                     &:before {
-                        background-color: lighten($custom-control-indicator-checked-bg, 10%);
+                        background-color: lighten(
+                            $custom-control-indicator-checked-bg,
+                            10%
+                        );
                     }
                 }
             }
@@ -51,10 +57,9 @@
     border-radius: 34px !important;
     background-color: transparent;
 
-
     &:before {
         position: absolute;
-        content: "";
+        content: '';
         height: 18px;
         width: 18px;
         left: 2px;

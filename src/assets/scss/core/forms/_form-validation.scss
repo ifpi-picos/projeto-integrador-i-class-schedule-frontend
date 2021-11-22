@@ -8,7 +8,7 @@
 .has-danger {
     position: relative;
 
-    &:after, {
+    &:after {
         width: 19px;
         height: 19px;
         line-height: 19px;
@@ -27,18 +27,17 @@
 
 .has-success {
     &:after {
-        content: "\ea26";
+        content: '\ea26';
         color: daken($form-feedback-valid-color, 18%);
         background-color: $form-feedback-valid-bg;
     }
-    
+
     .form-control {
         background-color: $input-focus-bg;
 
         &:focus {
             border-color: $input-focus-border-color;
         }
-
 
         // Placeholder
 
@@ -50,7 +49,7 @@
 
 .has-danger {
     &:after {
-        content: "\ea53";
+        content: '\ea53';
         color: daken($form-feedback-invalid-color, 18%);
         background-color: $form-feedback-invalid-bg;
     }
