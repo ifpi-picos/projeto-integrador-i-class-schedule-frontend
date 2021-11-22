@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import SubjectList from '../components/SubjectList'
-import SubjectForm from '../components/SubjectForm'
+import SubjectList from '@/components/SubjectList'
+import SubjectForm from '@/components/SubjectForm'
 
 export default {
   name: 'Subjects',

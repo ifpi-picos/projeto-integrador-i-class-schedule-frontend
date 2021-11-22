@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import AvailabilityForm from '../components/AvailabilityForm.vue'
+import AvailabilityForm from '@/components/AvailabilityForm.vue'
 export default {
   components: { AvailabilityForm },
   name: 'Rooms'

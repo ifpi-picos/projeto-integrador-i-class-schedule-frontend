@@ -24,14 +24,14 @@ const routes = [
         name: 'professores',
         meta: { name: 'professores' },
         component: () =>
-          import(/* webpackChunkName: "Professores" */ '../views/Teachers.vue')
+          import(/* webpackChunkName: "Professores" */ '../views/Pages/Teachers.vue')
       },
       {
         path: '/cursos',
         name: 'cursos',
         meta: { name: 'cursos' },
         component: () =>
-          import(/* webpackChunkName: "Cursos" */ '../views/Courses.vue')
+          import(/* webpackChunkName: "Cursos" */ '../views/Pages/Courses.vue')
       },
       {
         path: '/curso',
@@ -39,7 +39,7 @@ const routes = [
         meta: { name: 'novo curso' },
         component: () =>
           import(
-            /* webpackChunkName: "novo-curso" */ '../views/Course.vue'
+            /* webpackChunkName: "novo-curso" */ '../views/Pages/Course.vue'
           ),
         children: [
           {
@@ -48,7 +48,7 @@ const routes = [
             meta: { name: 'editar curso' },
             component: () =>
               import(
-                /* webpackChunkName: "editar-curso" */ '../views/Course.vue'
+                /* webpackChunkName: "editar-curso" */ '../views/Pages/Course.vue'
               )
           }
         ]
@@ -58,28 +58,28 @@ const routes = [
         name: 'turmas',
         meta: { name: 'turmas' },
         component: () =>
-          import(/* webpackChunkName: "Turmas" */ '../views/Class.vue')
+          import(/* webpackChunkName: "Turmas" */ '../views/Pages/Class.vue')
       },
       {
         path: '/areas',
         name: 'areas',
         meta: { name: 'Áreas' },
         component: () =>
-          import(/* webpackChunkName: "Turmas" */ '../views/Areas.vue')
+          import(/* webpackChunkName: "Turmas" */ '../views/Pages/Areas.vue')
       },
       {
         path: '/salas',
         name: 'salas',
         meta: { name: 'salas' },
         component: () =>
-          import(/* webpackChunkName: "Salas" */ '../views/Rooms.vue')
+          import(/* webpackChunkName: "Salas" */ '../views/Pages/Rooms.vue')
       },
       {
         path: '/disciplinas',
         name: 'disciplinas',
         meta: { name: 'disciplinas' },
         component: () =>
-          import(/* webpackChunkName: "Disciplinas" */ '../views/Subjects.vue')
+          import(/* webpackChunkName: "Disciplinas" */ '../views/Pages/Subjects.vue')
       },
       {
         path: '/coordenacoes',
@@ -87,7 +87,7 @@ const routes = [
         meta: { name: 'coordenações' },
         component: () =>
           import(
-            /* webpackChunkName: "Coordenacoes" */ '../views/Coordination.vue'
+            /* webpackChunkName: "Coordenacoes" */ '../views/Pages/Coordination.vue'
           )
       },
       {
@@ -95,7 +95,7 @@ const routes = [
         name: 'turnos',
         meta: { name: 'turnos' },
         component: () =>
-          import(/* webpackChunkName: "Coordenacoes" */ '../views/Schedule.vue')
+          import(/* webpackChunkName: "Coordenacoes" */ '../views/Pages/Schedule.vue')
       },
       {
         path: '/icons',
@@ -121,7 +121,7 @@ const routes = [
         path: '/disp',
         name: 'disp',
         component: () =>
-          import(/* webpackChunkName: "disp" */ '../views/dispo.vue')
+          import(/* webpackChunkName: "disp" */ '../views/Pages/dispo.vue')
       },
       {
         path: '/tables',

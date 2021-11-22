@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import ScheduleList from '../components/ScheduleList'
-import ScheduleForm from '../components/ScheduleForm'
+import ScheduleList from '@/components/ScheduleList'
+import ScheduleForm from '@/components/ScheduleForm'
 
 export default {
   name: 'Schedules',

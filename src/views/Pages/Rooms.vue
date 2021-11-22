@@ -51,8 +51,8 @@
 </template>
 
 <script>
-import RoomForm from '../components/RoomForm.vue'
-import RoomList from '../components/RoomList.vue'
+import RoomForm from '@/components/RoomForm.vue'
+import RoomList from '@/components/RoomList.vue'
 
 export default {
   name: 'Rooms',
