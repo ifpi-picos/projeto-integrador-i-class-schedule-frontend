@@ -3,7 +3,7 @@
 		<base-header
 			class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success"
 		></base-header>
-		<ClassForm idModal="addclass" />
+		<ClassForm idModal="addclass" title="Nova Turma" />
 		<b-container fluid class="mt--7">
 			<b-card>
 				<b-card-header class="pt-0 pl-0 pr-0">
@@ -19,7 +19,9 @@
 						</b-col>
 					</b-row>
 				</b-card-header>
-				<b-card-body class="p-0"> <class-list /> </b-card-body>
+				<b-card-body class="p-0">
+					<ClassList />
+				</b-card-body>
 			</b-card>
 		</b-container>
 	</div>
@@ -34,7 +36,7 @@ export default {
 		ClassForm,
 		ClassList
 	},
-	data() {
+	data () {
 		return {}
 	}
 }
