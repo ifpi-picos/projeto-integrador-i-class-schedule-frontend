@@ -96,7 +96,7 @@ export default {
 	},
 
 	watch: {
-		$route (to, from) {
+		$route (to) {
 			const query = to.query ? to.query : null
 			this.searchName(query)
 		}
