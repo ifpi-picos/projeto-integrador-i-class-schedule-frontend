@@ -1,44 +1,61 @@
 <template>
-	<div>
-		<b-table
-			sort-by="nome"
-			sort-icon-left
-			show-empty
-			head-variant="light"
-			hover
-			responsive
-			table-class="border-bottom"
-			thead-tr-class="text-center"
-			tbody-tr-class="text-center"
-			:items="courses"
-			:fields="fields"
-		>
-			<template #cell(workload)="{ item }">
-				{{ item.workload }}h
-			</template>
-			<template v-slot:cell(actions)="data">
-				<div class="d-flex justify-content-center">
-					<b-button
-						@click="editCourse(data.item)"
-						variant="outline-dark"
-						size="sm"
-						><i class="fas fa-pen"></i
-					></b-button>
-					<b-button
-						@click="delCourse(data.item.id)"
-						variant="outline-danger"
-						size="sm"
-						><i class="fas fa-trash"></i
-					></b-button>
-				</div>
-			</template>
-		</b-table>
-	</div>
+	<section>
+		<div v-if="loading" class="d-flex justify-content-center mt-3 mb-3">
+			<b-spinner
+				style="width: 3rem; height: 3rem"
+				variant="success"
+				label="Spinning"
+			></b-spinner>
+		</div>
+
+		<div v-else>
+			<b-table
+				sort-by="nome"
+				sort-icon-left
+				show-empty
+				head-variant="light"
+				hover
+				responsive
+				table-class="border-bottom"
+				thead-tr-class="text-center"
+				tbody-tr-class="text-center"
+				:items="dataBase"
+				:fields="fields"
+			>
+				<template #cell(workload)="{ item }">
+					{{ item.workload }}h
+				</template>
+				<template v-slot:cell(actions)="{ item }">
+					<div class="d-flex justify-content-center">
+						<b-button
+							@click="editCourse(item)"
+							variant="outline-dark"
+							size="sm"
+							><i class="fas fa-pen"></i
+						></b-button>
+						<b-button
+							@click="delCourse(item.id)"
+							variant="outline-danger"
+							size="sm"
+							><i class="fas fa-trash"></i
+						></b-button>
+					</div>
+				</template>
+				<template #empty>
+					<h4>Sem dados</h4>
+				</template>
+			</b-table>
+		</div>
+	</section>
 </template>
 
 <script>
+import handleData from '@/mixins/handleData.js'
+
 export default {
-	data() {
+	mixins: [handleData],
+
+	data () {
 		return {
 			fields: [
 				{
@@ -76,38 +93,17 @@ export default {
 	},
 
 	methods: {
-		async getCourse() {
-			const { data } = await this.$axios.get('/courses')
-			this.courses = data
-		},
-
-		editCourse({ id }) {
+		editCourse ({ id }) {
 			this.$router.push({ path: '/cursos', query: { curso: id } })
 		},
 
-		async delCourse(id) {
-			try {
-				const { message } = await this.$axios.delete(`/courses/${id}`)
-				const index = this.courses.findIndex(value => {
-					return value.id === id
-				})
-				this.courses.splice(index, 1)
-
-				window.toast.fire({
-					icon: 'success',
-					title: message
-				})
-			} catch ({ message }) {
-				window.toast.fire({
-					icon: 'error',
-					title: message
-				})
-			}
+		async delCourse (id) {
+			this.delete('/courses', id)
 		}
 	},
 
-	created() {
-		this.getCourse()
+	created () {
+		this.get('/courses')
 	}
 }
 </script>
