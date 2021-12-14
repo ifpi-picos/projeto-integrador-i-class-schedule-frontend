@@ -1,16 +1,16 @@
 <template>
-    <button
-        type="button"
-        class="navbar-toggler"
-        data-toggle="collapse"
-        @click="handleClick"
-        :data-target="`#${target}`"
-        :aria-controls="target"
-        :aria-expanded="expanded"
-        aria-label="Toggle navigation"
-    >
-        <span></span> <span></span>
-    </button>
+	<button
+		type="button"
+		class="navbar-toggler"
+		data-toggle="collapse"
+		@click="handleClick"
+		:data-target="`#${target}`"
+		:aria-controls="target"
+		:aria-expanded="expanded"
+		aria-label="Toggle navigation"
+	>
+		<span></span> <span></span>
+	</button>
 </template>
 <script>
 export default {
@@ -26,7 +26,7 @@ export default {
 		}
 	},
 	methods: {
-		handleClick (evt) {
+		handleClick(evt) {
 			this.$emit('click', evt)
 		}
 	}

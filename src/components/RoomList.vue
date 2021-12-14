@@ -1,51 +1,51 @@
 <template>
-    <div>
-        <div v-if="loading" class="d-flex justify-content-center mt-3 mb-3">
-            <b-spinner
-                style="width: 3rem; height: 3rem"
-                variant="success"
-                label="Spinning"
-            ></b-spinner>
-        </div>
-        <div v-else>
-            <b-table
-                head-variant="light"
-                hover
-                responsive
-                table-class="border-bottom"
-                thead-tr-class="text-center"
-                tbody-tr-class="text-center"
-                :items="dataBase"
-                :fields="fields"
-                sort-by="nome"
-                sort-icon-left
-                show-empty
-            >
-                <template v-slot:cell(actions)="data">
-                    <div class="d-flex justify-content-center">
-                        <b-button
-                            @click="editRoom(data.item)"
-                            variant="outline-dark"
-                            size="sm"
-                            ><i class="fas fa-pen"></i
-                        ></b-button>
+	<div>
+		<div v-if="loading" class="d-flex justify-content-center mt-3 mb-3">
+			<b-spinner
+				style="width: 3rem; height: 3rem"
+				variant="success"
+				label="Spinning"
+			></b-spinner>
+		</div>
+		<div v-else>
+			<b-table
+				head-variant="light"
+				hover
+				responsive
+				table-class="border-bottom"
+				thead-tr-class="text-center"
+				tbody-tr-class="text-center"
+				:items="dataBase"
+				:fields="fields"
+				sort-by="nome"
+				sort-icon-left
+				show-empty
+			>
+				<template v-slot:cell(actions)="data">
+					<div class="d-flex justify-content-center">
+						<b-button
+							@click="editRoom(data.item)"
+							variant="outline-dark"
+							size="sm"
+							><i class="fas fa-pen"></i
+						></b-button>
 
-                        <b-button
-                            @click="delRoom(data.item.id, $event.target)"
-                            variant="outline-danger"
-                            size="sm"
-                            ><i class="fas fa-trash"></i
-                        ></b-button>
-                    </div>
-                </template>
-                <template #empty>
-                    <h4>Sem dados</h4>
-                </template>
-            </b-table>
-        </div>
+						<b-button
+							@click="delRoom(data.item.id, $event.target)"
+							variant="outline-danger"
+							size="sm"
+							><i class="fas fa-trash"></i
+						></b-button>
+					</div>
+				</template>
+				<template #empty>
+					<h4>Sem dados</h4>
+				</template>
+			</b-table>
+		</div>
 
-        <room-form idModal="modalEdit" title="Atualizar Sala" />
-    </div>
+		<room-form idModal="modalEdit" title="Atualizar Sala" />
+	</div>
 </template>
 
 <script>
@@ -96,7 +96,7 @@ export default {
 	},
 
 	watch: {
-		$route (to, from) {
+		$route (to) {
 			const query = to.query ? to.query : null
 			this.searchName(query)
 		}
