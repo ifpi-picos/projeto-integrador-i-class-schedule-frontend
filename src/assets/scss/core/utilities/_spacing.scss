@@ -2,22 +2,22 @@
 // Spacing
 //
 
-.row.row-grid > [class*="col-"] + [class*="col-"] {
+.row.row-grid > [class*='col-'] + [class*='col-'] {
     margin-top: 3rem;
 }
 
 @include media-breakpoint-up(lg) {
-    .row.row-grid > [class*="col-lg-"] + [class*="col-lg-"] {
+    .row.row-grid > [class*='col-lg-'] + [class*='col-lg-'] {
         margin-top: 0;
     }
 }
 @include media-breakpoint-up(md) {
-    .row.row-grid > [class*="col-md-"] + [class*="col-md-"] {
+    .row.row-grid > [class*='col-md-'] + [class*='col-md-'] {
         margin-top: 0;
     }
 }
 @include media-breakpoint-up(sm) {
-    .row.row-grid > [class*="col-sm-"] + [class*="col-sm-"] {
+    .row.row-grid > [class*='col-sm-'] + [class*='col-sm-'] {
         margin-top: 0;
     }
 }
@@ -26,17 +26,14 @@
     margin-top: 3rem;
 }
 
-
 // Negative margins and paddings
 
-@media(min-width: 992px) {
-    [class*="mt--"],
-    [class*="mr--"],
-    [class*="mb--"],
-    [class*="ml--"] {
-        
+@media (min-width: 992px) {
+    [class*='mt--'],
+    [class*='mr--'],
+    [class*='mb--'],
+    [class*='ml--'] {
     }
-
 
     // Large negative margins in pixels
 
@@ -71,7 +68,6 @@
         margin-bottom: -300px !important;
     }
 
-
     // Large margins in pixels
 
     .pt-100 {
@@ -99,9 +95,9 @@
         padding-bottom: 250px !important;
     }
     .pt-300 {
-        padding-top: 300px!important;
+        padding-top: 300px !important;
     }
     .pb-300 {
-        padding-bottom: 300px!important;
+        padding-bottom: 300px !important;
     }
 }

@@ -21,54 +21,48 @@ import 'sweetalert2/dist/sweetalert2.min.css'
 Vue.use(DashboardPlugin)
 Vue.use(VueSweetalert2)
 Vue.use({
-  install (Vue) {
-    Vue.prototype.$debounce = debounce
-  }
+	install(Vue) {
+		Vue.prototype.$debounce = debounce
+	}
 })
 
 window.toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: toast => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
+	toast: true,
+	position: 'top-end',
+	showConfirmButton: false,
+	timer: 3000,
+	timerProgressBar: true,
+	didOpen: toast => {
+		toast.addEventListener('mouseenter', Swal.stopTimer)
+		toast.addEventListener('mouseleave', Swal.resumeTimer)
+	}
 })
-
-
 
 export const eventBus = new Vue()
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  render: h => h(App),
-  router,
-  store,
-  
-  beforeCreate: async () => {
-    const token = window.localStorage.getItem('token')
-    const user = JSON.parse(window.localStorage.getItem('user'))
+	el: '#app',
+	render: h => h(App),
+	router,
+	store,
 
-    if (user) {
-      try {
-        const response = await api.verifyToken({
-          email: user.email,
-          name: user.name,
-          token
-        })
+	beforeCreate: async () => {
+		const token = window.localStorage.getItem('token')
+		const user = JSON.parse(window.localStorage.getItem('user'))
 
-        credentials(response)
-      } catch ({ response }) {
-        localStorage.clear()
-      }
-    }
-    // if (token && Response.auth) {
-    //   credentials(Response)
-    //   router.push({ name: 'dashboard' })
-    // }
-  }
+		if (user) {
+			try {
+				const response = await api.verifyToken({
+					email: user.email,
+					name: user.name,
+					token
+				})
+
+				credentials(response)
+			} catch ({ response }) {
+				localStorage.clear()
+			}
+		}
+	}
 })

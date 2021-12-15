@@ -1,138 +1,180 @@
 <template>
-  <b-modal size="lg" centered :id="idModal" :ref="idModal" :title="title">
-    <b-form ref="form" @submit.stop.prevent="handleSubmit">
-      <h6 class="heading-small text-muted mb-4">Cadastro das turmas</h6>
+	<b-modal size="lg" centered :id="idModal" :ref="idModal" :title="title">
+		<b-form ref="form" @submit.stop.prevent="handleSubmit">
+			<h6 class="heading-small text-muted mb-4">Cadastro das turmas</h6>
 
-      <div class="pl-lg-4">
-        <b-row>
-          <b-col lg="7">
-            <base-input
-              type="text"
-              label="Nome da turma"
-              placeholder="INFO III"
-              v-model="schoolClass.name"
-              name="Nome da turma"
-              required
-            >
-            </base-input>
-          </b-col>
+			<div class="px-lg-4">
+				<b-row>
+					<b-col lg="7">
+						<base-input
+							type="text"
+							label="Nome da turma"
+							placeholder="INFO III"
+							v-model="registry.name"
+							name="Nome da turma"
+							required
+						>
+						</base-input>
+					</b-col>
 
-          <b-col lg="4">
-            <base-input label="Turno" required>
-              <b-form-select
-                class="form-control"
-                required
-                v-model="schoolClass.shift"
-                :options="schedules"
-              ></b-form-select>
-            </base-input>
-          </b-col>
-        </b-row>
+					<b-col lg="5">
+						<base-input label="Turno" required>
+							<b-form-select
+								class="form-control"
+								required
+								v-model="registry.idShift"
+								:options="shifts"
+								value-field="id"
+								text-field="name"
+							></b-form-select>
+						</base-input>
+					</b-col>
+				</b-row>
 
-        <b-row>
-          <b-col lg="6">
-            <base-input label="Curso" name="Curso" required>
-              <b-form-select
-                class="form-control"
-                required
-                v-model="schoolClass.course"
-                :options="courses"
-              ></b-form-select>
-            </base-input>
-          </b-col>
+				<b-row>
+					<b-col lg="6">
+						<base-input label="Curso" name="Curso" required>
+							<b-form-select
+								class="form-control"
+								required
+								v-model="registry.idCourse"
+								:options="courses"
+								value-field="id"
+								text-field="name"
+							></b-form-select>
+						</base-input>
+					</b-col>
 
-          <b-col lg="5">
-            <base-input
-              type="number"
-              label="Módulo"
-              placeholder="3"
-              v-model="schoolClass.module"
-              name="modulo"
-              required
-            >
-            </base-input>
-          </b-col>
-        </b-row>
+					<b-col lg="6">
+						<base-input
+							type="number"
+							label="Módulo"
+							placeholder="3"
+							v-model="registry.modulo"
+							name="modulo"
+							required
+						>
+						</base-input>
+					</b-col>
+				</b-row>
 
-        <b-row>
-          <b-col lg="6">
-            <base-input label="Sala" required>
-              <b-form-select
-                class="form-control"
-                required
-                v-model="schoolClass.location"
-                :options="locations"
-              ></b-form-select>
-            </base-input>
-          </b-col>
-        </b-row>
-      </div>
-    </b-form>
+				<b-row>
+					<b-col lg="6">
+						<base-input label="Sala" required>
+							<b-form-select
+								class="form-control"
+								required
+								v-model="registry.idRoom"
+								:options="rooms"
+								value-field="id"
+								text-field="name"
+							></b-form-select>
+						</base-input>
+					</b-col>
+					<b-col lg="6">
+						<base-input
+							type="text"
+							label="Periodo Letivo"
+							placeholder="2021.2"
+							v-model="registry.schoolPeriod"
+							name="Periodo"
+							required
+						>
+						</base-input>
+					</b-col>
+				</b-row>
+			</div>
+		</b-form>
 
-    <template #modal-footer="{ hide }">
-      <b-button variant="outline-danger" @click="cancel">
-        Cancelar
-      </b-button>
-      <b-button
-        :disabled="!checkFormValidity()"
-        variant="success"
-        @click="handleOk()"
-      >
-        Salvar
-      </b-button>
-    </template>
-  </b-modal>
+		<template #modal-footer>
+			<b-button variant="outline-danger" @click="cancel">
+				Cancelar
+			</b-button>
+			<b-button
+				:disabled="!checkFormValidity()"
+				variant="success"
+				@click="handleOk('classes')"
+			>
+				Salvar
+			</b-button>
+		</template>
+	</b-modal>
 </template>
 
 <script>
+import modalForm from '@/mixins/modalForm'
+
 export default {
-  name: 'ClassForm',
-  data () {
-    return {
-      schoolClass: {
-        name: null,
-        shift: null,
-        course: null,
-        module: null,
-        location: null
-        //houer: null
-      },
-      schedules: [
-        { value: null, text: 'Por favor escolha uma opção' },
-        { value: 'id-manha', text: 'Manha' },
-        { value: 'id-tarde', text: 'Tarde' },
-        { value: 'id-noite', text: 'Noite' }
-      ],
-      locations: [
-        { value: null, text: 'Por favor escolha uma opção' },
-        { value: 'id-a1', text: 'A1' },
-        { value: 'id-a2', text: 'A2' },
-        { value: 'id-a3', text: 'A3' }
-      ],
-      courses: [
-        { value: null, text: 'Por favor escolha uma opção' },
-        { value: 'id-ads', text: 'ADS' },
-        { value: 'id-adm', text: 'ADM' },
-        { value: 'id-fis', text: 'FIS' }
-      ]
-    }
-  },
-  props: {
-    idModal: {
-      type: String,
-      default: '',
-      description: 'referencia do modal'
-    },
-    idClass: {
-      type: String,
-      default: '',
-      description: 'id da turma que vai ser atualizado'
-    },
-    title: {
-      type: String,
-      description: 'titulo do modal'
-    }
-  }
+	name: 'classForm',
+
+	mixins: [modalForm],
+
+	props: {
+		idModal: {
+			type: String,
+			default: '',
+			description: 'referencia do modal'
+		},
+		idClass: {
+			type: String,
+			default: '',
+			description: 'id da turma que vai ser atualizado'
+		},
+		title: {
+			type: String,
+			description: 'titulo do modal'
+		}
+	},
+
+	data () {
+		return {
+			shifts: [],
+			rooms: [],
+			courses: []
+		}
+	},
+
+	created () {
+		this.getCourses()
+		this.getRooms()
+		this.getShifts()
+	},
+
+	methods: {
+		async getCourses () {
+			try {
+				const { data } = await this.$axios.get('/courses')
+				this.courses = data
+			} catch ({ message }) {
+				window.toast.fire({
+					icon: 'error',
+					title: message
+				})
+			}
+		},
+		async getRooms () {
+			try {
+				const { data } = await this.$axios.get('/rooms')
+				this.rooms = data
+			} catch ({ message }) {
+				window.toast.fire({
+					icon: 'error',
+					title: message
+				})
+			}
+		},
+		async getShifts () {
+			try {
+				const { data } = await this.$axios.get('/shifts')
+				this.shifts = data
+			} catch ({ message }) {
+				window.toast.fire({
+					icon: 'error',
+					title: message
+				})
+			}
+		}
+	}
 }
 </script>
 
