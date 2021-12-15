@@ -4,8 +4,6 @@ export default {
 	data() {
 		return {
 			dataBase: null,
-			produtosPorPagina: 50,
-			produtosTotal: 0,
 			loading: true
 		}
 	},

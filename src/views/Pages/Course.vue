@@ -45,6 +45,8 @@
 									required
 									v-model="course.idLevel"
 									:options="levels"
+									value-field="id"
+									text-field="name"
 								>
 								</b-form-select>
 							</base-input>
@@ -76,7 +78,7 @@
 					</b-row>
 				</b-form>
 
-				<div v-if="checkFormValidity()">
+				<div v-show="checkFormValidity()">
 					<h3 class="pt-3 pb-4">Disciplinas</h3>
 					<b-form ref="formSubjects">
 						<div
@@ -156,7 +158,7 @@
 						<b-button
 							block
 							@click="saveAll()"
-							:disabled="!checkForm"
+							:disabled="!allFieldsFilled"
 							variant="primary"
 						>
 							Salvar
@@ -171,7 +173,7 @@
 <script>
 export default {
 	name: 'coursePage',
-	data() {
+	data () {
 		return {
 			course: {
 				name: '',
@@ -190,38 +192,37 @@ export default {
 				workload: null
 			},
 			modulesCount: null,
-			levels: [
-				{ value: 1, text: 'Superior' },
-				{ value: 2, text: 'Técnico' }
-			],
-			coordinations: []
+			levels: [],
+			coordinations: [],
+			allFieldsFilled: false
 		}
 	},
 
-	created() {
+	created () {
 		this.getCoordinations()
+		this.getLeves()
 	},
 
 	methods: {
-		checkFormValidity() {
+		checkFormValidity () {
 			const valid = this.$refs.form && this.$refs.form.checkValidity()
 			return valid
 		},
 
-		addDiscipline(index) {
+		addDiscipline (index) {
 			this.course.modules[index].subjects.push({
 				name: '',
 				workload: null
 			})
 		},
 
-		removeDiscipline(index) {
+		removeDiscipline (index) {
 			if (this.course.modules[index].subjects.length > 1) {
 				this.course.modules[index].subjects.pop()
 			}
 		},
 
-		addModule() {
+		addModule () {
 			const moduleNumber = this.course.modules.length + 1
 			this.course.modules.push({
 				title: `Módulo ${moduleNumber}`,
@@ -234,7 +235,7 @@ export default {
 			})
 		},
 
-		async getCoordinations() {
+		async getCoordinations () {
 			try {
 				const { data } = await this.$axios.get('/coordinations')
 				this.coordinations = data
@@ -243,7 +244,16 @@ export default {
 			}
 		},
 
-		async saveAll() {
+		async getLeves () {
+			try {
+				const { data } = await this.$axios.get('/levels')
+				this.levels = data
+			} catch ({ message }) {
+				console.log(message)
+			}
+		},
+
+		async saveAll () {
 			try {
 				const { message } = await this.$axios.post(
 					'/courses',
@@ -266,19 +276,25 @@ export default {
 	},
 
 	computed: {
-		disabledAddModules() {
+		disabledAddModules () {
 			const modules = this.course.modules
 			if (modules.length < Number(this.modulesCount)) {
 				return true
 			}
+
 			return false
-		},
-		checkForm() {
-			const valid =
-				this.$refs.formSubjects &&
-				this.$refs.formSubjects.checkValidity() &&
-				this.checkFormValidity()
-			return !!valid
+		}
+	},
+
+	watch: {
+		course: {
+			handler: function () {
+				this.allFieldsFilled =
+					this.$refs.formSubjects &&
+					this.$refs.formSubjects.checkValidity() &&
+					this.checkFormValidity()
+			},
+			deep: true
 		}
 	}
 }

@@ -99,23 +99,6 @@ export default {
 
 		async delCourse (id) {
 			this.delete('/courses', id)
-			// try {
-			// 	const { message } = await this.$axios.delete(`/courses/${id}`)
-			// 	const index = this.courses.findIndex(value => {
-			// 		return value.id === id
-			// 	})
-			// 	this.courses.splice(index, 1)
-
-			// 	window.toast.fire({
-			// 		icon: 'success',
-			// 		title: message
-			// 	})
-			// } catch ({ message }) {
-			// 	window.toast.fire({
-			// 		icon: 'error',
-			// 		title: message
-			// 	})
-			// }
 		}
 	},
 

@@ -70,7 +70,7 @@
                 </b-row>
             </div>
         </b-form>
-        <template #modal-footer="{ hide }">
+        <template #modal-footer>
             <!-- Emulate built in modal footer ok and cancel button actions -->
             <b-button variant="outline-danger" @click="cancel">
                 Cancelar
