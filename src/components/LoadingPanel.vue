@@ -1,5 +1,5 @@
 <template>
-  <b-row v-loading="true" id="loading"></b-row>
+    <b-row v-loading="true" id="loading"></b-row>
 </template>
 
 <script>
@@ -12,16 +12,16 @@ export default {}
 
 <style scoped>
 #loading {
-  min-height: 200px;
-  display: flex;
-  align-items: center;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
 }
 
 .el-loading-spinner .path {
-  stroke: #66615b !important;
+    stroke: #66615b !important;
 }
 
 .el-loading-mask {
-  background: transparent !important;
+    background: transparent !important;
 }
 </style>
