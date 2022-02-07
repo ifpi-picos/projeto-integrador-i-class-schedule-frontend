@@ -5,7 +5,6 @@ export default {
 	data() {
 		return {
 			registry: {
-				name: ''
 			},
 			buttonDisable: false
 		}
