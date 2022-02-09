@@ -6,7 +6,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 export default {
 	data() {
 		return {
-			registry: {},
+			registry: {
+			},
 			buttonDisable: false
 		}
 	},
@@ -93,17 +94,29 @@ export default {
 			}
 		},
 		cancel() {
-			Swal.fire({
-				title: 'Você têm certeza?',
-				text: 'As alterações feitas podem não ser salvas.',
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#2dce89',
-				cancelButtonColor: '#f5365c',
-				confirmButtonText: 'Confirmar',
-				cancelButtonText: 'Cancelar'
-			}).then(result => {
-				if (result.isConfirmed) {
+			const registryArray = Object.keys(this.registry)
+
+			if (!registryArray.length) {
+				this.$refs[this.idModal].hide()
+			}
+
+			registryArray.forEach(key => {
+				if (this.registry[key]) {
+					Swal.fire({
+						title: 'Você têm certeza?',
+						text: 'As alterações feitas podem não ser salvas.',
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#2dce89',
+						cancelButtonColor: '#f5365c',
+						confirmButtonText: 'Confirmar',
+						cancelButtonText: 'Cancelar'
+					}).then(result => {
+						if (result.isConfirmed) {
+							this.$refs[this.idModal].hide()
+						}
+					})
+				} else {
 					this.$refs[this.idModal].hide()
 				}
 			})

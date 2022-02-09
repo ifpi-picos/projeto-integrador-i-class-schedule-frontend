@@ -14,7 +14,7 @@
                             placeholder="Nome da coordenação"
                             name="Nome da coordenação"
                             v-model="registry.name"
-                            :state="nameState"
+                            
                             required
                         >
                         </base-input>
