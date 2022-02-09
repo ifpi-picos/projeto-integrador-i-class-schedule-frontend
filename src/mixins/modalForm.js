@@ -1,6 +1,8 @@
 import { eventBus } from '../main'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
+
+
 export default {
 	data() {
 		return {
@@ -18,6 +20,13 @@ export default {
 			}
 		})
 	},
+
+	// computed: {
+	// 	nameState() {
+	// 	  this.value.length == 0 ? true : false
+	// 	  return console.log('campos vazios')
+	// 	}
+	// },
 
 	methods: {
 		// Validar formulário

@@ -55,7 +55,7 @@
                                 v-model="registry.idModule"
 								:options="modules"
                                 value-field="id"
-                                text-field="title"
+                                text-field="id"
 								
                             ></b-form-select>
                         </base-input>
@@ -151,7 +151,7 @@ export default {
             try {
                 const {data } = await this.$axios.get(`/courses`)
                 this.courses = data
-				
+				console.log(this.courses)
             } catch ({ message }) {
                 window.toast.fire({
                     icon: 'error',
