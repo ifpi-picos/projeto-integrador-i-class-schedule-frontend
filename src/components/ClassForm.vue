@@ -54,7 +54,7 @@
 								v-model="registry.idModule"
 								:options="modules"
 								value-field="id"
-								text-field="title"
+								text-field="number"
 							></b-form-select>
 						</base-input>
 					</b-col>

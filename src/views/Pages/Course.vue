@@ -88,7 +88,7 @@
 						>
 							<div class="container">
 								<b-row class="pt-3 pb-3 bb-2">
-									<b-col> {{ module.title }} </b-col>
+									<b-col> Módulo {{ module.number }} </b-col>
 								</b-row>
 								<b-card class="mb-2">
 									<b-row
@@ -180,7 +180,7 @@ export default {
 				idLevel: '',
 				modules: [
 					{
-						title: 'Módulo 1',
+						number: 1,
 						subjects: [
 							{
 								name: '',
@@ -225,7 +225,7 @@ export default {
 		addModule () {
 			const moduleNumber = this.course.modules.length + 1
 			this.course.modules.push({
-				title: `Módulo ${moduleNumber}`,
+				number: moduleNumber,
 				subjects: [
 					{
 						name: '',

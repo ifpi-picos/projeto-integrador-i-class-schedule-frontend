@@ -65,7 +65,8 @@
                 </b-row>
             </div>
         </b-form>
-        <template #modal-footer v-if="this.voidField">
+        <template #modal-footer>
+        <!-- <template #modal-footer v-if="this.voidField"> -->
             <b-button variant="outline-danger" @click="cancel">
                 Cancelar
             </b-button>
@@ -108,7 +109,7 @@ export default {
     data() {
         return {
             teachers: [],
-            voidFields: true
+            // voidFields: true
         }
     },
 
@@ -123,11 +124,11 @@ export default {
         }
     },
     computed: {
-        nameState() {
-			this.voidFields = false
-            // value.length == 0 ? true : false
-            return console.log('campos vazios')
-        }
+        // nameState() {
+		// 	this.voidFields = false
+        //     // value.length == 0 ? true : false
+        //     return console.log('campos vazios')
+        // }
     },
     methods: {
         createCoordination(id) {
