@@ -1,13 +1,10 @@
 import { eventBus } from '../main'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
-
-
 export default {
 	data() {
 		return {
-			registry: {
-			},
+			registry: {},
 			buttonDisable: false
 		}
 	},

@@ -223,9 +223,9 @@ export default {
 		},
 
 		addModule () {
-			const moduleNumber = this.course.modules.length + 1
+			const number = this.course.modules.length + 1
 			this.course.modules.push({
-				number: moduleNumber,
+				number,
 				subjects: [
 					{
 						name: '',

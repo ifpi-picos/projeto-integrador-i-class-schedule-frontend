@@ -133,7 +133,7 @@ export default {
 			shifts: [],
 			rooms: [],
 			courses: [],
-			modules: [],
+			modules: []
 		}
 	},
 
@@ -148,7 +148,7 @@ export default {
 			try {
 				const { data } = await this.$axios.get('/courses')
 				this.courses = data
-                console.log(this.courses)
+				console.log(this.courses)
 			} catch ({ message }) {
 				window.toast.fire({
 					icon: 'error',
