@@ -19,7 +19,7 @@
 						</base-input>
 					</b-col>
 				</b-row>
-				
+
 				<b-row>
 					<b-col lg="11">
 						<label class="form-control-label">
@@ -65,6 +65,7 @@
 			</div>
 		</b-form>
 		<template #modal-footer>
+			<!-- <template #modal-footer v-if="this.voidField"> -->
 			<b-button variant="outline-danger" @click="cancel">
 				Cancelar
 			</b-button>
@@ -104,13 +105,14 @@ export default {
 		}
 	},
 
-	data() {
+	data () {
 		return {
 			teachers: []
+			// voidFields: true
 		}
 	},
 
-	async created() {
+	async created () {
 		try {
 			const { data } = await this.$axios.get(
 				'/teachers/available-coordinators'
@@ -120,8 +122,15 @@ export default {
 			console.log(message)
 		}
 	},
+	computed: {
+		// nameState() {
+		// 	this.voidFields = false
+		//     // value.length == 0 ? true : false
+		//     return console.log('campos vazios')
+		// }
+	},
 	methods: {
-		createCoordination(id) {
+		createCoordination (id) {
 			this.handleOk('coordinations')
 			const teacherIndex = this.teachers.findIndex(teacher => {
 				return teacher.id === id
@@ -130,7 +139,7 @@ export default {
 		}
 	},
 	watch: {
-		registry() {
+		registry () {
 			if (this.registry.coordinationTeacher) {
 				this.registry.idResponsible = this.registry.coordinationTeacher.id
 			}
