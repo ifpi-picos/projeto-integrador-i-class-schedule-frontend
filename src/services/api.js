@@ -2,7 +2,6 @@ import Axios from 'axios'
 import { credentials } from '../helpers/index'
 import router from '../routes/router'
 
-// const API_URL = 'http://localhost:3000/api/'
 const API_URL = 'https://empty-coffee-cups.herokuapp.com/api/'
 
 const axiosInstance = Axios.create({

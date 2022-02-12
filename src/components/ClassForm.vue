@@ -38,6 +38,7 @@
 								class="form-control"
 								required
 								v-model="registry.idCourse"
+								@change="getModules($event)"
 								:options="courses"
 								value-field="id"
 								text-field="name"
@@ -46,14 +47,15 @@
 					</b-col>
 
 					<b-col lg="6">
-						<base-input
-							type="number"
-							label="Módulo"
-							placeholder="3"
-							v-model="registry.modulo"
-							name="modulo"
-							required
-						>
+						<base-input label="Módulo" required>
+							<b-form-select
+								class="form-control"
+								required
+								v-model="registry.idModule"
+								:options="modules"
+								value-field="id"
+								text-field="number"
+							></b-form-select>
 						</base-input>
 					</b-col>
 				</b-row>
@@ -130,7 +132,8 @@ export default {
 		return {
 			shifts: [],
 			rooms: [],
-			courses: []
+			courses: [],
+			modules: []
 		}
 	},
 
@@ -145,6 +148,20 @@ export default {
 			try {
 				const { data } = await this.$axios.get('/courses')
 				this.courses = data
+				console.log(this.courses)
+			} catch ({ message }) {
+				window.toast.fire({
+					icon: 'error',
+					title: message
+				})
+			}
+		},
+		async getModules (courseId) {
+			try {
+				const { data } = await this.$axios.get(
+					`/courses/${courseId}/modules`
+				)
+				this.modules = data
 			} catch ({ message }) {
 				window.toast.fire({
 					icon: 'error',
