@@ -65,7 +65,7 @@ export default {
 					sortable: true
 				},
 				{
-					key: 'classCourse.name',
+					key: 'course.name',
 					label: 'curso',
 					tdClass: 'font-weight-600 name text-sm ',
 					sortable: true
@@ -77,13 +77,13 @@ export default {
 					sortable: true
 				},
 				{
-					key: 'classRoom.name',
+					key: 'room.name',
 					label: 'sala',
 					tdClass: 'font-weight-600 name text-sm ',
 					sortable: true
 				},
 				{
-					key: 'classShift.name',
+					key: 'shift.name',
 					label: 'Horário',
 					tdClass: 'font-weight-600 name text-sm ',
 					sortable: true
@@ -104,13 +104,13 @@ export default {
 	methods: {
 		editClass (item) {
 			const payload = Object.assign({}, item)
-			payload.idRoom = payload.classRoom.id
-			payload.idCourse = payload.classCourse.id
-			payload.idShift = payload.classShift.id
+			payload.idRoom = payload.room.id
+			payload.idCourse = payload.course.id
+			payload.idShift = payload.shift.id
 
-			delete payload.classRoom
-			delete payload.classCourse
-			delete payload.classShift
+			delete payload.room
+			delete payload.course
+			delete payload.shift
 
 			this.$root.$emit('bv::show::modal', 'modalEdit', payload)
 		},
