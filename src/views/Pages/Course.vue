@@ -121,6 +121,17 @@
 											>
 											</base-input>
 										</b-col>
+										<b-col lg="3">
+											<base-input
+												type="number"
+												label="Carga Horária Semanal"
+												v-model="discipline.weekWorkload"
+												name="Carga Horária Semanal"
+												min="1"
+												required
+											>
+											</base-input>
+										</b-col>
 									</b-row>
 									<b-row>
 										<b-col class="text-right" lg="8">
@@ -184,7 +195,8 @@ export default {
 						subjects: [
 							{
 								name: '',
-								workload: null
+								workload: null,
+								weekWorkload: null
 							}
 						]
 					}
@@ -212,7 +224,8 @@ export default {
 		addDiscipline (index) {
 			this.course.modules[index].subjects.push({
 				name: '',
-				workload: null
+				workload: null,
+				weekWorkload: null
 			})
 		},
 
@@ -229,7 +242,8 @@ export default {
 				subjects: [
 					{
 						name: '',
-						workload: null
+						workload: null,
+						weekWorkload: null
 					}
 				]
 			})
