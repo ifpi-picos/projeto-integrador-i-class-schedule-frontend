@@ -69,6 +69,15 @@ const routes = [
 					)
 			},
 			{
+				path: '/turmas/:id',
+				name: 'informacoes-turma',
+				meta: { name: 'Informações da Turma' },
+				component: () =>
+					import(
+						/* webpackChunkName: "informacoes-turma" */ '../views/Pages/InfoClass.vue'
+					)
+			},
+			{
 				path: '/areas',
 				name: 'areas',
 				meta: { name: 'Áreas' },

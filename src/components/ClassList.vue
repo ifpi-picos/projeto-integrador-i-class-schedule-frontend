@@ -18,6 +18,11 @@
 				sort-by="nome"
 				sort-icon-left
 			>
+			<template v-slot:cell(name)="{ item }">
+					<router-link style="color: #525f7f" class="font-weight-600 name text-sm" :to="{ name: 'informacoes-turma', params: { id: item.id }}">{{item.name}}</router-link>
+					
+				</template>
+
 				<template v-slot:cell(actions)="{ item }">
 					<div class="d-flex align-items-center">
 						<b-button
