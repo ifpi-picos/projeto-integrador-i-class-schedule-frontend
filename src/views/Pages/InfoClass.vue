@@ -10,7 +10,7 @@
 					class="pt-0 pl-0 pr-0 d-flex justify-content-around"
 				>
 					<h4>Turma: {{ classInfo.name }}</h4>
-					<h4>CURSO: {{ classInfo.course.name }}</h4>
+					<h4>Curso: {{ classInfo.course.name }}</h4>
 					<h4>Módulo/Série: {{ classInfo.modulo }}</h4>
 					<h4>Sala: {{ classInfo.room.name }}</h4>
 					<h4>Turno: {{ classInfo.shift.name }}</h4>
