@@ -9,7 +9,8 @@
 					v-if="classInfo"
 					class="pt-0 pl-0 pr-0 d-flex justify-content-around"
 				>
-					<h3>CURSO: {{ classInfo.course.name }}</h3>
+					<h4>Turma: {{ classInfo.name }}</h4>
+					<h4>Curso: {{ classInfo.course.name }}</h4>
 					<h4>Módulo/Série: {{ classInfo.modulo }}</h4>
 					<h4>Sala: {{ classInfo.room.name }}</h4>
 					<h4>Turno: {{ classInfo.shift.name }}</h4>
@@ -46,7 +47,7 @@
 export default {
 	name: 'infoClass',
 	components: {},
-	data() {
+	data () {
 		return {
 			classInfo: null,
 			fields: [
@@ -77,11 +78,11 @@ export default {
 			]
 		}
 	},
-	created() {
+	created () {
 		this.getinfoClass()
 	},
 	methods: {
-		async getinfoClass() {
+		async getinfoClass () {
 			const { id } = this.$route.params
 			try {
 				const { data } = await this.$axios.get(`/classes/${id}`)
@@ -97,4 +98,3 @@ export default {
 }
 </script>
 
-<style></style>
