@@ -59,7 +59,7 @@
                                 <span class="avatar avatar-sm rounded-circle">
                                     <img
                                         alt="Image placeholder"
-                                        src="img/theme/team-1.jpg"
+                                        src="/img/theme/team-1.jpg"
                                     />
                                 </span>
                             </div>
@@ -162,7 +162,7 @@ export default {
 	props: {
 		logo: {
 			type: String,
-			default: 'img/brand/ifpi.png',
+			default: '/img/brand/ifpi.png',
 			description: 'Sidebar app logo'
 		},
 		autoClose: {

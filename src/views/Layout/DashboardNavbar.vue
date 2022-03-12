@@ -63,7 +63,7 @@
                         <span class="avatar avatar-sm rounded-circle">
                             <img
                                 alt="Image placeholder"
-                                src="img/theme/team-4.jpg"
+                                src="/img/theme/team-4.jpg"
                             />
                         </span>
                         <b-media-body class="ml-2 d-none d-lg-block">
