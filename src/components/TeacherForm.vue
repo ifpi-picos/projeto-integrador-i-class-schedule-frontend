@@ -52,23 +52,12 @@
 								class="form-control"
 								required
 								v-model="registry.idArea"
-								:options="occupationAreas"
-                                value-field="id"
+								:options="areas"
+								value-field="id"
 								text-field="name"
 							></b-form-select>
 						</base-input>
 					</b-col>
-
-					<!--  <b-col lg="6">
-            <base-input label="Coordenação" required>
-              <b-form-select
-                class="form-control"
-                required
-                v-model="teacher.coordination"
-                :options="coordinations"
-              ></b-form-select>
-            </base-input>
-          </b-col>-->
 				</b-row>
 			</div>
 		</b-form>
@@ -94,7 +83,7 @@ import modalForm from '../mixins/modalForm'
 export default {
 	name: 'TeacherForm',
 	mixins: [modalForm],
-	data () {
+	data() {
 		return {
 			coordinations: [
 				{ value: null, text: 'Por favor selecione uma opção' },
@@ -121,28 +110,14 @@ export default {
 			description: 'titulo do modal'
 		}
 	},
-	created(){
-		this.getAreas()
+	computed: {
+		areas() {
+			return this.$store.getters.getAreas
+		}
 	},
 	methods: {
-		handleSubmit () {
+		handleSubmit() {
 			this.handleOk('teachers')
-		},
-
-		async getAreas() {
-			try {
-				const { data } = await this.$axios.get('/areas')
-				console.log('data: ', data )
-				this.occupationAreas = data
-
-
-
-			} catch ({ message }) {
-				window.toast.fire({
-					icon: 'error',
-					title: message
-				})
-			}
 		}
 	}
 }
