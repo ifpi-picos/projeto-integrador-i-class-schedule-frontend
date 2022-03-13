@@ -28,10 +28,15 @@ import TeacherForm from '@/components/TeacherForm.vue'
 
 export default {
 	name: 'Teachers',
+
 	components: {
 		TeacherForm,
 		TeacherList
-	}
+	},
+
+    async created() {
+        await this.$store.dispatch('requestAreas')
+    }
 }
 </script>
 
