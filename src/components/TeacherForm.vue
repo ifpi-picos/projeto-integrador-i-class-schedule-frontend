@@ -135,8 +135,6 @@ export default {
 				console.log('data: ', data )
 				this.occupationAreas = data
 
-
-
 			} catch ({ message }) {
 				window.toast.fire({
 					icon: 'error',

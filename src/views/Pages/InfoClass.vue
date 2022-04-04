@@ -27,7 +27,20 @@
 						striped
 						:fields="fields"
 						:items="classInfo.subjects"
-					></b-table>
+					>
+						<template #cell(teacher)="data">
+							<b-form-select
+								class="form-control"
+								required
+								size="sm"
+								responsive
+								v-model="data.teacher"
+								:options="options"
+								value-field="id"
+								text-field="name"
+							></b-form-select>
+						</template>
+					</b-table>
 				</b-card-body>
 
 				<b-card-body v-else class="text-center">
@@ -47,8 +60,11 @@
 export default {
 	name: 'infoClass',
 	components: {},
-	data () {
+	data() {
 		return {
+			// areaTeacher: '',
+			selected: null,
+			options: [],
 			classInfo: null,
 			fields: [
 				{
@@ -78,14 +94,30 @@ export default {
 			]
 		}
 	},
-	created () {
+	created() {
 		this.getinfoClass()
+		this.getInfoTeachersByAreas()
 	},
 	methods: {
-		async getinfoClass () {
+		async getInfoTeachersByAreas() {
+			try {
+				const { data } = await this.$axios.get(
+					`/teachers/teachers-for-areas?areasTeacher=ads`
+				)
+				console.log(data)
+				this.options = data
+			} catch ({ message }) {
+				window.toast.fire({
+					icon: 'error',
+					title: message
+				})
+			}
+		},
+		async getinfoClass() {
 			const { id } = this.$route.params
 			try {
 				const { data } = await this.$axios.get(`/classes/${id}`)
+				console.log(data)
 				this.classInfo = data
 			} catch ({ message }) {
 				window.toast.fire({
@@ -97,4 +129,3 @@ export default {
 	}
 }
 </script>
-
